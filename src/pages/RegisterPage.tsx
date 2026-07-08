@@ -16,38 +16,36 @@ export default function RegisterPage() {
         <img src={RegisterHero} alt="Register Hero" className="register-hero" />
       </div>
       <div>
-        <h1 className="font-raleway font-extrabold text-[30px] leading-[130%] tracking-[-1%] align-middle">
-          Create account
-        </h1>
+        <h1 className="font-raleway font-extrabold text-3xl">Create account</h1>
         <form action="" className="mt-10 flex flex-col gap-6">
           <div className="flex flex-col gap-1.5">
-            <label className="font-inter font-normal text-[14px] leading-[125%] text-[#344054] tracking-normal align-bottom">
+            <label className="font-inter  text-base  text-[#344054]">
               Username
             </label>
             <input
               type="text"
-              className="rounded-lg w-106.5 h-14 focus:outline-none hover:bg-[#F9FAFB] focus:ring-[3px] focus:ring-[#BCC7FF] focus:border-[#BCC7FF] transition-all ease-in-out duration-300 border border-[#D0D5DD] py-4.5 px-4 placeholder:text-[#667085] font-inter font-normal text-[16px] leading-[125%] tracking-normal align-bottom"
+              className="rounded-lg w-106.5 h-14 focus:outline-none hover:bg-[#F9FAFB] focus:ring-3 focus:ring-[#BCC7FF] focus:border-[#BCC7FF] transition-all ease-in-out duration-300 border border-[#D0D5DD] py-4.5 px-4 placeholder:text-[#667085] font-inter text-base"
               placeholder="Your username"
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="font-inter font-normal text-[14px] leading-[125%] text-[#344054] tracking-normal align-bottom">
+            <label className="font-inter  text-base  text-[#344054]">
               Email
             </label>
             <input
               type="text"
-              className="rounded-lg w-106.5 h-14 focus:outline-none hover:bg-[#F9FAFB] focus:ring-[3px] focus:ring-[#BCC7FF] focus:border-[#BCC7FF] transition-all ease-in-out duration-300 border border-[#D0D5DD] py-4.5 px-4 placeholder:text-[#667085] font-inter font-normal text-[16px] leading-[125%] tracking-normal align-bottom"
+              className="rounded-lg w-106.5 h-14 focus:outline-none hover:bg-[#F9FAFB] focus:ring-3 focus:ring-[#BCC7FF] focus:border-[#BCC7FF] transition-all ease-in-out duration-300 border border-[#D0D5DD] py-4.5 px-4 placeholder:text-[#667085] font-inter text-base"
               placeholder="Example@gmail.com"
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="font-inter font-normal text-[14px] leading-[125%] text-[#344054] tracking-normal align-bottom">
+            <label className="font-inter  text-base text-[#344054]">
               Create a password
             </label>
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
-                className="rounded-lg w-106.5 h-14 focus:outline-none hover:bg-[#F9FAFB] focus:ring-[3px] focus:ring-[#BCC7FF] focus:border-[#BCC7FF] transition-all ease-in-out duration-300 border border-[#D0D5DD] py-4.5 px-4 pr-12 placeholder:text-[#667085] font-inter font-normal text-[16px] leading-[125%] tracking-normal align-bottom"
+                className="rounded-lg w-106.5 h-14 focus:outline-none hover:bg-[#F9FAFB] focus:ring-3 focus:ring-[#BCC7FF] focus:border-[#BCC7FF] transition-all ease-in-out duration-300 border border-[#D0D5DD] py-4.5 px-4 pr-12 placeholder:text-[#667085] font-inter  text-base"
                 placeholder="must be 8 characters"
               />
               <button
@@ -58,15 +56,15 @@ export default function RegisterPage() {
                 {showPassword ? <Eye /> : <EyeCrossed />}
               </button>
             </div>
-          </div>{' '}
+          </div>
           <div className="flex flex-col gap-1.5">
-            <label className="font-inter font-normal text-[14px] leading-[125%] text-[#344054] tracking-normal align-bottom">
+            <label className="font-inter text-base  text-[#344054]">
               Create a password
             </label>
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
-                className="rounded-lg w-106.5 h-14 focus:outline-none hover:bg-[#F9FAFB] focus:ring-[3px] focus:ring-[#BCC7FF] focus:border-[#BCC7FF] transition-all ease-in-out duration-300 border border-[#D0D5DD] py-4.5 px-4 pr-12 placeholder:text-[#667085] font-inter font-normal text-[16px] leading-[125%] tracking-normal align-bottom"
+                className="rounded-lg w-106.5 h-14 focus:outline-none hover:bg-[#F9FAFB] focus:ring-3 focus:ring-[#BCC7FF] focus:border-[#BCC7FF] transition-all ease-in-out duration-300 border border-[#D0D5DD] py-4.5 px-4 pr-12 placeholder:text-[#667085] font-inter text-base"
                 placeholder="must be 8 characters"
               />
               <button
@@ -80,17 +78,17 @@ export default function RegisterPage() {
           </div>
           <div className="flex gap-3 items-center">
             <div className="w-5 h-5 rounded-full border border-[#98A2B3] cursor-pointer"></div>
-            <p className="font-inter font-normal text-[14px] leading-[125%] text-[#344054] tracking-normal align-bottom">
+            <p className="font-inter  text-base  text-[#344054]">
               I accept the terms and privacy policy
             </p>
           </div>
-          <button className="rounded-lg w-106.5 h-14 bg-black flex items-center justify-center mt-3.5 font-inter font-semibold text-[16px] leading-[125%] tracking-normal text-white cursor-pointer align-middle">
+          <button className="rounded-lg w-106.5 h-14 bg-black flex items-center justify-center mt-3.5 font-inter font-semibold text-base  text-white cursor-pointer ">
             Sign Up
           </button>
         </form>
-        <p className="mt-9.5 font-inter font-normal text-[14px] leading-[125%] tracking-normal align-bottom">
+        <p className="mt-9.5 font-inter text-base">
           Already have an account?
-          <span className="font-inter cursor-pointer hover:underline font-semibold text-[14px] leading-[125%] tracking-normal text-[#4B69FD] align-bottom">
+          <span className="font-inter cursor-pointer hover:underline font-semibold text-base text-[#4B69FD]">
             {' '}
             Log in
           </span>
