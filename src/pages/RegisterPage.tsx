@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import RegisterHero from '../assets/images/register/register-hero.png';
-import Logo from '../components/UI/Logo';
-import Eye from '../components/UI/Eye';
-import EyeCrossed from '../components/UI/EyeCrossed';
+import Logo from '../components/UI/Icons/Logo';
+import Eye from '../components/UI/Icons/Eye';
+import EyeCrossed from '../components/UI/Icons/EyeCrossed';
+import { Link } from 'react-router-dom';
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -87,11 +88,13 @@ export default function RegisterPage() {
           </button>
         </form>
         <p className="mt-9.5 font-inter text-base">
-          Already have an account?
-          <span className="font-inter cursor-pointer hover:underline font-semibold text-base text-[#4B69FD]">
-            {' '}
+          Already have an account?{' '}
+          <Link
+            to="/login"
+            className="font-inter font-semibold text-base text-[#4B69FD] hover:underline"
+          >
             Log in
-          </span>
+          </Link>
         </p>
       </div>
     </div>
