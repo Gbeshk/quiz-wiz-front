@@ -25,14 +25,14 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center gap-20.5">
+    <div className="flex gap-20.5">
       <AuthHeroImage
         src={LoginHero}
         alt="Login Hero"
         imgClassName="login-hero"
       />
 
-      <div className="relative">
+      <div className="relative mt-31">
         <BackButton />
 
         <AuthHeader

@@ -23,7 +23,7 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <div className="flex items-center gap-20.5">
+    <div className="flex  gap-20.5">
       <div className="relative">
         <div className="absolute top-10 left-10">
           <Logo />
@@ -31,7 +31,7 @@ export default function ResetPasswordPage() {
         <img src={ForgotPasswordHero} alt="Login Hero" className="login-hero" />
       </div>
 
-      <div className="relative">
+      <div className="relative mt-31">
         <BackButton />
         <h1 className="font-raleway flex items-center gap-2 font-extrabold text-3xl">
           Reset password
@@ -50,15 +50,16 @@ export default function ResetPasswordPage() {
             rules={passwordRules}
             error={errors.password}
           />
-
-          <PasswordInput<RegisterFormValues>
-            label="Confirm password"
-            name="confirmPassword"
-            register={register}
-            placeholder="repeat password"
-            rules={confirmPasswordRules<RegisterFormValues>(password)}
-            error={errors.confirmPassword}
-          />
+          <div className="mt-3">
+            <PasswordInput<RegisterFormValues>
+              label="Confirm password"
+              name="confirmPassword"
+              register={register}
+              placeholder="repeat password"
+              rules={confirmPasswordRules<RegisterFormValues>(password)}
+              error={errors.confirmPassword}
+            />
+          </div>
 
           <SubmitButton label="Reset password" />
         </form>

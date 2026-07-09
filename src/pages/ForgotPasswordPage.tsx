@@ -20,14 +20,14 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="flex items-center gap-20.5">
+    <div className="flex gap-20.5">
       <AuthHeroImage
         src={ForgotPasswordHero}
         alt="Forgot Password Hero"
         imgClassName="login-hero"
       />
 
-      <div className="relative">
+      <div className="relative mt-31">
         <BackButton />
 
         <AuthHeader

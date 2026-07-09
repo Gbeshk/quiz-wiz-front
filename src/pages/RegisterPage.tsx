@@ -32,14 +32,14 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex items-center gap-20.5">
+    <div className="flex gap-20.5">
       <AuthHeroImage
         src={RegisterHero}
         alt="Register Hero"
         imgClassName="register-hero"
       />
 
-      <div className="relative">
+      <div className="relative mt-31">
         <BackButton />
 
         <AuthHeader title="Create account" />
