@@ -1,12 +1,33 @@
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import RegisterHero from '../assets/images/register/register-hero.png';
 import Logo from '../components/UI/Icons/Logo';
-import Eye from '../components/UI/Icons/Eye';
-import EyeCrossed from '../components/UI/Icons/EyeCrossed';
-import { Link } from 'react-router-dom';
+import AuthInput from '../components/Auth/AuthInput';
+import PasswordInput from '../components/Auth/PasswordInput';
+import RoundCheckbox from '../components/Auth/RoundCheckbox';
+import AuthFooter from '../components/Auth/AuthFooter';
+import SubmitButton from '../components/Auth/SubmitButton';
+import ErrorText from '../components/Auth/ErrorText';
+import {
+  emailRules,
+  passwordRules,
+  confirmPasswordRules,
+} from '../utils/validation';
+import type { RegisterFormValues } from '../types/auth';
 
 export default function RegisterPage() {
-  const [showPassword, setShowPassword] = useState(false);
+  const {
+    register,
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<RegisterFormValues>();
+
+  const password = watch('password');
+
+  const onSubmit = (data: RegisterFormValues) => {
+    console.log(data);
+  };
 
   return (
     <div className="flex items-center gap-20.5">
@@ -16,86 +37,73 @@ export default function RegisterPage() {
         </div>
         <img src={RegisterHero} alt="Register Hero" className="register-hero" />
       </div>
+
       <div>
         <h1 className="font-raleway font-extrabold text-3xl">Create account</h1>
-        <form action="" className="mt-10 flex flex-col gap-6">
+
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="mt-10 flex flex-col gap-6"
+        >
+          <AuthInput<RegisterFormValues>
+            label="Username"
+            name="username"
+            placeholder="Your username"
+            register={register}
+            rules={{ required: 'Username is required' }}
+            error={errors.username}
+          />
+
+          <AuthInput<RegisterFormValues>
+            label="Email"
+            name="email"
+            placeholder="Example@gmail.com"
+            register={register}
+            rules={emailRules}
+            error={errors.email}
+          />
+
+          <PasswordInput<RegisterFormValues>
+            label="Create a password"
+            name="password"
+            register={register}
+            rules={passwordRules}
+            error={errors.password}
+          />
+
+          <PasswordInput<RegisterFormValues>
+            label="Create a password"
+            name="confirmPassword"
+            register={register}
+            rules={confirmPasswordRules<RegisterFormValues>(password)}
+            error={errors.confirmPassword}
+          />
+
           <div className="flex flex-col gap-1.5">
-            <label className="font-inter  text-base  text-[#344054]">
-              Username
-            </label>
-            <input
-              type="text"
-              className="rounded-lg w-106.5 h-14 focus:outline-none hover:bg-[#F9FAFB] focus:ring-3 focus:ring-[#BCC7FF] focus:border-[#BCC7FF] transition-all ease-in-out duration-300 border border-[#D0D5DD] py-4.5 px-4 placeholder:text-[#667085] font-inter text-base"
-              placeholder="Your username"
-            />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <label className="font-inter  text-base  text-[#344054]">
-              Email
-            </label>
-            <input
-              type="text"
-              className="rounded-lg w-106.5 h-14 focus:outline-none hover:bg-[#F9FAFB] focus:ring-3 focus:ring-[#BCC7FF] focus:border-[#BCC7FF] transition-all ease-in-out duration-300 border border-[#D0D5DD] py-4.5 px-4 placeholder:text-[#667085] font-inter text-base"
-              placeholder="Example@gmail.com"
-            />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <label className="font-inter  text-base text-[#344054]">
-              Create a password
-            </label>
-            <div className="relative">
-              <input
-                type={showPassword ? 'text' : 'password'}
-                className="rounded-lg w-106.5 h-14 focus:outline-none hover:bg-[#F9FAFB] focus:ring-3 focus:ring-[#BCC7FF] focus:border-[#BCC7FF] transition-all ease-in-out duration-300 border border-[#D0D5DD] py-4.5 px-4 pr-12 placeholder:text-[#667085] font-inter  text-base"
-                placeholder="must be 8 characters"
+            <div className="flex gap-3 items-center">
+              <RoundCheckbox<RegisterFormValues>
+                control={control}
+                name="acceptTerms"
+                rules={{ required: 'You must accept the terms' }}
+                hasError={!!errors.acceptTerms}
               />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2"
-              >
-                {showPassword ? <Eye /> : <EyeCrossed />}
-              </button>
+              <p className="font-inter  text-base  text-[#344054]">
+                I accept the terms and privacy policy
+              </p>
             </div>
+            {errors.acceptTerms && (
+              <ErrorText message={errors.acceptTerms.message ?? ''} />
+            )}
           </div>
-          <div className="flex flex-col gap-1.5">
-            <label className="font-inter text-base  text-[#344054]">
-              Create a password
-            </label>
-            <div className="relative">
-              <input
-                type={showPassword ? 'text' : 'password'}
-                className="rounded-lg w-106.5 h-14 focus:outline-none hover:bg-[#F9FAFB] focus:ring-3 focus:ring-[#BCC7FF] focus:border-[#BCC7FF] transition-all ease-in-out duration-300 border border-[#D0D5DD] py-4.5 px-4 pr-12 placeholder:text-[#667085] font-inter text-base"
-                placeholder="must be 8 characters"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2"
-              >
-                {showPassword ? <Eye /> : <EyeCrossed />}
-              </button>
-            </div>
-          </div>
-          <div className="flex gap-3 items-center">
-            <div className="w-5 h-5 rounded-full border border-[#98A2B3] cursor-pointer"></div>
-            <p className="font-inter  text-base  text-[#344054]">
-              I accept the terms and privacy policy
-            </p>
-          </div>
-          <button className="rounded-lg w-106.5 h-14 bg-black flex items-center justify-center mt-3.5 font-inter font-semibold text-base  text-white cursor-pointer ">
-            Sign Up
-          </button>
+
+          <SubmitButton label="Sign Up" />
         </form>
-        <p className="mt-9.5 font-inter text-base">
-          Already have an account?{' '}
-          <Link
-            to="/login"
-            className="font-inter font-semibold text-base text-[#4B69FD] hover:underline"
-          >
-            Log in
-          </Link>
-        </p>
+
+        <AuthFooter
+          prompt="Already have an account?"
+          linkText="Log in"
+          to="/login"
+        />
       </div>
     </div>
   );
