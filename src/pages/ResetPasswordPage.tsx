@@ -1,12 +1,14 @@
 import { useForm } from 'react-hook-form';
-import ForgotPasswordHero from '../assets/images/forgot-password/forgot-password-hero.png';
-import Logo from '../components/UI/Icons/Logo';
-import BackButton from '../components/Auth/BackButton';
-import SubmitButton from '../components/Auth/SubmitButton';
-import { confirmPasswordRules, passwordRules } from '../utils/validation';
-import type { ResetPasswordFormValues } from '../types/auth';
-import PasswordInput from '../components/Auth/PasswordInput';
-import AuthFooter from '../components/Auth/AuthFooter';
+import ForgotPasswordHero from '@/assets/images/forgot-password/forgot-password-hero.png';
+import { Logo } from '@/components/UI/Icons';
+import {
+  BackButton,
+  SubmitButton,
+  AuthInput,
+  AuthFooter,
+} from '@/components/Auth';
+import { confirmPasswordRules, passwordRules } from '@/utils/validation';
+import type { ResetPasswordFormValues } from '@/types/auth';
 
 export default function ResetPasswordPage() {
   const {
@@ -37,7 +39,7 @@ export default function ResetPasswordPage() {
         <h1 className="font-raleway flex items-center gap-2 font-extrabold text-3xl">
           Reset password
         </h1>
-        <p className="mt-4 font-inter text-sm leading-[165%] w-106.5 text-[#475467] ">
+        <p className="mt-4 font-inter text-sm leading-[165%] w-106.5 text-auth-text ">
           Please type something you'll remember
         </p>
 
@@ -45,18 +47,20 @@ export default function ResetPasswordPage() {
           onSubmit={handleSubmit(onSubmit)}
           className="mt-10 flex flex-col gap-6"
         >
-          <PasswordInput<ResetPasswordFormValues>
+          <AuthInput<ResetPasswordFormValues>
             label="New password"
             name="password"
+            type="password"
             register={register}
             rules={passwordRules}
             error={errors.password}
           />
 
           <div className="mt-3">
-            <PasswordInput<ResetPasswordFormValues>
+            <AuthInput<ResetPasswordFormValues>
               label="Confirm password"
               name="confirmPassword"
+              type="password"
               register={register}
               placeholder="repeat password"
               rules={confirmPasswordRules<ResetPasswordFormValues>(password)}

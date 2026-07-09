@@ -1,12 +1,14 @@
 import { useForm } from 'react-hook-form';
-import ForgotPasswordHero from '../assets/images/forgot-password/forgot-password-hero.png';
-import AuthInput from '../components/Auth/AuthInput';
-import BackButton from '../components/Auth/BackButton';
-import SubmitButton from '../components/Auth/SubmitButton';
-import AuthHeroImage from '../components/Auth/AuthHeroImage';
-import AuthHeader from '../components/Auth/AuthHeader';
-import { emailRules } from '../utils/validation';
-import type { ForgotPasswordFormValues } from '../types/auth';
+import ForgotPasswordHero from '@/assets/images/forgot-password/forgot-password-hero.png';
+import {
+  AuthInput,
+  BackButton,
+  SubmitButton,
+  AuthHeroImage,
+  AuthHeader,
+} from '@/components/Auth';
+import { emailRules } from '@/utils/validation';
+import type { ForgotPasswordFormValues } from '@/types/auth';
 
 export default function ForgotPasswordPage() {
   const {

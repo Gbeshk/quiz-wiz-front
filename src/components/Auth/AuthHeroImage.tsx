@@ -1,5 +1,4 @@
-import Logo from '../UI/Icons/Logo';
-
+import { Logo } from '@/components/UI/Icons';
 interface AuthHeroImageProps {
   src: string;
   alt: string;

@@ -1,5 +1,4 @@
-import ArrowRight from '../UI/Icons/ArrowRight';
-
+import { ArrowRight } from '@/components/UI/Icons';
 interface SubmitButtonProps {
   label: string;
 }

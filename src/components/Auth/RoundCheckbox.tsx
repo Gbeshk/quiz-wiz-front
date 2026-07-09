@@ -5,7 +5,8 @@ import type {
   FieldValues,
   Path,
 } from 'react-hook-form';
-import CheckBoxIcon from '../UI/Icons/CheckBoxIcon';
+import { CheckBoxIcon } from '@/components/UI/Icons';
+import { cn } from '@/lib/utils';
 
 interface RoundCheckboxProps<T extends FieldValues> {
   control: Control<T>;
@@ -25,9 +26,10 @@ export default function RoundCheckbox<T extends FieldValues>({
 
   return (
     <label
-      className={`w-5 h-5 rounded-full flex items-center justify-center cursor-pointer transition-colors duration-200 ${
-        value ? 'bg-black' : 'border border-[#98A2B3]'
-      }`}
+      className={cn(
+        'w-5 h-5 rounded-full flex items-center justify-center cursor-pointer transition-colors duration-200',
+        value ? 'bg-black' : 'border border-auth-checkbox-border',
+      )}
     >
       {value && <CheckBoxIcon />}
       <input

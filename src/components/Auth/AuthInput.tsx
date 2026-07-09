@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type {
   UseFormRegister,
   RegisterOptions,
@@ -5,8 +6,9 @@ import type {
   FieldValues,
   Path,
 } from 'react-hook-form';
-import ErrorIcon from '../UI/Icons/ErrorIcon';
+import { ErrorIcon, Eye, EyeCrossed } from '@/components/UI/Icons';
 import ErrorText from './ErrorText';
+import { cn } from '@/lib/utils';
 
 interface AuthInputProps<T extends FieldValues> {
   label: string;
@@ -27,23 +29,37 @@ export default function AuthInput<T extends FieldValues>({
   rules,
   error,
 }: AuthInputProps<T>) {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const isPassword = type === 'password';
+  const inputType = isPassword ? (showPassword ? 'text' : 'password') : type;
+
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="font-inter  text-base  text-[#344054]">{label}</label>
+      <label className="font-inter text-base text-auth-label">{label}</label>
       <div className="relative">
         <input
-          type={type}
+          type={inputType}
           placeholder={placeholder}
-          className={`rounded-lg w-106.5 h-14 focus:outline-none hover:bg-[#F9FAFB] focus:ring-3 focus:ring-[#BCC7FF] focus:border-[#BCC7FF] transition-all ease-in-out duration-300 border py-4.5 px-4 placeholder:text-[#667085] font-inter text-base ${
-            error ? 'border-[#FDA29B] pr-12' : 'border-[#D0D5DD]'
-          }`}
+          className={cn(
+            'rounded-lg w-106.5 h-14 focus:outline-none hover:bg-auth-hover-bg focus:ring-3 focus:ring-auth-ring focus:border-auth-ring transition-all ease-in-out duration-300 border py-4.5 px-4 placeholder:text-auth-placeholder font-inter text-base',
+            error || isPassword ? 'pr-12' : '',
+            error ? 'border-auth-border-error' : 'border-auth-border',
+          )}
           {...register(name, rules)}
         />
-        {error && (
-          <span className="absolute right-4 top-1/2 -translate-y-1/2">
+        <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center">
+          {error ? (
             <ErrorIcon />
-          </span>
-        )}
+          ) : isPassword ? (
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <Eye /> : <EyeCrossed />}
+            </button>
+          ) : null}
+        </div>
       </div>
       {error && <ErrorText message={error.message ?? ''} />}
     </div>

@@ -4,7 +4,7 @@ interface ErrorTextProps {
 
 export default function ErrorText({ message }: ErrorTextProps) {
   return (
-    <span className="font-inter font-normal text-sm text-[#F04438] tracking-normal">
+    <span className="font-inter font-normal text-sm text-auth-error-text-color tracking-normal">
       {message}
     </span>
   );

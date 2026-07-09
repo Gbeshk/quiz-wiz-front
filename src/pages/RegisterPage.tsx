@@ -1,20 +1,21 @@
 import { useForm } from 'react-hook-form';
-import RegisterHero from '../assets/images/register/register-hero.png';
-import AuthInput from '../components/Auth/AuthInput';
-import PasswordInput from '../components/Auth/PasswordInput';
-import RoundCheckbox from '../components/Auth/RoundCheckbox';
-import AuthFooter from '../components/Auth/AuthFooter';
-import SubmitButton from '../components/Auth/SubmitButton';
-import ErrorText from '../components/Auth/ErrorText';
-import AuthHeroImage from '../components/Auth/AuthHeroImage';
-import AuthHeader from '../components/Auth/AuthHeader';
+import RegisterHero from '@/assets/images/register/register-hero.png';
+import {
+  AuthInput,
+  RoundCheckbox,
+  AuthFooter,
+  SubmitButton,
+  ErrorText,
+  AuthHeroImage,
+  AuthHeader,
+  BackButton,
+} from '@/components/Auth';
 import {
   emailRules,
   passwordRules,
   confirmPasswordRules,
-} from '../utils/validation';
-import type { RegisterFormValues } from '../types/auth';
-import BackButton from '../components/Auth/BackButton';
+} from '@/utils/validation';
+import type { RegisterFormValues } from '@/types/auth';
 
 export default function RegisterPage() {
   const {
@@ -66,17 +67,19 @@ export default function RegisterPage() {
             error={errors.email}
           />
 
-          <PasswordInput<RegisterFormValues>
+          <AuthInput<RegisterFormValues>
             label="Create a password"
             name="password"
+            type="password"
             register={register}
             rules={passwordRules}
             error={errors.password}
           />
 
-          <PasswordInput<RegisterFormValues>
+          <AuthInput<RegisterFormValues>
             label="Create a password"
             name="confirmPassword"
+            type="password"
             register={register}
             rules={confirmPasswordRules<RegisterFormValues>(password)}
             error={errors.confirmPassword}
@@ -90,7 +93,7 @@ export default function RegisterPage() {
                 rules={{ required: 'You must accept the terms' }}
                 hasError={!!errors.acceptTerms}
               />
-              <p className="font-inter  text-base  text-[#344054]">
+              <p className="font-inter  text-base  text-auth-label">
                 I accept the terms and privacy policy
               </p>
             </div>

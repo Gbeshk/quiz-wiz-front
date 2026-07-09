@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import Arrow from '../UI/Icons/Arrow';
+import { Arrow } from '@/components/UI/Icons';
 
 export default function BackButton() {
   const navigate = useNavigate();
@@ -15,7 +15,9 @@ export default function BackButton() {
       className="absolute -top-16 -left-8 cursor-pointer flex items-center gap-2 h-4"
     >
       <Arrow />
-      <p className="font-inter text-[#667085] font-medium text-sm">Back</p>
+      <p className="font-inter text-auth-placeholder font-medium text-sm">
+        Back
+      </p>
     </div>
   );
 }

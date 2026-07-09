@@ -15,12 +15,12 @@ export default function RememberForgotRow<T extends FieldValues>({
     <div className="flex gap-3 items-center">
       <RoundCheckbox<T> control={control} name={name} />
       <div className="flex items-center justify-between w-full">
-        <p className="font-inter  text-base  text-[#344054]">
+        <p className="font-inter  text-base  text-auth-label">
           Remember for 30 days
         </p>
         <Link
           to="/forgot-password"
-          className="font-inter  text-base  text-[#344054] hover:underline"
+          className="font-inter  text-base  text-auth-label hover:underline"
         >
           Forgot password?
         </Link>

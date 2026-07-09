@@ -1,16 +1,17 @@
 import { useForm } from 'react-hook-form';
-import LoginHero from '../assets/images/login/login-hero.png';
-import Hello from '../components/UI/Icons/Hello';
-import AuthInput from '../components/Auth/AuthInput';
-import PasswordInput from '../components/Auth/PasswordInput';
-import RememberForgotRow from '../components/Auth/RememberForgotRow';
-import BackButton from '../components/Auth/BackButton';
-import AuthFooter from '../components/Auth/AuthFooter';
-import SubmitButton from '../components/Auth/SubmitButton';
-import AuthHeroImage from '../components/Auth/AuthHeroImage';
-import AuthHeader from '../components/Auth/AuthHeader';
-import { emailRules, passwordRules } from '../utils/validation';
-import type { LoginFormValues } from '../types/auth';
+import LoginHero from '@/assets/images/login/login-hero.png';
+import { Hello } from '@/components/UI/Icons';
+import {
+  AuthInput,
+  RememberForgotRow,
+  BackButton,
+  AuthFooter,
+  SubmitButton,
+  AuthHeroImage,
+  AuthHeader,
+} from '@/components/Auth';
+import { emailRules, passwordRules } from '@/utils/validation';
+import type { LoginFormValues } from '@/types/auth';
 
 export default function LoginPage() {
   const {
@@ -56,9 +57,10 @@ export default function LoginPage() {
             error={errors.email}
           />
 
-          <PasswordInput<LoginFormValues>
+          <AuthInput<LoginFormValues>
             label="Password"
             name="password"
+            type="password"
             register={register}
             rules={passwordRules}
             placeholder="••••••••"
