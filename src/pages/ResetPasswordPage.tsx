@@ -53,6 +53,7 @@ export default function ResetPasswordPage() {
             type="password"
             register={register}
             rules={passwordRules}
+            placeholder="must be 8 characters"
             error={errors.password}
           />
 

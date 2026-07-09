@@ -74,6 +74,7 @@ export default function RegisterPage() {
             register={register}
             rules={passwordRules}
             error={errors.password}
+            placeholder="must be 8 characters"
           />
 
           <AuthInput<RegisterFormValues>
@@ -83,6 +84,7 @@ export default function RegisterPage() {
             register={register}
             rules={confirmPasswordRules<RegisterFormValues>(password)}
             error={errors.confirmPassword}
+            placeholder="must be 8 characters"
           />
 
           <div className="flex flex-col gap-1.5">
