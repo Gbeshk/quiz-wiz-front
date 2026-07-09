@@ -1,13 +1,17 @@
+import { useNavigate, useLocation } from 'react-router-dom';
 import Arrow from '../UI/Icons/Arrow';
 
-interface BackButtonProps {
-  onClick: () => void;
-}
+export default function BackButton() {
+  const navigate = useNavigate();
+  const location = useLocation();
 
-export default function BackButton({ onClick }: BackButtonProps) {
+  const canGoBack = location.key !== 'default';
+
+  if (!canGoBack) return null;
+
   return (
     <div
-      onClick={onClick}
+      onClick={() => navigate(-1)}
       className="absolute -top-16 -left-8 cursor-pointer flex items-center gap-2 h-4"
     >
       <Arrow />

@@ -11,3 +11,11 @@ export interface RegisterFormValues {
   confirmPassword: string;
   acceptTerms: boolean;
 }
+export interface ForgotPasswordFormValues {
+  email: string;
+}
+
+export interface ResetPasswordFormValues {
+  password: string;
+  confirmPassword: string;
+}

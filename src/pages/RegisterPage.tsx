@@ -1,18 +1,20 @@
 import { useForm } from 'react-hook-form';
 import RegisterHero from '../assets/images/register/register-hero.png';
-import Logo from '../components/UI/Icons/Logo';
 import AuthInput from '../components/Auth/AuthInput';
 import PasswordInput from '../components/Auth/PasswordInput';
 import RoundCheckbox from '../components/Auth/RoundCheckbox';
 import AuthFooter from '../components/Auth/AuthFooter';
 import SubmitButton from '../components/Auth/SubmitButton';
 import ErrorText from '../components/Auth/ErrorText';
+import AuthHeroImage from '../components/Auth/AuthHeroImage';
+import AuthHeader from '../components/Auth/AuthHeader';
 import {
   emailRules,
   passwordRules,
   confirmPasswordRules,
 } from '../utils/validation';
 import type { RegisterFormValues } from '../types/auth';
+import BackButton from '../components/Auth/BackButton';
 
 export default function RegisterPage() {
   const {
@@ -31,15 +33,16 @@ export default function RegisterPage() {
 
   return (
     <div className="flex items-center gap-20.5">
-      <div className="relative">
-        <div className="absolute top-10 left-10">
-          <Logo />
-        </div>
-        <img src={RegisterHero} alt="Register Hero" className="register-hero" />
-      </div>
+      <AuthHeroImage
+        src={RegisterHero}
+        alt="Register Hero"
+        imgClassName="register-hero"
+      />
 
-      <div>
-        <h1 className="font-raleway font-extrabold text-3xl">Create account</h1>
+      <div className="relative">
+        <BackButton />
+
+        <AuthHeader title="Create account" />
 
         <form
           onSubmit={handleSubmit(onSubmit)}

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 import RoundCheckbox from './RoundCheckbox';
 
@@ -17,9 +18,12 @@ export default function RememberForgotRow<T extends FieldValues>({
         <p className="font-inter  text-base  text-[#344054]">
           Remember for 30 days
         </p>
-        <p className="font-inter  text-base  text-[#344054] cursor-pointer hover:underline">
+        <Link
+          to="/forgot-password"
+          className="font-inter  text-base  text-[#344054] hover:underline"
+        >
           Forgot password?
-        </p>
+        </Link>
       </div>
     </div>
   );

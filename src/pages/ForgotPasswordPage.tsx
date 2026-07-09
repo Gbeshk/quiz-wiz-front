@@ -1,0 +1,56 @@
+import { useForm } from 'react-hook-form';
+import ForgotPasswordHero from '../assets/images/forgot-password/forgot-password-hero.png';
+import AuthInput from '../components/Auth/AuthInput';
+import BackButton from '../components/Auth/BackButton';
+import SubmitButton from '../components/Auth/SubmitButton';
+import AuthHeroImage from '../components/Auth/AuthHeroImage';
+import AuthHeader from '../components/Auth/AuthHeader';
+import { emailRules } from '../utils/validation';
+import type { ForgotPasswordFormValues } from '../types/auth';
+
+export default function ForgotPasswordPage() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ForgotPasswordFormValues>();
+
+  const onSubmit = (data: ForgotPasswordFormValues) => {
+    console.log(data);
+  };
+
+  return (
+    <div className="flex items-center gap-20.5">
+      <AuthHeroImage
+        src={ForgotPasswordHero}
+        alt="Forgot Password Hero"
+        imgClassName="login-hero"
+      />
+
+      <div className="relative">
+        <BackButton />
+
+        <AuthHeader
+          title="Forgot password?"
+          description="Don't worry! It happens. Please enter the email associated with your account."
+        />
+
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="mt-10 flex flex-col gap-6"
+        >
+          <AuthInput<ForgotPasswordFormValues>
+            label="Email address"
+            name="email"
+            placeholder="enter your email address"
+            register={register}
+            rules={emailRules}
+            error={errors.email}
+          />
+
+          <SubmitButton label="Send" />
+        </form>
+      </div>
+    </div>
+  );
+}
