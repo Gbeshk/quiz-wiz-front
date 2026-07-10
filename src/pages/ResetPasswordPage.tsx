@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import ForgotPasswordHero from '@/assets/images/forgot-password/forgot-password-hero.png';
 import { Logo } from '@/components/UI/Icons';
 import {
   BackButton,
@@ -9,6 +8,7 @@ import {
 } from '@/components/Auth';
 import { confirmPasswordRules, passwordRules } from '@/utils/validation';
 import type { ResetPasswordFormValues } from '@/types/auth';
+import { ForgotPasswordHero } from '@/assets';
 
 export default function ResetPasswordPage() {
   const {

@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import RegisterHero from '@/assets/images/register/register-hero.png';
 import {
   AuthInput,
   RoundCheckbox,
@@ -16,6 +15,7 @@ import {
   confirmPasswordRules,
 } from '@/utils/validation';
 import type { RegisterFormValues } from '@/types/auth';
+import { RegisterHero } from '@/assets';
 
 export default function RegisterPage() {
   const {

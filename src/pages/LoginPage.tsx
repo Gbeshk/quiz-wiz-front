@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import LoginHero from '@/assets/images/login/login-hero.png';
 import { Hello } from '@/components/UI/Icons';
 import {
   AuthInput,
@@ -12,6 +11,7 @@ import {
 } from '@/components/Auth';
 import { emailRules, passwordRules } from '@/utils/validation';
 import type { LoginFormValues } from '@/types/auth';
+import { LoginHero } from '@/assets';
 
 export default function LoginPage() {
   const {
