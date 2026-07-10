@@ -1,1 +1,16 @@
 @import 'tailwindcss';
+
+@theme {
+  --font-inter: 'Inter', sans-serif;
+  --font-raleway: 'Raleway', sans-serif;
+  --color-auth-text: #475467;
+  --color-auth-label: #344054;
+  --color-auth-placeholder: #667085;
+  --color-auth-border: #d0d5dd;
+  --color-auth-border-error: #fda29b;
+  --color-auth-ring: #bcc7ff;
+  --color-auth-checkbox-border: #98a2b3;
+  --color-auth-link: #4b69fd;
+  --color-auth-hover-bg: #f9fafb;
+  --color-auth-error-text-color: #f04438;
+}
