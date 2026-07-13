@@ -12,5 +12,10 @@
   --color-auth-checkbox-border: #98a2b3;
   --color-auth-link: #4b69fd;
   --color-auth-hover-bg: #f9fafb;
+  --color-header-border-b: #66666640;
   --color-auth-error-text-color: #f04438;
+  --color-landing-text-color: #808080;
+  --color-landing-first-section-bg: #ff5613;
+  --color-footer-text: #101828;
+  --color-footer-line: #d0d5dd66;
 }
