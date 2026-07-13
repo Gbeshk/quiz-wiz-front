@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { PAGE_CATEGORIES } from '@/constants/categories';
 import { useCategoryScroller } from '@/hooks/useCategoryScroller';
+import { cn } from '@/lib/utils';
 import FilterIcon from '@/components/UI/Icons/FilterIcon';
-import ChevronLeftIcon from '@/components/UI/Icons/ChevronLeftIcon';
 import ChevronRightIcon from '@/components/UI/Icons/ChevronRightIcon';
 import FilterModal from '@/components/Modals/FilterModal/FilterModal';
+import CategoryScrollArrow from './CategoryScrollArrow';
+import CategoryIndicator from './CategoryIndicator';
 
 export default function CategoryTabs() {
   const {
@@ -25,22 +27,11 @@ export default function CategoryTabs() {
   return (
     <div className="mx-auto w-360 px-24 flex items-center mt-6 justify-between gap-6">
       <div className="relative flex flex-1 items-center min-w-0">
-        <div
-          className={`absolute left-0 top-0 z-20 flex h-[calc(100%-16px)] items-center pr-4 bg-white transition-opacity duration-200 ${
-            showBackArrow
-              ? 'opacity-100 pointer-events-auto'
-              : 'opacity-0 pointer-events-none'
-          }`}
-        >
-          <button
-            type="button"
-            onClick={handleSlidePrev}
-            aria-label="Show previous categories"
-            className="shrink-0"
-          >
-            <ChevronLeftIcon />
-          </button>
-        </div>
+        <CategoryScrollArrow
+          direction="left"
+          visible={showBackArrow}
+          onClick={handleSlidePrev}
+        />
 
         <div
           ref={scrollRef}
@@ -55,29 +46,19 @@ export default function CategoryTabs() {
                   ref={registerButtonRef(category)}
                   type="button"
                   onClick={() => setActiveCategory(category)}
-                  className={`transition-colors duration-200 font-semibold font-inter text-sm leading-5 whitespace-nowrap shrink-0 ${
+                  className={cn(
+                    'transition-colors duration-200 font-semibold font-inter text-sm leading-5 whitespace-nowrap shrink-0',
                     activeCategory === category
                       ? 'text-black'
-                      : 'text-auth-placeholder'
-                  }`}
+                      : 'text-auth-placeholder',
+                  )}
                 >
                   {category}
                 </button>
               ))}
             </div>
 
-            <div className="relative w-full h-0.5 mt-4">
-              <div className="absolute inset-x-0 bottom-0 h-px bg-categories-line-bg" />
-              <div
-                className="absolute bottom-0 h-0.5 bg-black transition-all duration-300 ease-out z-10 left-(--indicator-left) w-(--indicator-width)"
-                style={
-                  {
-                    '--indicator-left': `${indicatorLeft}px`,
-                    '--indicator-width': `${indicatorWidth}px`,
-                  } as React.CSSProperties
-                }
-              />
-            </div>
+            <CategoryIndicator left={indicatorLeft} width={indicatorWidth} />
           </div>
         </div>
       </div>

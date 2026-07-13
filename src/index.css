@@ -20,4 +20,10 @@
   --color-footer-line: #d0d5dd66;
   --color-filter-border: #66708599;
   --color-categories-line-bg: #d9d9d9;
+  --color-modal-line: #0000001a;
+  --color-modal-header-text: #4b69fd;
+  --color-modal-header: #f6f6f6b2;
+  --color-modal-input-border: #66708566;
+  --color-vertical-line: #00000066;
+  --color-modal-sorting-hover: #d9d9d933;
 }

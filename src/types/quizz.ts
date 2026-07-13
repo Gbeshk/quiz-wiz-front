@@ -15,3 +15,55 @@ export interface SortOptionConfig {
   label: string;
   Icon: ComponentType;
 }
+export interface CategoryChipProps {
+  category: string;
+  isSelected: boolean;
+  onToggle: () => void;
+}
+export interface FilterByPanelProps {
+  myQuizzes: boolean;
+  notCompleted: boolean;
+  selectedLevels: string[];
+  selectedCategories: string[];
+  onToggleMyQuizzes: () => void;
+  onToggleNotCompleted: () => void;
+  onToggleLevel: (label: string) => void;
+  onToggleCategory: (category: string) => void;
+}
+export interface FilterModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+export interface FilterModalHeaderProps {
+  hasSelection: boolean;
+  onReset: () => void;
+  onClose: () => void;
+}
+export interface LevelChipProps {
+  level: Level;
+  isSelected: boolean;
+  onToggle: () => void;
+}
+export interface SortByPanelProps {
+  sortBy: SortKey | null;
+  onSelect: (key: SortKey) => void;
+}
+export interface SortOptionRowProps {
+  option: SortOptionConfig;
+  isSelected: boolean;
+  onSelect: (key: SortKey) => void;
+}
+export interface ToggleRowProps {
+  label: string;
+  checked: boolean;
+  onToggle: () => void;
+}
+export interface CategoryScrollArrowProps {
+  direction: 'left' | 'right';
+  visible: boolean;
+  onClick: () => void;
+}
+export interface CategoryIndicatorProps {
+  left: number;
+  width: number;
+}

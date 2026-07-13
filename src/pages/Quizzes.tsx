@@ -1,5 +1,3 @@
-'use client';
-
 import { LandingFooter, LandingHeader } from '@/components/Landing';
 import CategoryTabs from '@/components/Quizzes/CategoryTabs';
 
