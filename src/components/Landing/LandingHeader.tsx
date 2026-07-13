@@ -10,7 +10,7 @@ function LandingHeader() {
         </Link>
         <Link
           to="/quizzes"
-          className="w-22.75 h-6 flex text-auth-text hover:text-auth-placeholder transition-all duration-300 ease-in-out items-center justify-center"
+          className="w-22.75 h-6 font-inter flex text-auth-text hover:text-auth-placeholder transition-all duration-300 ease-in-out items-center justify-center"
         >
           Quizzes
         </Link>
@@ -26,7 +26,7 @@ function LandingHeader() {
 
         <Link
           to="/login"
-          className="group w-28 h-10.5 bg-white flex items-center justify-center font-raleway text-sm font-bold text-auth-link rounded transition-all duration-300 gap-1"
+          className="group w-24 h-10.5 bg-white flex items-center justify-center font-raleway text-sm font-bold text-auth-link rounded transition-all duration-300 gap-1"
         >
           <span>Log in</span>
           <span className="w-0 opacity-0 overflow-hidden group-hover:w-3.5 group-hover:opacity-100 transition-all duration-300 flex items-center">
