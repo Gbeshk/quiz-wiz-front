@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { LandingFooter, LandingHeader } from '@/components/Landing';
 import FilterIcon from '@/components/UI/Icons/FilterIcon';
+import FilterModal from '@/components/Modals/FilterModal';
 
 const CATEGORIES: string[] = [
   'All Quizzes',
@@ -42,7 +43,7 @@ export default function Quizzes() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
-
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [showBackArrow, setShowBackArrow] = useState(false);
 
   const updateIndicator = (category: string) => {
@@ -147,7 +148,7 @@ export default function Quizzes() {
           </div>
         </div>
 
-        <div className="flex gap-6.25 items-center mb-4 shrink-0">
+        <div className="flex gap-6.25 items-center mb-4 shrink-0 relative">
           <button
             type="button"
             onClick={handleSlideNext}
@@ -171,15 +172,27 @@ export default function Quizzes() {
             </svg>
           </button>
 
-          <div className="w-21.25 h-9.5 border border-filter-border rounded-lg flex items-center px-4 gap-2 shrink-0">
+          <button
+            type="button"
+            onClick={() => setIsFilterOpen((prev) => !prev)}
+            className="w-21.25 h-9.5 border border-filter-border rounded-lg flex items-center px-4 gap-2"
+          >
             <FilterIcon />
-            <p className="text-auth-placeholder text-sm font-inter leading-6">
-              Filter
-            </p>
-          </div>
+            <p className="text-auth-placeholder text-sm">Filter</p>
+          </button>
+
+          <FilterModal
+            isOpen={isFilterOpen}
+            onClose={() => setIsFilterOpen(false)}
+          />
         </div>
       </div>
-      <div className="mx-auto w-360 px-24 flex items-center mt- justify-between"></div>
+      <div className="mx-auto gap-8 w-360 mt-11.5 px-24 flex items-center justify-between flex-wrap">
+        <div className="shadow-[0px_4px_6px_-2px_#10182808,0px_12px_16px_-4px_#10182814] w-98.5 h-128 px-6 py-8">
+          <div className="w-full bg-red-100 h-60"></div>
+          <div className="mt-8"></div>
+        </div>
+      </div>
       <LandingFooter />
     </div>
   );
