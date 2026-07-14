@@ -120,3 +120,15 @@ export interface Quiz {
 export interface QuizCardProps {
   quiz: Quiz;
 }
+export interface QuizDifficultyPointsProps {
+  difficulty: string;
+  isCompleted: boolean;
+  pointsEarned?: number;
+  pointsTotal?: number;
+}
+export interface QuizStatsProps {
+  isCompleted: boolean;
+  completedDate?: string;
+  totalTimeMinutes: number;
+  totalUsers: number;
+}
