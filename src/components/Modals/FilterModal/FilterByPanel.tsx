@@ -10,11 +10,16 @@ export default function FilterByPanel({
   notCompleted,
   selectedLevels,
   selectedCategories,
+  searchTerm,
   onToggleMyQuizzes,
   onToggleNotCompleted,
   onToggleLevel,
   onToggleCategory,
 }: FilterByPanelProps) {
+  const visibleCategories = FILTER_CATEGORIES.filter((category) =>
+    category.toLowerCase().includes(searchTerm.trim().toLowerCase()),
+  );
+
   return (
     <div className="w-157.75 h-135 border border-auth-border rounded-lg p-4">
       <p className="font-inter font-semibold text-sm leading-5 text-modal-header-text">
@@ -53,14 +58,20 @@ export default function FilterByPanel({
       </p>
       <div className="flex flex-wrap gap-2 mt-3">
         <div className="flex flex-wrap gap-x-3 gap-y-4">
-          {FILTER_CATEGORIES.map((category) => (
-            <CategoryChip
-              key={category}
-              category={category}
-              isSelected={selectedCategories.includes(category)}
-              onToggle={() => onToggleCategory(category)}
-            />
-          ))}
+          {visibleCategories.length > 0 ? (
+            visibleCategories.map((category) => (
+              <CategoryChip
+                key={category}
+                category={category}
+                isSelected={selectedCategories.includes(category)}
+                onToggle={() => onToggleCategory(category)}
+              />
+            ))
+          ) : (
+            <p className="font-inter text-sm text-auth-placeholder">
+              No categories match your search.
+            </p>
+          )}
         </div>
       </div>
     </div>

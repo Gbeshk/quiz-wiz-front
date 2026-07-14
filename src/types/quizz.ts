@@ -25,6 +25,7 @@ export interface FilterByPanelProps {
   notCompleted: boolean;
   selectedLevels: string[];
   selectedCategories: string[];
+  searchTerm: string;
   onToggleMyQuizzes: () => void;
   onToggleNotCompleted: () => void;
   onToggleLevel: (label: string) => void;
@@ -93,4 +94,29 @@ export interface CategoryTabListProps {
   onMouseMove: (e: React.MouseEvent<HTMLDivElement>) => void;
   onMouseUp: () => void;
   onMouseLeave: () => void;
+}
+export interface FilterModalHeaderProps {
+  hasSelection: boolean;
+  searchTerm: string;
+  onSearchChange: (value: string) => void;
+  onReset: () => void;
+  onConfirm: () => void;
+  onClose: () => void;
+}
+export interface Quiz {
+  id: string;
+  title: string;
+  categories: [string, string];
+  photoUrl?: string;
+  isCompleted: boolean;
+  completedDate?: string;
+  totalTimeMinutes: number;
+  totalUsers: number;
+  difficulty: string;
+  pointsEarned: number;
+  pointsTotal: number;
+}
+
+export interface QuizCardProps {
+  quiz: Quiz;
 }

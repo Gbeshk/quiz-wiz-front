@@ -5,6 +5,8 @@ import type { FilterModalHeaderProps } from '@/types/quizz';
 
 export default function FilterModalHeader({
   hasSelection,
+  searchTerm,
+  onSearchChange,
   onReset,
   onConfirm,
   onClose,
@@ -23,7 +25,9 @@ export default function FilterModalHeader({
         <SearchIcon />
         <input
           type="text"
-          className="font-inter placeholder:text-auth-placeholder text-sm leading-6 font-normal tracking-normal w-full rounded-3xl h-9.5 border border-modal-input-border pl-12"
+          value={searchTerm}
+          onChange={(e) => onSearchChange(e.target.value)}
+          className="font-inter placeholder:text-auth-placeholder focus:outline-none text-sm leading-6 font-normal tracking-normal w-full rounded-3xl h-9.5 border border-modal-input-border pl-12"
           placeholder="Search"
         />
       </div>

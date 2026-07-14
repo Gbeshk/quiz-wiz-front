@@ -10,10 +10,11 @@ import FilterByPanel from './FilterByPanel';
 import SortByPanel from './SortByPanel';
 import type { FilterModalProps } from '@/types/quizz';
 import { cn } from '@/lib';
+import { useState } from 'react';
 
 export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const [searchTerm, setSearchTerm] = useState('');
   const {
     selectedLevels,
     selectedCategories,
@@ -56,6 +57,8 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
     >
       <FilterModalHeader
         hasSelection={hasSelection}
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
         onReset={handleReset}
         onConfirm={handleConfirm}
         onClose={onClose}
@@ -67,6 +70,7 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
           notCompleted={notCompleted}
           selectedLevels={selectedLevels}
           selectedCategories={selectedCategories}
+          searchTerm={searchTerm}
           onToggleMyQuizzes={() => setMyQuizzes((prev) => !prev)}
           onToggleNotCompleted={() => setNotCompleted((prev) => !prev)}
           onToggleLevel={toggleLevel}

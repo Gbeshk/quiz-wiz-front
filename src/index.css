@@ -39,4 +39,8 @@
   --color-danhigh-bg: #fff1f3;
   --color-danhigh-text: #c01048;
   --color-filter-hover: #f0f2fb;
+  --color-category-hover-bg: #4754671a;
+  --color-completed-bg: #d1fadf;
+  --color-quiz-completed-bg: #f6f6f7;
+  --color-not-completed-quiz-text: #4754674d;
 }
