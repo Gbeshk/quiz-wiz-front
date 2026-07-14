@@ -1,6 +1,10 @@
-'use client';
+import { useSearchParams } from 'react-router-dom';
 
 import { useFilterModal } from '@/hooks/useFilterModal';
+import {
+  buildFilterSearchParams,
+  parseFilterSearchParams,
+} from '@/lib/filterParams';
 import FilterModalHeader from './FilterModalHeader';
 import FilterByPanel from './FilterByPanel';
 import SortByPanel from './SortByPanel';
@@ -8,6 +12,8 @@ import type { FilterModalProps } from '@/types/quizz';
 import { cn } from '@/lib';
 
 export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const {
     selectedLevels,
     selectedCategories,
@@ -19,9 +25,27 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
     toggleCategory,
     setMyQuizzes,
     setNotCompleted,
-    setSortBy,
+    toggleSort,
     resetAll,
-  } = useFilterModal();
+  } = useFilterModal(parseFilterSearchParams(searchParams));
+
+  const handleConfirm = () => {
+    const params = buildFilterSearchParams({
+      selectedLevels,
+      selectedCategories,
+      myQuizzes,
+      notCompleted,
+      sortBy,
+    });
+
+    setSearchParams(params);
+    onClose();
+  };
+
+  const handleReset = () => {
+    resetAll();
+    setSearchParams(new URLSearchParams());
+  };
 
   return (
     <div
@@ -32,7 +56,8 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
     >
       <FilterModalHeader
         hasSelection={hasSelection}
-        onReset={resetAll}
+        onReset={handleReset}
+        onConfirm={handleConfirm}
         onClose={onClose}
       />
 
@@ -47,7 +72,7 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
           onToggleLevel={toggleLevel}
           onToggleCategory={toggleCategory}
         />
-        <SortByPanel sortBy={sortBy} onSelect={setSortBy} />
+        <SortByPanel sortBy={sortBy} onSelect={toggleSort} />
       </div>
     </div>
   );

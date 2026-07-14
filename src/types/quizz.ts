@@ -37,6 +37,7 @@ export interface FilterModalProps {
 export interface FilterModalHeaderProps {
   hasSelection: boolean;
   onReset: () => void;
+  onConfirm: () => void;
   onClose: () => void;
 }
 export interface LevelChipProps {
@@ -66,4 +67,30 @@ export interface CategoryScrollArrowProps {
 export interface CategoryIndicatorProps {
   left: number;
   width: number;
+}
+export interface FilterButtonProps {
+  isOpen: boolean;
+  hasConfirmedFilters: boolean;
+  filterCount: number;
+  onClick: () => void;
+}
+
+export interface CategoryTabListProps {
+  categories: string[];
+  activeCategory: string;
+  onSelectCategory: (category: string) => void;
+  scrollRef: React.RefObject<HTMLDivElement | null>;
+  registerButtonRef: (
+    category: string,
+  ) => (el: HTMLButtonElement | null) => void;
+  indicatorLeft: number;
+  indicatorWidth: number;
+  showBackArrow: boolean;
+  onScroll: () => void;
+  onSlideNext: () => void;
+  onSlidePrev: () => void;
+  onMouseDown: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onMouseMove: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onMouseUp: () => void;
+  onMouseLeave: () => void;
 }

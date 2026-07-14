@@ -6,6 +6,7 @@ import type { FilterModalHeaderProps } from '@/types/quizz';
 export default function FilterModalHeader({
   hasSelection,
   onReset,
+  onConfirm,
   onClose,
 }: FilterModalHeaderProps) {
   return (
@@ -29,7 +30,10 @@ export default function FilterModalHeader({
 
       {hasSelection && (
         <>
-          <div className="w-27.5 shrink-0 h-9.5 flex items-center justify-center bg-auth-link rounded-xl font-inter font-semibold text-sm leading-4.25 text-white cursor-pointer">
+          <div
+            onClick={onConfirm}
+            className="w-27.5 shrink-0 h-9.5 flex items-center justify-center bg-auth-link rounded-xl font-inter font-semibold text-sm leading-4.25 text-white cursor-pointer"
+          >
             Confirm
           </div>
           <div className="w-px h-3.5 bg-vertical-line" />

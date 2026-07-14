@@ -1,4 +1,4 @@
-export default function FilterIcon({ fill = '#667085' }) {
+export default function FilterIcon({ fill = 'currentColor' }) {
   return (
     <svg
       width="14"

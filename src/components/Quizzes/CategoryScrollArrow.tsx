@@ -1,28 +1,28 @@
-import { cn } from '@/lib/utils';
 import ChevronLeftIcon from '@/components/UI/Icons/ChevronLeftIcon';
+import ChevronRightIcon from '@/components/UI/Icons/ChevronRightIcon';
 import type { CategoryScrollArrowProps } from '@/types/quizz';
+import { cn } from '@/lib';
 
 export default function CategoryScrollArrow({
+  direction,
   visible,
   onClick,
 }: CategoryScrollArrowProps) {
   return (
-    <div
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={
+        direction === 'left'
+          ? 'Show previous categories'
+          : 'Show more categories'
+      }
       className={cn(
-        'absolute left-0 top-0 z-20 flex h-[calc(100%-16px)] items-center pr-4 bg-white transition-opacity duration-300',
-        visible
-          ? 'opacity-100 pointer-events-auto'
-          : 'opacity-0 pointer-events-none',
+        'shrink-0 w-9 h-9 flex items-center justify-center rounded-full hover:bg-modal-line cursor-pointer transition-all ease-in-out duration-300',
+        !visible && 'opacity-0 pointer-events-none',
       )}
     >
-      <button
-        type="button"
-        onClick={onClick}
-        aria-label="Show previous categories"
-        className="shrink-0"
-      >
-        <ChevronLeftIcon />
-      </button>
-    </div>
+      {direction === 'left' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+    </button>
   );
 }

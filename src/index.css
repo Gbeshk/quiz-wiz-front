@@ -26,4 +26,17 @@
   --color-modal-input-border: #66708566;
   --color-vertical-line: #00000066;
   --color-modal-sorting-hover: #d9d9d933;
+  --color-starter-bg: #f0f9ff;
+  --color-starter-text: #026aa2;
+  --color-beginner-bg: #eff8ff;
+  --color-beginner-text: #175cd3;
+  --color-middle-bg: #f9f5ff;
+  --color-middle-text: #6941c6;
+  --color-high-bg: #fffaeb;
+  --color-high-text: #b54708;
+  --color-veryhigh-bg: #fdf2fa;
+  --color-veryhigh-text: #c11574;
+  --color-danhigh-bg: #fff1f3;
+  --color-danhigh-text: #c01048;
+  --color-filter-hover: #f0f2fb;
 }

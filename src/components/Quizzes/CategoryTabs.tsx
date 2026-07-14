@@ -1,91 +1,97 @@
+import { useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
-import { PAGE_CATEGORIES } from '@/constants/categories';
+import { ALL_QUIZZES, PAGE_CATEGORIES } from '@/constants/categories';
 import { useCategoryScroller } from '@/hooks/useCategoryScroller';
-import { cn } from '@/lib/utils';
-import FilterIcon from '@/components/UI/Icons/FilterIcon';
-import ChevronRightIcon from '@/components/UI/Icons/ChevronRightIcon';
-import FilterModal from '@/components/Modals/FilterModal/FilterModal';
+import {
+  getActiveCategory,
+  parseFilterSearchParams,
+  setActiveCategory,
+} from '@/lib/filterParams';
+import FilterModal from '../Modals/FilterModal/FilterModal';
+import CategoryTabList from './CategoryTabList';
 import CategoryScrollArrow from './CategoryScrollArrow';
-import CategoryIndicator from './CategoryIndicator';
+import FilterButton from './FilterButton';
 
 export default function CategoryTabs() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeCategory = getActiveCategory(searchParams);
+
   const {
-    activeCategory,
-    setActiveCategory,
     scrollRef,
     registerButtonRef,
     indicatorLeft,
     indicatorWidth,
     showBackArrow,
+    showForwardArrow,
     handleScroll,
     handleSlideNext,
     handleSlidePrev,
-  } = useCategoryScroller(PAGE_CATEGORIES[0]);
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+    handleMouseLeave,
+    wasDragged,
+  } = useCategoryScroller(activeCategory);
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
+  const confirmedFilters = parseFilterSearchParams(searchParams);
+  const filterCount =
+    confirmedFilters.selectedLevels.length +
+    (confirmedFilters.selectedCategories.length > 1
+      ? confirmedFilters.selectedCategories.length
+      : 0) +
+    (confirmedFilters.myQuizzes ? 1 : 0) +
+    (confirmedFilters.notCompleted ? 1 : 0) +
+    (confirmedFilters.sortBy ? 1 : 0) +
+    (activeCategory !== ALL_QUIZZES ? 1 : 0);
+  const hasConfirmedFilters = filterCount > 0;
+
+  const handleSelectCategory = (category: string) => {
+    if (wasDragged()) return;
+    setSearchParams(setActiveCategory(searchParams, category));
+  };
+
   return (
-    <div className="mx-auto w-360 px-24 flex items-center mt-6 justify-between gap-6">
-      <div className="relative flex flex-1 items-center min-w-0">
-        <CategoryScrollArrow
-          direction="left"
-          visible={showBackArrow}
-          onClick={handleSlidePrev}
-        />
-
-        <div
-          ref={scrollRef}
-          onScroll={handleScroll}
-          className="flex gap-6 items-center overflow-x-auto flex-1 scrollbar-none"
-        >
-          <div>
-            <div className="relative flex gap-6">
-              {PAGE_CATEGORIES.map((category) => (
-                <button
-                  key={category}
-                  ref={registerButtonRef(category)}
-                  type="button"
-                  onClick={() => setActiveCategory(category)}
-                  className={cn(
-                    'transition-colors duration-200 font-semibold font-inter text-sm leading-5 whitespace-nowrap shrink-0',
-                    activeCategory === category
-                      ? 'text-black'
-                      : 'text-auth-placeholder',
-                  )}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-
-            <CategoryIndicator left={indicatorLeft} width={indicatorWidth} />
-          </div>
-        </div>
-      </div>
+    <div className="mx-auto w-360 px-24 flex items-center mt-6 justify-between gap-2">
+      <CategoryTabList
+        categories={PAGE_CATEGORIES}
+        activeCategory={activeCategory}
+        onSelectCategory={handleSelectCategory}
+        scrollRef={scrollRef}
+        registerButtonRef={registerButtonRef}
+        indicatorLeft={indicatorLeft}
+        indicatorWidth={indicatorWidth}
+        showBackArrow={showBackArrow}
+        onScroll={handleScroll}
+        onSlideNext={handleSlideNext}
+        onSlidePrev={handleSlidePrev}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+      />
 
       <div className="flex gap-6.25 items-center mb-4 shrink-0 relative">
-        <button
-          type="button"
+        <CategoryScrollArrow
+          direction="right"
+          visible={showForwardArrow}
           onClick={handleSlideNext}
-          aria-label="Show more categories"
-          className="shrink-0"
-        >
-          <ChevronRightIcon />
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setIsFilterOpen((prev) => !prev)}
-          className="w-21.25 h-9.5 border border-filter-border rounded-lg flex items-center px-4 gap-2"
-        >
-          <FilterIcon />
-          <p className="text-auth-placeholder text-sm">Filter</p>
-        </button>
-
-        <FilterModal
-          isOpen={isFilterOpen}
-          onClose={() => setIsFilterOpen(false)}
         />
+
+        <FilterButton
+          isOpen={isFilterOpen}
+          hasConfirmedFilters={hasConfirmedFilters}
+          filterCount={filterCount}
+          onClick={() => setIsFilterOpen((prev) => !prev)}
+        />
+
+        {isFilterOpen && (
+          <FilterModal
+            isOpen={isFilterOpen}
+            onClose={() => setIsFilterOpen(false)}
+          />
+        )}
       </div>
     </div>
   );

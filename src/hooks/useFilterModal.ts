@@ -1,12 +1,23 @@
 import type { SortKey } from '@/types/quizz';
 import { useState } from 'react';
+import type { FilterState } from '@/lib/filterParams';
 
-export function useFilterModal() {
-  const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [myQuizzes, setMyQuizzes] = useState(false);
-  const [notCompleted, setNotCompleted] = useState(false);
-  const [sortBy, setSortBy] = useState<SortKey | null>(null);
+export function useFilterModal(initialFilters?: FilterState) {
+  const [selectedLevels, setSelectedLevels] = useState<string[]>(
+    initialFilters?.selectedLevels ?? [],
+  );
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(
+    initialFilters?.selectedCategories ?? [],
+  );
+  const [myQuizzes, setMyQuizzes] = useState(
+    initialFilters?.myQuizzes ?? false,
+  );
+  const [notCompleted, setNotCompleted] = useState(
+    initialFilters?.notCompleted ?? false,
+  );
+  const [sortBy, setSortBy] = useState<SortKey | null>(
+    initialFilters?.sortBy ?? null,
+  );
 
   const toggleLevel = (label: string) => {
     setSelectedLevels((prev) =>
@@ -22,18 +33,24 @@ export function useFilterModal() {
     );
   };
 
+  const toggleSort = (key: SortKey) => {
+    setSortBy((prev) => (prev === key ? null : key));
+  };
+
   const resetAll = () => {
     setSelectedLevels([]);
     setSelectedCategories([]);
     setMyQuizzes(false);
     setNotCompleted(false);
+    setSortBy(null);
   };
 
   const hasSelection =
     selectedLevels.length > 0 ||
     selectedCategories.length > 0 ||
     myQuizzes ||
-    notCompleted;
+    notCompleted ||
+    sortBy !== null;
 
   return {
     selectedLevels,
@@ -46,7 +63,7 @@ export function useFilterModal() {
     toggleCategory,
     setMyQuizzes,
     setNotCompleted,
-    setSortBy,
+    toggleSort,
     resetAll,
   };
 }
