@@ -35,12 +35,6 @@ export interface FilterModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
-export interface FilterModalHeaderProps {
-  hasSelection: boolean;
-  onReset: () => void;
-  onConfirm: () => void;
-  onClose: () => void;
-}
 export interface LevelChipProps {
   level: Level;
   isSelected: boolean;

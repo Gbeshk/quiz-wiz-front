@@ -34,12 +34,12 @@ export default function FilterModalHeader({
 
       {hasSelection && (
         <>
-          <div
+          <button
             onClick={onConfirm}
             className="w-27.5 shrink-0 h-9.5 flex items-center justify-center bg-auth-link rounded-xl font-inter font-semibold text-sm leading-4.25 text-white cursor-pointer"
           >
             Confirm
-          </div>
+          </button>
           <div className="w-px h-3.5 bg-vertical-line" />
           <p
             onClick={onReset}
