@@ -16,8 +16,14 @@ export default function FilterByPanel({
   onToggleLevel,
   onToggleCategory,
 }: FilterByPanelProps) {
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+
+  const visibleLevels = LEVELS.filter((level) =>
+    level.label.toLowerCase().includes(normalizedSearch),
+  );
+
   const visibleCategories = FILTER_CATEGORIES.filter((category) =>
-    category.toLowerCase().includes(searchTerm.trim().toLowerCase()),
+    category.toLowerCase().includes(normalizedSearch),
   );
 
   return (
@@ -42,14 +48,20 @@ export default function FilterByPanel({
         Levels
       </p>
       <div className="flex flex-wrap gap-2 mt-3">
-        {LEVELS.map((level) => (
-          <LevelChip
-            key={level.label}
-            level={level}
-            isSelected={selectedLevels.includes(level.label)}
-            onToggle={() => onToggleLevel(level.label)}
-          />
-        ))}
+        {visibleLevels.length > 0 ? (
+          visibleLevels.map((level) => (
+            <LevelChip
+              key={level.label}
+              level={level}
+              isSelected={selectedLevels.includes(level.label)}
+              onToggle={() => onToggleLevel(level.label)}
+            />
+          ))
+        ) : (
+          <p className="font-inter text-sm text-auth-placeholder">
+            No levels match your search.
+          </p>
+        )}
       </div>
 
       <div className="mt-4 h-px w-full bg-modal-line" />
