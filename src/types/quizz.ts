@@ -97,11 +97,22 @@ export interface FilterModalHeaderProps {
   onConfirm: () => void;
   onClose: () => void;
 }
+export interface Question {
+  id: string;
+  question: string;
+  options: string[];
+  type: 'single' | 'multiple';
+  correctAnswer?: number;
+  correctAnswers?: number[];
+  points: number;
+}
+
 export interface Quiz {
   id: string;
   title: string;
+  description: string;
   categories: [string, string];
-  photoUrl?: string;
+  questions: Question[];
   isCompleted: boolean;
   completedDate?: string;
   totalTimeMinutes: number;
@@ -109,10 +120,13 @@ export interface Quiz {
   difficulty: string;
   pointsEarned: number;
   pointsTotal: number;
+  timesPlayed: number;
+  instructions: string;
+  photoUrl?: string;
 }
-
 export interface QuizCardProps {
   quiz: Quiz;
+  variant?: 'default' | 'flat';
 }
 export interface QuizDifficultyPointsProps {
   difficulty: string;
@@ -125,4 +139,19 @@ export interface QuizStatsProps {
   completedDate?: string;
   totalTimeMinutes: number;
   totalUsers: number;
+}
+export interface QuizHeroSectionProps {
+  quiz: Quiz;
+}
+
+export interface QuizMetaRowProps {
+  quiz: Quiz;
+}
+
+export interface QuizInstructionsProps {
+  instructions: string;
+}
+
+export interface QuizOtherQuizzesSliderProps {
+  quizzes: Quiz[];
 }

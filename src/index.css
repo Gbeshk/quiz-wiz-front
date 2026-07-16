@@ -43,4 +43,15 @@
   --color-completed-bg: #d1fadf;
   --color-quiz-completed-bg: #f6f6f7;
   --color-not-completed-quiz-text: #4754674d;
+  --color-quiz-card-border: #f8f8f9;
+  --color-text-points: #e72a8b;
+  --color-optional-quiz-div-bg: #f6fef9;
+  --color-optional-quiz-div-border: #039855;
+  --color-optional-quiz-div-text: #027a48;
+  --color-chosen-option-bg: #f5f6ff;
+  --color-chosen-option-border: #4b69fd66;
+  --color-chosen-option-text: #4b69fd;
+  --border-width-hairline: 0.33px;
+  --color-progress-bar: #7f56d9;
+  --color-listing-points-bg: #fce7f6;
 }
