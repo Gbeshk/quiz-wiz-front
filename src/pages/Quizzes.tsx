@@ -1,15 +1,19 @@
+import { useSearchParams } from 'react-router-dom';
 import { LandingFooter, LandingHeader } from '@/components/Landing';
 import CategoryTabs from '@/components/Quizzes/CategoryTabs';
 import QuizGrid from '@/components/Quizzes/QuizGrid';
 import LoadMoreButton from '@/components/Quizzes/LoadMoreButton';
 import { MOCK_QUIZZES } from '@/constants/mockQuizzes';
 import { useLoadMore } from '@/hooks/useLoadMore';
+import { useFilteredQuizzes } from '@/hooks/useFilteredQuizzes';
 
 const PAGE_SIZE = 9;
 
 export default function QuizzesPage() {
+  const [searchParams] = useSearchParams();
+  const filteredQuizzes = useFilteredQuizzes(MOCK_QUIZZES, searchParams);
   const { visibleItems, hasMore, isLoadingMore, handleLoadMore } = useLoadMore(
-    MOCK_QUIZZES,
+    filteredQuizzes,
     PAGE_SIZE,
   );
 
