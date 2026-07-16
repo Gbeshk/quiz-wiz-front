@@ -20,7 +20,7 @@ export default function CategoryTabList({
 }: CategoryTabListProps) {
   return (
     <div className="relative flex flex-1 items-center min-w-0">
-      <div
+      <button
         className={cn(
           'absolute left-0 top-0 z-20 flex h-[calc(100%-16px)] items-center pr-4 bg-white transition-opacity duration-200',
           showBackArrow
@@ -33,7 +33,7 @@ export default function CategoryTabList({
           visible={showBackArrow}
           onClick={onSlidePrev}
         />
-      </div>
+      </button>
 
       <div
         ref={scrollRef}

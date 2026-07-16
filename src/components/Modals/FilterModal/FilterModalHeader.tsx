@@ -41,18 +41,18 @@ export default function FilterModalHeader({
             Confirm
           </button>
           <div className="w-px h-3.5 bg-vertical-line" />
-          <p
+          <button
             onClick={onReset}
             className="whitespace-nowrap font-inter font-normal text-sm leading-6 text-auth-placeholder cursor-pointer"
           >
             Reset all filters
-          </p>
+          </button>
         </>
       )}
 
-      <div onClick={onClose} className="cursor-pointer">
+      <button onClick={onClose} className="cursor-pointer">
         <CloseIcon />
-      </div>
+      </button>
     </div>
   );
 }

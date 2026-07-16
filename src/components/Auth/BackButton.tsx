@@ -10,7 +10,7 @@ export default function BackButton() {
   if (!canGoBack) return null;
 
   return (
-    <div
+    <button
       onClick={() => navigate(-1)}
       className="absolute -top-16 -left-8 cursor-pointer flex items-center gap-2 h-4"
     >
@@ -18,6 +18,6 @@ export default function BackButton() {
       <p className="font-inter text-auth-placeholder font-medium text-sm">
         Back
       </p>
-    </div>
+    </button>
   );
 }
