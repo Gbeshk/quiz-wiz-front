@@ -53,7 +53,7 @@ export default function CategoryTabs() {
   };
 
   return (
-    <div className="mx-auto w-360 px-24 flex items-center mt-6 justify-between gap-2">
+    <div className="w-full flex items-center mt-6 justify-between gap-2">
       <CategoryTabList
         categories={PAGE_CATEGORIES}
         activeCategory={activeCategory}

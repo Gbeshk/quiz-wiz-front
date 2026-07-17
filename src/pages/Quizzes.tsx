@@ -18,13 +18,17 @@ export default function QuizzesPage() {
   );
 
   return (
-    <div className="w-full flex mx-auto flex-col">
+    <div className="w-full min-h-screen flex flex-col bg-white">
       <LandingHeader />
-      <CategoryTabs />
-      <QuizGrid quizzes={visibleItems} />
-      {hasMore && (
-        <LoadMoreButton isLoading={isLoadingMore} onClick={handleLoadMore} />
-      )}
+
+      <main className="w-full max-w-360 mx-auto px-24 grow flex flex-col">
+        <CategoryTabs />
+        <QuizGrid quizzes={visibleItems} />
+        {hasMore && (
+          <LoadMoreButton isLoading={isLoadingMore} onClick={handleLoadMore} />
+        )}
+      </main>
+
       <div className="mt-17 bg-auth-border h-px w-full"></div>
       <LandingFooter />
     </div>

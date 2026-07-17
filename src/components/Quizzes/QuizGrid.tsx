@@ -7,7 +7,7 @@ interface QuizGridProps {
 
 export default function QuizGrid({ quizzes }: QuizGridProps) {
   return (
-    <div className="mx-auto gap-8 w-360 mt-11.5 px-24 flex items-center justify-start flex-wrap">
+    <div className="w-full mt-11.5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-start">
       {quizzes.map((quiz) => (
         <QuizCard key={quiz.id} quiz={quiz} />
       ))}

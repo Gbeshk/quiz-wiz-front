@@ -11,18 +11,18 @@ export default function QuizCard({ quiz, variant = 'default' }: QuizCardProps) {
   return (
     <Link
       to={`/quizzes/${quiz.id}`}
-      className={`block rounded-xl w-98.5 group h-128 px-6 py-8 hover:border hover:border-black cursor-pointer text-inherit no-underline ${
+      className={`block rounded-xl w-full max-w-98.5 mx-auto group h-128 px-6 py-8 hover:border hover:border-black cursor-pointer text-inherit no-underline transition-all duration-300 ${
         isFlat
           ? 'bg-quiz-card-border border border-auth-border'
           : 'shadow-[0px_4px_6px_-2px_#10182808,0px_12px_16px_-4px_#10182814]'
       }`}
     >
-      <div className="w-full flex items-center justify-center bg-amber-50 h-60">
+      <div className="w-full flex items-center justify-center bg-amber-50 h-60 overflow-hidden rounded-lg">
         {quiz.photoUrl ? (
           <img
             src={quiz.photoUrl}
             alt={quiz.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         ) : (
           'photo'
@@ -35,8 +35,10 @@ export default function QuizCard({ quiz, variant = 'default' }: QuizCardProps) {
         <p className="font-inter font-semibold text-2xl leading-8 truncate min-w-0">
           {quiz.title}
         </p>
-        <div className="hidden group-hover:inline">
-          <GoToArrow />
+        <div className="w-6 h-6 flex items-center justify-center shrink-0">
+          <div className="hidden group-hover:block">
+            <GoToArrow />
+          </div>
         </div>
       </div>
 

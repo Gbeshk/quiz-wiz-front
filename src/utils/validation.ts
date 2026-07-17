@@ -1,5 +1,11 @@
 import type { RegisterOptions, FieldValues, Path } from 'react-hook-form';
-
+export const usernameRules = {
+  required: 'Username is required',
+  minLength: {
+    value: 3,
+    message: 'Username must be at least 3 characters',
+  },
+};
 export const emailRules = {
   required: 'Email is required',
   pattern: { value: /^\S+@\S+\.\S+$/, message: 'Enter a valid email' },

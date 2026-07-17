@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 
 export default function QuizHeroSection({ quiz }: QuizHeroSectionProps) {
   return (
-    <div className="w-203.25 flex">
-      <div className="w-113.75">
+    <div className="w-full max-w-203.25 flex justify-between gap-8">
+      <div className=" w-full max-w-113.75 shrink-0">
         <h1 className="font-raleway font-bold text-4xl leading-none tracking-normal">
           {quiz.title}
         </h1>
@@ -26,7 +26,7 @@ export default function QuizHeroSection({ quiz }: QuizHeroSectionProps) {
         </Link>
       </div>
 
-      <div className="w-81.5 h-76.75 bg-amber-100 rounded-3xl flex items-center justify-center">
+      <div className="w-81.5 h-76.75 bg-amber-100 rounded-3xl flex items-center justify-center shrink-0">
         Image
       </div>
     </div>

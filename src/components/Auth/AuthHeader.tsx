@@ -12,7 +12,7 @@ export default function AuthHeader({ title, description }: AuthHeaderProps) {
         {title}
       </h1>
       {description && (
-        <p className="mt-4 font-inter text-sm w-106.5 text-auth-text">
+        <p className="mt-4 font-inter text-sm w-full max-w-106.5 text-auth-text">
           {description}
         </p>
       )}

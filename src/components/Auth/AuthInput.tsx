@@ -54,9 +54,10 @@ export default function AuthInput<T extends FieldValues>({
           ) : isPassword ? (
             <button
               type="button"
+              className="cursor-pointer"
               onClick={() => setShowPassword((prev) => !prev)}
             >
-              {showPassword ? <Eye /> : <EyeCrossed />}
+              {showPassword ? <EyeCrossed /> : <Eye />}
             </button>
           ) : null}
         </div>

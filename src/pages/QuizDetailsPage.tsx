@@ -19,22 +19,24 @@ export default function QuizDetailsPage() {
   }
 
   return (
-    <div className="w-full flex mx-auto flex-col min-h-screen">
+    <div className="w-full min-h-screen flex flex-col bg-white">
       <LandingHeader />
 
-      <div className="w-360 mx-auto px-24">
-        <div className="relative ml-8 mt-22">
-          <BackButton />
-        </div>
-      </div>
-
-      <div className="w-360 mx-auto px-24 -mt-4 flex justify-between">
-        <div>
-          <QuizHeroSection quiz={quiz} />
-          <QuizInstructions instructions={quiz.instructions} />
+      <div className="grow">
+        <div className="max-w-360 w-full mx-auto px-24">
+          <div className="relative ml-8 mt-22">
+            <BackButton />
+          </div>
         </div>
 
-        <QuizOtherQuizzesSlider quizzes={sliderQuizzes} />
+        <div className="max-w-360 w-full mx-auto px-24 -mt-4 flex justify-between items-start">
+          <div className="sticky top-1 self-start">
+            <QuizHeroSection quiz={quiz} />
+            <QuizInstructions instructions={quiz.instructions} />
+          </div>
+
+          <QuizOtherQuizzesSlider quizzes={sliderQuizzes} />
+        </div>
       </div>
 
       <div className="w-full h-px bg-auth-border mt-20"></div>

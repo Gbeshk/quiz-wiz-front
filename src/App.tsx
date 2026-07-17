@@ -4,14 +4,14 @@ import {
   LandingFooter,
 } from '@/components/Landing';
 
-function App() {
+export default function App() {
   return (
-    <div className="w-full flex mx-auto flex-col">
+    <div className="min-h-screen w-full flex flex-col bg-white">
       <LandingHeader />
-      <LandingHero />
+      <main className="grow">
+        <LandingHero />
+      </main>
       <LandingFooter />
     </div>
   );
 }
-
-export default App;
