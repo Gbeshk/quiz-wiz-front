@@ -11,6 +11,7 @@ import { useInitialFixedPosition } from '@/hooks/useInitialFixedPosition';
 import { formatTime } from '@/utils/quizTime';
 import { isAnswerCorrect } from '@/utils/quizAnswers';
 import { useCountdown } from '@/hooks/useCountdown';
+import NotFoundPage from './NotFoundPage';
 
 export default function StartQuizPage() {
   const { id } = useParams();
@@ -36,9 +37,8 @@ export default function StartQuizPage() {
   const formattedTime = formatTime(secondsLeft);
 
   if (!quiz) {
-    return <div>Quiz not found</div>;
+    return <NotFoundPage />;
   }
-
   const answeredCount = quiz.questions.filter(
     (q) => (selectedAnswers[q.id]?.length ?? 0) > 0,
   ).length;

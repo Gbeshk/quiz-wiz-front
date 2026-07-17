@@ -6,18 +6,16 @@ import { useOtherQuizzes } from '@/hooks/useOtherQuizzes';
 import QuizHeroSection from '@/components/Quizzes/QuizDetails/QuizHeroSection';
 import QuizInstructions from '@/components/Quizzes/QuizDetails/QuizInstructions';
 import QuizOtherQuizzesSlider from '@/components/Quizzes/QuizDetails/QuizOtherQuizzesSlider';
-import QuizNotFound from '@/components/Quizzes/QuizDetails/QuizNotFound';
+import NotFoundPage from './NotFoundPage';
 
 export default function QuizDetailsPage() {
   const { id } = useParams<{ id: string }>();
 
   const quiz = MOCK_QUIZZES.find((item) => item.id === id);
   const sliderQuizzes = useOtherQuizzes(id);
-
   if (!quiz) {
-    return <QuizNotFound />;
+    return <NotFoundPage />;
   }
-
   return (
     <div className="w-full min-h-screen flex flex-col bg-white">
       <LandingHeader />
