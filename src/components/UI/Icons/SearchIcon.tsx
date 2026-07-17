@@ -1,7 +1,13 @@
-export default function SearchIcon() {
+interface SearchIconProps {
+  className?: string;
+}
+
+export default function SearchIcon({
+  className = 'absolute left-6 top-1/2 -translate-y-1/2 pointer-events-none',
+}: SearchIconProps) {
   return (
     <svg
-      className="absolute left-6 top-1/2 -translate-y-1/2 pointer-events-none"
+      className={className}
       width="16"
       height="16"
       viewBox="0 0 16 16"

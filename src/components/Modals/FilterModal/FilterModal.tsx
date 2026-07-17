@@ -37,6 +37,7 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
       myQuizzes,
       notCompleted,
       sortBy,
+      searchTerm: searchParams.get('search') ?? '',
     });
 
     setSearchParams(params);
@@ -45,7 +46,12 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
 
   const handleReset = () => {
     resetAll();
-    setSearchParams(new URLSearchParams());
+    const params = new URLSearchParams();
+    const currentSearch = searchParams.get('search');
+    if (currentSearch) {
+      params.set('search', currentSearch);
+    }
+    setSearchParams(params);
   };
 
   return (
