@@ -6,6 +6,9 @@ import RegisterPage from '@/pages/RegisterPage';
 import ForgotPasswordPage from '@/pages/ForgotPasswordPage';
 import ResetPasswordPage from '@/pages/ResetPasswordPage';
 import Quizzes from '@/pages/Quizzes';
+import QuizDetailsPage from '@/pages/QuizDetailsPage';
+import StartQuizPage from '@/pages/StartQuizPage';
+
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -30,5 +33,13 @@ export const router = createBrowserRouter([
   {
     path: '/quizzes',
     element: <Quizzes />,
+  },
+  {
+    path: '/quizzes/:id',
+    element: <QuizDetailsPage />,
+  },
+  {
+    path: '/quizzes/:id/start',
+    element: <StartQuizPage />,
   },
 ]);

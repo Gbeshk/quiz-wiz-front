@@ -11,7 +11,7 @@ export default function QuizCategories({ categories }: QuizCategoriesProps) {
             {category}
           </p>
           {index < categories.length - 1 && (
-            <div className="h-2 w-2 rounded-full bg-auth-border" />
+            <div className="h-1 w-1 rounded-full bg-auth-border" />
           )}
         </div>
       ))}
