@@ -1,5 +1,4 @@
-import SearchIcon from '../UI/Icons/SearchIcon';
-import CloseIcon from '../UI/Icons/CloseIcon';
+import { SearchIcon, CloseIcon } from '@/components/UI/Icons';
 
 interface SearchBoxProps {
   isOpen: boolean;

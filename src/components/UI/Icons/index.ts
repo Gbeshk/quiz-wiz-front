@@ -7,3 +7,5 @@ export { default as Eye } from './Eye';
 export { default as EyeCrossed } from './EyeCrossed';
 export { default as Hello } from './Hello';
 export { default as CheckBoxIcon } from './CheckBoxIcon';
+export { default as SearchIcon } from './SearchIcon';
+export { default as CloseIcon } from './CloseIcon';
