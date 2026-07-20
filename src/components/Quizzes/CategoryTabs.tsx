@@ -53,7 +53,7 @@ export default function CategoryTabs() {
   };
 
   return (
-    <div className="mx-auto w-360 px-24 flex items-center mt-6 justify-between gap-2">
+    <div className="mt-6 flex w-full items-center justify-between gap-2">
       <CategoryTabList
         categories={PAGE_CATEGORIES}
         activeCategory={activeCategory}
@@ -72,7 +72,7 @@ export default function CategoryTabs() {
         onMouseLeave={handleMouseLeave}
       />
 
-      <div className="flex gap-6.25 items-center mb-4 shrink-0 relative">
+      <div className="relative mb-4 flex shrink-0 items-center gap-6.25">
         <CategoryScrollArrow
           direction="right"
           visible={showForwardArrow}

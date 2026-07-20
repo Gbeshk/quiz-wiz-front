@@ -25,58 +25,64 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <div className="flex  gap-20.5">
-      <div className="relative">
-        <div className="absolute top-10 left-10">
-          <Logo />
-        </div>
-        <img src={ForgotPasswordHero} alt="Login Hero" className="login-hero" />
-      </div>
-
-      <div className="relative mt-31">
-        <BackButton />
-
-        <h1 className="font-raleway flex items-center gap-2 font-extrabold text-3xl">
-          Reset password
-        </h1>
-        <p className="mt-4 font-inter text-sm leading-[165%] w-106.5 text-auth-text ">
-          Please type something you'll remember
-        </p>
-
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="mt-10 flex flex-col gap-6"
-        >
-          <AuthInput<ResetPasswordFormValues>
-            label="New password"
-            name="password"
-            type="password"
-            register={register}
-            rules={passwordRules}
-            placeholder="must be 8 characters"
-            error={errors.password}
+    <div className="flex min-h-screen w-full items-center justify-center bg-white">
+      <div className="flex w-360 shrink-0 gap-20.5">
+        {' '}
+        <div className="relative">
+          <div className="absolute top-10 left-10">
+            <Logo />
+          </div>
+          <img
+            src={ForgotPasswordHero}
+            alt="Login Hero"
+            className="login-hero"
           />
+        </div>
+        <div className="relative mt-31">
+          <BackButton />
 
-          <div className="mt-3">
+          <h1 className="font-raleway flex items-center gap-2 text-3xl font-extrabold">
+            Reset password
+          </h1>
+          <p className="font-inter text-auth-text mt-4 w-106.5 text-sm leading-[165%]">
+            Please type something you'll remember
+          </p>
+
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="mt-10 flex flex-col gap-6"
+          >
             <AuthInput<ResetPasswordFormValues>
-              label="Confirm password"
-              name="confirmPassword"
+              label="New password"
+              name="password"
               type="password"
               register={register}
-              placeholder="repeat password"
-              rules={confirmPasswordRules<ResetPasswordFormValues>(password)}
-              error={errors.confirmPassword}
+              rules={passwordRules}
+              placeholder="must be 8 characters"
+              error={errors.password}
             />
-          </div>
 
-          <SubmitButton label="Reset password" />
-        </form>
+            <div className="mt-3">
+              <AuthInput<ResetPasswordFormValues>
+                label="Confirm password"
+                name="confirmPassword"
+                type="password"
+                register={register}
+                placeholder="repeat password"
+                rules={confirmPasswordRules<ResetPasswordFormValues>(password)}
+                error={errors.confirmPassword}
+              />
+            </div>
 
-        <AuthFooter
-          prompt="Already have an account?"
-          linkText="Log in"
-          to="/login"
-        />
+            <SubmitButton label="Reset password" />
+          </form>
+
+          <AuthFooter
+            prompt="Already have an account?"
+            linkText="Log in"
+            to="/login"
+          />
+        </div>
       </div>
     </div>
   );

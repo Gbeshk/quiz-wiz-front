@@ -8,11 +8,14 @@ import ResetPasswordPage from '@/pages/ResetPasswordPage';
 import Quizzes from '@/pages/Quizzes';
 import QuizDetailsPage from '@/pages/QuizDetailsPage';
 import StartQuizPage from '@/pages/StartQuizPage';
+import NotFoundPage from '@/pages/NotFoundPage';
+import InternalErrorPage from '@/pages/InternalErrorPage';
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <InternalErrorPage />,
   },
   {
     path: '/login',
@@ -41,5 +44,9 @@ export const router = createBrowserRouter([
   {
     path: '/quizzes/:id/start',
     element: <StartQuizPage />,
+  },
+  {
+    path: '*',
+    element: <NotFoundPage />,
   },
 ]);

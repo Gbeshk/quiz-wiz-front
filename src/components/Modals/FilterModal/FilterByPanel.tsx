@@ -27,8 +27,8 @@ export default function FilterByPanel({
   );
 
   return (
-    <div className="w-157.75 h-135 border border-auth-border rounded-lg p-4">
-      <p className="font-inter font-semibold text-sm leading-5 text-modal-header-text">
+    <div className="border-auth-border h-135 w-157.75 rounded-lg border p-4">
+      <p className="font-inter text-modal-header-text text-sm leading-5 font-semibold">
         Filter by
       </p>
 
@@ -43,11 +43,11 @@ export default function FilterByPanel({
         onToggle={onToggleNotCompleted}
       />
 
-      <div className="mt-5 h-px w-full bg-modal-line" />
-      <p className="font-inter text-footer-text mt-4 font-semibold text-sm leading-5">
+      <div className="bg-modal-line mt-5 h-px w-full" />
+      <p className="font-inter text-footer-text mt-4 text-sm leading-5 font-semibold">
         Levels
       </p>
-      <div className="flex flex-wrap gap-2 mt-3">
+      <div className="mt-3 flex flex-wrap gap-2">
         {visibleLevels.length > 0 ? (
           visibleLevels.map((level) => (
             <LevelChip
@@ -58,17 +58,17 @@ export default function FilterByPanel({
             />
           ))
         ) : (
-          <p className="font-inter text-sm text-auth-placeholder">
+          <p className="font-inter text-auth-placeholder text-sm">
             No levels match your search.
           </p>
         )}
       </div>
 
-      <div className="mt-4 h-px w-full bg-modal-line" />
-      <p className="font-inter text-footer-text mt-5 font-semibold text-sm leading-5">
+      <div className="bg-modal-line mt-4 h-px w-full" />
+      <p className="font-inter text-footer-text mt-5 text-sm leading-5 font-semibold">
         Categories
       </p>
-      <div className="flex flex-wrap gap-2 mt-3">
+      <div className="mt-3 flex flex-wrap gap-2">
         <div className="flex flex-wrap gap-x-3 gap-y-4">
           {visibleCategories.length > 0 ? (
             visibleCategories.map((category) => (
@@ -80,7 +80,7 @@ export default function FilterByPanel({
               />
             ))
           ) : (
-            <p className="font-inter text-sm text-auth-placeholder">
+            <p className="font-inter text-auth-placeholder text-sm">
               No categories match your search.
             </p>
           )}

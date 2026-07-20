@@ -7,21 +7,21 @@ import {
 
 function LandingHero() {
   return (
-    <div className="mx-auto w-360 relative">
-      <img src={LandingLogo} alt="Landing Icon" className="ml-24 mt-7" />
-      <p className="ml-24 text-landing-text-color font-semibold text-3xl leading-10 font-raleway">
+    <div className="relative mx-auto w-360">
+      <img src={LandingLogo} alt="Landing Icon" className="mt-7 ml-24" />
+      <p className="text-landing-text-color font-raleway ml-24 text-3xl leading-10 font-semibold">
         Play with us, Explore with us
       </p>
-      <div className="mt-28 w-full mx-auto overflow-hidden">
+      <div className="mx-auto mt-28 w-full overflow-hidden">
         <img
           src={LandingOrangeSection}
           alt="Features overview"
-          className="w-full h-auto object-cover object-center image-render-auto"
+          className="image-render-auto h-auto w-full object-cover object-center"
         />
         <img
           src={LandingBlueSection}
           alt="Features overview"
-          className="w-full h-auto object-cover object-center image-render-auto"
+          className="image-render-auto h-auto w-full object-cover object-center"
         />
       </div>
 
@@ -29,7 +29,7 @@ function LandingHero() {
         <img
           src={LandingFrame}
           alt="Features overview"
-          className="object-cover image-render-auto"
+          className="image-render-auto object-cover"
         />
       </div>
     </div>

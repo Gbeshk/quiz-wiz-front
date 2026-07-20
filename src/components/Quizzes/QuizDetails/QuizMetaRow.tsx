@@ -6,24 +6,24 @@ import TimeIcon from '@/components/UI/Icons/TimeIcon';
 
 export default function QuizMetaRow({ quiz }: QuizMetaRowProps) {
   return (
-    <div className="flex items-center mt-8">
+    <div className="mt-8 flex items-center">
       <QuestionsIcon />
-      <p className="text-auth-placeholder ml-2 font-inter font-semibold text-sm leading-5 tracking-normal">
+      <p className="text-auth-placeholder font-inter ml-2 text-sm leading-5 font-semibold tracking-normal">
         {quiz.questions.length} Question
       </p>
-      <div className="h-3.5 w-px bg-auth-border mx-3"></div>
+      <div className="bg-auth-border mx-3 h-3.5 w-px"></div>
       <PointsIcon color="var(--color-auth-placeholder)" />
-      <p className="text-auth-placeholder ml-2 font-inter font-semibold text-sm leading-5 tracking-normal">
+      <p className="text-auth-placeholder font-inter ml-2 text-sm leading-5 font-semibold tracking-normal">
         {quiz.pointsTotal} Points
       </p>
-      <div className="h-3.5 w-px bg-auth-border mx-3"></div>
+      <div className="bg-auth-border mx-3 h-3.5 w-px"></div>
       <PlaysIcon />
-      <p className="text-auth-placeholder ml-2 font-inter font-semibold text-sm leading-5 tracking-normal">
+      <p className="text-auth-placeholder font-inter ml-2 text-sm leading-5 font-semibold tracking-normal">
         {quiz.timesPlayed} Plays
       </p>
-      <div className="h-3.5 w-px bg-auth-border mx-3"></div>
+      <div className="bg-auth-border mx-3 h-3.5 w-px"></div>
       <TimeIcon />
-      <p className="text-auth-placeholder ml-2 font-inter font-semibold text-sm leading-5 tracking-normal">
+      <p className="text-auth-placeholder font-inter ml-2 text-sm leading-5 font-semibold tracking-normal">
         {quiz.totalTimeMinutes} m
       </p>
     </div>

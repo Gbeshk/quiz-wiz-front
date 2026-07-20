@@ -14,6 +14,7 @@ export function useFilteredQuizzes(
       myQuizzes,
       notCompleted,
       sortBy,
+      searchTerm,
     } = parseFilterSearchParams(searchParams);
 
     let result = quizzes.filter((quiz) => {
@@ -34,6 +35,18 @@ export function useFilteredQuizzes(
 
       if (notCompleted && quiz.isCompleted) {
         return false;
+      }
+
+      if (searchTerm.trim()) {
+        const term = searchTerm.trim().toLowerCase();
+        const matchesTitle = quiz.title.toLowerCase().includes(term);
+        const matchesDescription = quiz.description
+          .toLowerCase()
+          .includes(term);
+
+        if (!matchesTitle && !matchesDescription) {
+          return false;
+        }
       }
 
       void myQuizzes;

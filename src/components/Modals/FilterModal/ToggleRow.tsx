@@ -8,20 +8,20 @@ export default function ToggleRow({
   onToggle,
 }: ToggleRowProps) {
   return (
-    <label className="flex items-center mt-4 gap-3 cursor-pointer">
+    <label className="mt-4 flex cursor-pointer items-center gap-3">
       <input
         type="checkbox"
         checked={checked}
         onChange={onToggle}
-        className="sr-only peer"
+        className="peer sr-only"
       />
-      <p className="font-inter text-footer-text font-semibold text-sm leading-5">
+      <p className="font-inter text-footer-text text-sm leading-5 font-semibold">
         {label}
       </p>
       <span
         className={cn(
-          'w-4 h-4 rounded-sm flex items-center justify-center',
-          checked ? 'bg-black' : 'border border-auth-border',
+          'flex h-4 w-4 items-center justify-center rounded-sm',
+          checked ? 'bg-black' : 'border-auth-border border',
         )}
       >
         {checked && <DoneIcon />}

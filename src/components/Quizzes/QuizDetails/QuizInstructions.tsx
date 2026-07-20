@@ -5,9 +5,9 @@ export default function QuizInstructions({
 }: QuizInstructionsProps) {
   return (
     <>
-      <div className="w-203.25 h-px bg-modal-line mt-12"></div>
-      <p className="mt-8 font-inter font-bold text-lg ">Instructions</p>
-      <p className="mt-3 w-203.25 font-inter font-normal text-base ">
+      <div className="bg-modal-line mt-12 h-px w-full max-w-203.25"></div>
+      <p className="font-inter mt-8 text-lg font-bold">Instructions</p>
+      <p className="font-inter mt-3 w-full max-w-203.25 text-base font-normal">
         {instructions}
       </p>
     </>

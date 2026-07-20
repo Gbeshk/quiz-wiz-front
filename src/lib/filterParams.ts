@@ -7,6 +7,7 @@ export interface FilterState {
   myQuizzes: boolean;
   notCompleted: boolean;
   sortBy: SortKey | null;
+  searchTerm: string;
 }
 
 export function buildFilterSearchParams(filters: FilterState): URLSearchParams {
@@ -32,6 +33,10 @@ export function buildFilterSearchParams(filters: FilterState): URLSearchParams {
     params.set('sort', filters.sortBy);
   }
 
+  if (filters.searchTerm.trim()) {
+    params.set('search', filters.searchTerm.trim());
+  }
+
   return params;
 }
 
@@ -42,12 +47,15 @@ export function parseFilterSearchParams(params: URLSearchParams): FilterState {
     myQuizzes: params.get('my_quizzes') === '1',
     notCompleted: params.get('not_completed') === '1',
     sortBy: (params.get('sort') as SortKey | null) ?? null,
+    searchTerm: params.get('search') ?? '',
   };
 }
+
 export function getActiveCategory(params: URLSearchParams): string {
   const categories = params.getAll('categories[]');
   return categories.length === 1 ? categories[0] : ALL_QUIZZES;
 }
+
 export function setActiveCategory(
   params: URLSearchParams,
   category: string,
@@ -57,6 +65,21 @@ export function setActiveCategory(
 
   if (category !== ALL_QUIZZES) {
     next.append('categories[]', category);
+  }
+
+  return next;
+}
+
+export function setSearchTerm(
+  params: URLSearchParams,
+  term: string,
+): URLSearchParams {
+  const next = new URLSearchParams(params);
+
+  if (term.trim()) {
+    next.set('search', term.trim());
+  } else {
+    next.delete('search');
   }
 
   return next;

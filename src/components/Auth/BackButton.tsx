@@ -12,10 +12,10 @@ export default function BackButton() {
   return (
     <button
       onClick={() => navigate(-1)}
-      className="absolute -top-16 -left-8 cursor-pointer flex items-center gap-2 h-4"
+      className="absolute -top-16 -left-8 flex h-4 cursor-pointer items-center gap-2"
     >
       <Arrow />
-      <p className="font-inter text-auth-placeholder font-medium text-sm">
+      <p className="font-inter text-auth-placeholder text-sm font-medium">
         Back
       </p>
     </button>

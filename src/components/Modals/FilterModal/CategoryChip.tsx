@@ -11,10 +11,10 @@ export default function CategoryChip({
       type="button"
       onClick={onToggle}
       className={cn(
-        'font-inter px-3 py-2 rounded-3xl text-sm font-semibold transition-colors ease-in-out duration-300 cursor-pointer',
+        'font-inter cursor-pointer rounded-3xl px-3 py-2 text-sm font-semibold transition-colors duration-300 ease-in-out',
         isSelected
-          ? 'bg-black text-white border-black'
-          : 'bg-white text-auth-text hover:bg-category-hover-bg hover:text-auth-text',
+          ? 'border-black bg-black text-white'
+          : 'text-auth-text hover:bg-category-hover-bg hover:text-auth-text bg-white',
       )}
     >
       {category}

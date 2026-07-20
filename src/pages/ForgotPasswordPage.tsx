@@ -22,36 +22,37 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="flex gap-20.5">
-      <AuthHeroImage
-        src={ForgotPasswordHero}
-        alt="Forgot Password Hero"
-        imgClassName="login-hero"
-      />
-
-      <div className="relative mt-31">
-        <BackButton />
-
-        <AuthHeader
-          title="Forgot password?"
-          description="Don't worry! It happens. Please enter the email associated with your account."
+    <div className="flex min-h-screen w-full items-center justify-center bg-white">
+      <div className="flex w-360 shrink-0 gap-20.5">
+        <AuthHeroImage
+          src={ForgotPasswordHero}
+          alt="Forgot Password Hero"
+          imgClassName="login-hero"
         />
+        <div className="relative mt-31">
+          <BackButton />
 
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="mt-10 flex flex-col gap-6"
-        >
-          <AuthInput<ForgotPasswordFormValues>
-            label="Email address"
-            name="email"
-            placeholder="enter your email address"
-            register={register}
-            rules={emailRules}
-            error={errors.email}
+          <AuthHeader
+            title="Forgot password?"
+            description="Don't worry! It happens. Please enter the email associated with your account."
           />
 
-          <SubmitButton label="Send" />
-        </form>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="mt-10 flex flex-col gap-6"
+          >
+            <AuthInput<ForgotPasswordFormValues>
+              label="Email address"
+              name="email"
+              placeholder="enter your email address"
+              register={register}
+              rules={emailRules}
+              error={errors.email}
+            />
+
+            <SubmitButton label="Send" />
+          </form>
+        </div>
       </div>
     </div>
   );

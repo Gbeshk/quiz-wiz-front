@@ -1,40 +1,76 @@
-import { Link } from 'react-router-dom';
-import { ArrowRightBlue, Logo } from '@/components/UI/Icons';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
+import { useDebounce } from '@/hooks/useDebounce';
+import SearchBox from './SearchBox';
+import NavBrand from './Header/NavBrand';
+import ProfileMenu from './Header/ProfileMenu';
+import GuestActions from './Header/GuestActions';
 
 function LandingHeader() {
+  const { isAuthenticated } = useAuth();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [query, setQuery] = useState('');
+  const debouncedQuery = useDebounce(query, 400);
+
+  const closeSearch = () => {
+    setIsSearchOpen(false);
+    setQuery('');
+  };
+
+  const showSearch = pathname !== '/';
+
+  useEffect(() => {
+    if (!isSearchOpen) return;
+
+    const params = new URLSearchParams(searchParams);
+    if (debouncedQuery.trim()) {
+      params.set('search', debouncedQuery.trim());
+    } else {
+      params.delete('search');
+    }
+
+    navigate(`/quizzes?${params.toString()}`, { replace: true });
+  }, [debouncedQuery]);
+
   return (
-    <div className="flex w-360 mx-auto items-center px-24 h-18 justify-between border-b border-b-header-border-b">
-      <div className="flex items-center gap-11">
-        <Link to="/">
-          <Logo />
-        </Link>
-        <Link
-          to="/quizzes"
-          className="w-22.75 h-6 font-inter flex text-auth-text hover:text-auth-placeholder transition-all duration-300 ease-in-out items-center justify-center"
-        >
-          Quizzes
-        </Link>
-      </div>
+    <header className="border-b-header-border-b w-full border-b bg-white">
+      <div className="mx-auto flex h-18 w-full max-w-360 items-center justify-between px-24">
+        <NavBrand />
 
-      <div className="flex items-center gap-2">
-        <Link
-          to="/register"
-          className="w-24 h-10.5 bg-black flex items-center justify-center font-raleway text-sm font-bold text-white rounded border border-transparent hover:bg-white hover:border-black hover:shadow-[4px_4px_0px_0px_#000000] hover:text-black transition-all duration-300"
-        >
-          Sign up
-        </Link>
-
-        <Link
-          to="/login"
-          className="group w-24 h-10.5 bg-white flex items-center justify-center font-raleway text-sm font-bold text-auth-link rounded transition-all duration-300 gap-1"
-        >
-          <span>Log in</span>
-          <span className="w-0 opacity-0 overflow-hidden group-hover:w-3.5 group-hover:opacity-100 transition-all duration-300 flex items-center">
-            <ArrowRightBlue />
-          </span>
-        </Link>
+        {isAuthenticated ? (
+          <div className="flex items-center gap-7.5">
+            {showSearch && (
+              <SearchBox
+                isOpen={isSearchOpen}
+                query={query}
+                onQueryChange={setQuery}
+                onOpen={() => setIsSearchOpen(true)}
+                onClose={closeSearch}
+              />
+            )}
+            <ProfileMenu />
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            {showSearch && (
+              <SearchBox
+                isOpen={isSearchOpen}
+                query={query}
+                onQueryChange={setQuery}
+                onOpen={() => setIsSearchOpen(true)}
+                onClose={closeSearch}
+              />
+            )}
+            <GuestActions />
+          </div>
+        )}
       </div>
-    </div>
+    </header>
   );
 }
 

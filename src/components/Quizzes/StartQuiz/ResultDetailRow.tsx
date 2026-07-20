@@ -16,18 +16,18 @@ export default function ResultDetailRow({
 }: ResultDetailRowProps) {
   return (
     <>
-      <p className="text-auth-label font-inter font-medium text-sm leading-5 mt-3">
+      <p className="text-auth-label font-inter mt-3 text-sm leading-5 font-medium">
         {label}
       </p>
       <p
         className={cn(
-          'mt-2 font-inter font-medium text-sm leading-5 tracking-normal text-black',
+          'font-inter mt-2 text-sm leading-5 font-medium tracking-normal text-black',
           valueClassName,
         )}
       >
         {value}
       </p>
-      {showDivider && <div className="w-full h-px bg-auth-border mt-3" />}
+      {showDivider && <div className="bg-auth-border mt-3 h-px w-full" />}
     </>
   );
 }

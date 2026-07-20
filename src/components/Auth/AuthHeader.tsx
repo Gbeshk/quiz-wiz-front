@@ -8,11 +8,11 @@ interface AuthHeaderProps {
 export default function AuthHeader({ title, description }: AuthHeaderProps) {
   return (
     <>
-      <h1 className="font-raleway flex items-center gap-2 font-extrabold text-3xl">
+      <h1 className="font-raleway flex items-center gap-2 text-3xl font-extrabold">
         {title}
       </h1>
       {description && (
-        <p className="mt-4 font-inter text-sm w-106.5 text-auth-text">
+        <p className="font-inter text-auth-text mt-4 w-full max-w-106.5 text-sm">
           {description}
         </p>
       )}
