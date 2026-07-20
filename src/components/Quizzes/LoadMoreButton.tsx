@@ -10,15 +10,15 @@ export default function LoadMoreButton({
   onClick,
 }: LoadMoreButtonProps) {
   return (
-    <div className="mx-auto w-360 px-24 flex justify-center mt-10">
+    <div className="mx-auto mt-10 flex w-360 justify-center px-24">
       <button
         type="button"
         onClick={onClick}
         disabled={isLoading}
-        className="flex items-center w-37.5 h-12 bg-auth-link/3 border border-auth-link/3 rounded-lg text-auth-link font-inter font-semibold text-base leading-6 cursor-pointer justify-center gap-2 shadow-[0px_1px_2px_0px_#1018280D]"
+        className="bg-auth-link/3 border-auth-link/3 text-auth-link font-inter flex h-12 w-37.5 cursor-pointer items-center justify-center gap-2 rounded-lg border text-base leading-6 font-semibold shadow-[0px_1px_2px_0px_#1018280D]"
       >
         {isLoading ? (
-          <div className="w-6 h-6 rounded-full border-2 border-auth-link/30 border-t-auth-link animate-spin" />
+          <div className="border-auth-link/30 border-t-auth-link h-6 w-6 animate-spin rounded-full border-2" />
         ) : (
           <LoadMoreArrow />
         )}

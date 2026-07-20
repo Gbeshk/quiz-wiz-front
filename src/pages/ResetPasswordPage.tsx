@@ -25,8 +25,8 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-white">
-      <div className="flex gap-20.5 w-360 shrink-0">
+    <div className="flex min-h-screen w-full items-center justify-center bg-white">
+      <div className="flex w-360 shrink-0 gap-20.5">
         {' '}
         <div className="relative">
           <div className="absolute top-10 left-10">
@@ -41,10 +41,10 @@ export default function ResetPasswordPage() {
         <div className="relative mt-31">
           <BackButton />
 
-          <h1 className="font-raleway flex items-center gap-2 font-extrabold text-3xl">
+          <h1 className="font-raleway flex items-center gap-2 text-3xl font-extrabold">
             Reset password
           </h1>
-          <p className="mt-4 font-inter text-sm leading-[165%] w-106.5 text-auth-text ">
+          <p className="font-inter text-auth-text mt-4 w-106.5 text-sm leading-[165%]">
             Please type something you'll remember
           </p>
 

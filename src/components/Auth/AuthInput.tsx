@@ -36,19 +36,19 @@ export default function AuthInput<T extends FieldValues>({
 
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="font-inter text-base text-auth-label">{label}</label>
+      <label className="font-inter text-auth-label text-base">{label}</label>
       <div className="relative">
         <input
           type={inputType}
           placeholder={placeholder}
           className={cn(
-            'rounded-lg w-106.5 h-14 focus:outline-none hover:bg-auth-hover-bg focus:ring-3 focus:ring-auth-ring focus:border-auth-ring transition-all ease-in-out duration-300 border py-4.5 px-4 placeholder:text-auth-placeholder font-inter text-base',
+            'hover:bg-auth-hover-bg focus:ring-auth-ring focus:border-auth-ring placeholder:text-auth-placeholder font-inter h-14 w-106.5 rounded-lg border px-4 py-4.5 text-base transition-all duration-300 ease-in-out focus:ring-3 focus:outline-none',
             error || isPassword ? 'pr-12' : '',
             error ? 'border-auth-border-error' : 'border-auth-border',
           )}
           {...register(name, rules)}
         />
-        <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center">
+        <div className="absolute top-1/2 right-4 flex -translate-y-1/2 items-center">
           {error ? (
             <ErrorIcon />
           ) : isPassword ? (

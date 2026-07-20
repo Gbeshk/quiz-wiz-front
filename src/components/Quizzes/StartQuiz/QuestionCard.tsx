@@ -23,22 +23,22 @@ export default function QuestionCard({
   return (
     <div>
       <div className="flex items-center">
-        <p className="font-inter text-sm font-semibold leading-5 text-auth-link">
+        <p className="font-inter text-auth-link text-sm leading-5 font-semibold">
           Question - {question.id}
         </p>
-        <div className="h-2.5 w-px mx-2.5 bg-auth-border"></div>
-        <p className="font-inter text-sm font-semibold leading-5 text-text-points">
+        <div className="bg-auth-border mx-2.5 h-2.5 w-px"></div>
+        <p className="font-inter text-text-points text-sm leading-5 font-semibold">
           Points - {question.points}
         </p>
       </div>
 
-      <h1 className="mt-5 font-inter text-lg font-bold leading">
+      <h1 className="font-inter leading mt-5 text-lg font-bold">
         {question.question}
       </h1>
 
       {question.correctAnswers && (
-        <div className="w-82.75 h-9.25 bg-optional-quiz-div-bg border border-px border-optional-quiz-div-border mt-6 flex items-center rounded-sm">
-          <p className="font-inter text-sm font-medium text-optional-quiz-div-text flex items-center pl-4.5 gap-2.5">
+        <div className="bg-optional-quiz-div-bg border-px border-optional-quiz-div-border mt-6 flex h-9.25 w-82.75 items-center rounded-sm border">
+          <p className="font-inter text-optional-quiz-div-text flex items-center gap-2.5 pl-4.5 text-sm font-medium">
             <InfoIcon />
             You can select {question.correctAnswers.length} options from
             question
@@ -46,7 +46,7 @@ export default function QuestionCard({
         </div>
       )}
 
-      <div className="flex flex-col gap-2 mt-5">
+      <div className="mt-5 flex flex-col gap-2">
         {question.options.map((option, oIndex) => {
           const isSelected = selected.includes(oIndex);
 
@@ -55,7 +55,7 @@ export default function QuestionCard({
               key={oIndex}
               onClick={() => onSelectOption(question.id, oIndex, isMultiple)}
               className={cn(
-                'p-4 rounded-xl border flex items-center justify-between font-inter text-sm leading-5 cursor-pointer',
+                'font-inter flex cursor-pointer items-center justify-between rounded-xl border p-4 text-sm leading-5',
                 isSelected
                   ? 'bg-chosen-option-bg border-chosen-option-border text-chosen-option-text'
                   : 'border-auth-border text-auth-placeholder',
@@ -64,10 +64,10 @@ export default function QuestionCard({
               {option}
               <div
                 className={cn(
-                  'w-4 h-4 rounded-full',
+                  'h-4 w-4 rounded-full',
                   isSelected
                     ? 'bg-auth-link flex items-center justify-center'
-                    : 'border border-auth-border',
+                    : 'border-auth-border border',
                 )}
               >
                 {isSelected && <CheckBoxIcon />}

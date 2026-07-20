@@ -14,7 +14,7 @@ export default function SortOptionRow({
       type="button"
       onClick={() => onSelect(key)}
       className={cn(
-        'mt-4 first:mt-6 font-inter font-semibold text-sm leading-6 px-3 flex items-center justify-between gap-4 text-auth-text w-full h-10 transition-all ease-in-out duration-300 rounded-lg cursor-pointer',
+        'font-inter text-auth-text mt-4 flex h-10 w-full cursor-pointer items-center justify-between gap-4 rounded-lg px-3 text-sm leading-6 font-semibold transition-all duration-300 ease-in-out first:mt-6',
         isSelected ? 'bg-modal-sorting-hover' : 'hover:bg-modal-sorting-hover',
       )}
     >

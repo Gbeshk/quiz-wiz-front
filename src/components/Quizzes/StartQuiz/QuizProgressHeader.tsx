@@ -33,17 +33,17 @@ export default function QuizProgressHeader({
   ] as const;
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white border-b border-b-header-border-b shadow-[0px_2px_14px_0px_#00000026]">
-      <div className="max-w-360 w-full mx-auto h-18 px-24 grid grid-cols-[1fr_auto_1fr] items-center">
+    <header className="border-b-header-border-b fixed top-0 left-0 z-50 w-full border-b bg-white shadow-[0px_2px_14px_0px_#00000026]">
+      <div className="mx-auto grid h-18 w-full max-w-360 grid-cols-[1fr_auto_1fr] items-center px-24">
         {isTitleVisible ? (
-          <div className="w-6 h-6"></div>
+          <div className="h-6 w-6"></div>
         ) : (
-          <div className="h-8.25 bg-quiz-completed-bg px-4 border gap-8 border-auth-border rounded-lg flex items-center justify-self-start">
-            <p className="font-bold text-base font-raleway">{quiz.title}</p>
+          <div className="bg-quiz-completed-bg border-auth-border flex h-8.25 items-center gap-8 justify-self-start rounded-lg border px-4">
+            <p className="font-raleway text-base font-bold">{quiz.title}</p>
             <div className="flex items-center gap-4">
               {META_ICONS.map(({ key, Icon }, index) => (
                 <div className="flex items-center gap-4" key={key}>
-                  {index > 0 && <div className="bg-auth-border w-px h-3.5" />}
+                  {index > 0 && <div className="bg-auth-border h-3.5 w-px" />}
                   {key === 'points' ? (
                     <Icon size={14} color="#000000" />
                   ) : (
@@ -55,18 +55,18 @@ export default function QuizProgressHeader({
           </div>
         )}
 
-        <div className="w-80 h-2 bg-footer-line rounded-sm relative overflow-hidden justify-self-center">
+        <div className="bg-footer-line relative h-2 w-80 justify-self-center overflow-hidden rounded-sm">
           <div
-            className="absolute top-0 left-0 h-full rounded-sm bg-progress-bar transition-all duration-300"
+            className="bg-progress-bar absolute top-0 left-0 h-full rounded-sm transition-all duration-300"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
 
         <button
           onClick={handleClose}
-          className="w-6 h-6 flex items-center justify-center cursor-pointer justify-self-end border-none bg-transparent p-0 outline-none"
+          className="flex h-6 w-6 cursor-pointer items-center justify-center justify-self-end border-none bg-transparent p-0 outline-none"
         >
-          <CloseIcon className="w-full h-full" />
+          <CloseIcon className="h-full w-full" />
         </button>
       </div>
     </header>

@@ -20,34 +20,34 @@ export default function QuizDifficultyPoints({
 
   return (
     <div className="flex items-center gap-5.5">
-      <div className="flex items-center gap-3 mt-5">
+      <div className="mt-5 flex items-center gap-3">
         <div
           className={cn(
-            'h-10 w-10 rounded-full flex items-center justify-center',
+            'flex h-10 w-10 items-center justify-center rounded-full',
             difficultyBg,
           )}
         >
           <DifficultyIcon className={difficultyColor} />
         </div>
         <div>
-          <p className="text-footer-text font-inter font-semibold text-sm leading-5">
+          <p className="text-footer-text font-inter text-sm leading-5 font-semibold">
             Difficulty level
           </p>
-          <p className="text-auth-text font-inter font-normal text-sm leading-5 tracking-normal">
+          <p className="text-auth-text font-inter text-sm leading-5 font-normal tracking-normal">
             {difficulty}
           </p>
         </div>
       </div>
       {isCompleted && (
-        <div className="flex items-center gap-3 mt-5">
-          <div className="h-10 w-10 rounded-full bg-listing-points-bg flex items-center justify-center">
+        <div className="mt-5 flex items-center gap-3">
+          <div className="bg-listing-points-bg flex h-10 w-10 items-center justify-center rounded-full">
             <PointsIcon />
           </div>
           <div>
-            <p className="text-footer-text font-inter font-semibold text-sm leading-5">
+            <p className="text-footer-text font-inter text-sm leading-5 font-semibold">
               POINTS
             </p>
-            <p className="text-auth-text font-inter font-normal text-sm leading-5 tracking-normal">
+            <p className="text-auth-text font-inter text-sm leading-5 font-normal tracking-normal">
               {pointsEarned}/{pointsTotal}
             </p>
           </div>

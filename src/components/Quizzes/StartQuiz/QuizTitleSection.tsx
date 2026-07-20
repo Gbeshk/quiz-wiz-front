@@ -13,18 +13,18 @@ const QuizTitleSection = forwardRef<HTMLHeadingElement, QuizTitleSectionProps>(
       <>
         <h1
           ref={ref}
-          className="mx-auto font-raleway font-bold text-4xl leading-none tracking-normal mt-15"
+          className="font-raleway mx-auto mt-15 text-4xl leading-none font-bold tracking-normal"
         >
           {quiz.title}
         </h1>
-        <div className="flex items-center gap-3 mx-auto mt-6">
+        <div className="mx-auto mt-6 flex items-center gap-3">
           <PinIcon />
           {quiz.categories.map((category, index) => (
             <div className="flex items-center" key={category}>
               {index > 0 && (
-                <div className="w-1 mr-3 h-1 rounded-full bg-auth-border" />
+                <div className="bg-auth-border mr-3 h-1 w-1 rounded-full" />
               )}
-              <span className="font-inter font-semibold text-sm leading-5 text-auth-placeholder">
+              <span className="font-inter text-auth-placeholder text-sm leading-5 font-semibold">
                 {category}
               </span>
             </div>

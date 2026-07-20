@@ -27,8 +27,8 @@ export default function RoundCheckbox<T extends FieldValues>({
   return (
     <label
       className={cn(
-        'w-5 h-5 rounded-full flex items-center justify-center cursor-pointer transition-colors duration-200',
-        value ? 'bg-black' : 'border border-auth-checkbox-border',
+        'flex h-5 w-5 cursor-pointer items-center justify-center rounded-full transition-colors duration-200',
+        value ? 'bg-black' : 'border-auth-checkbox-border border',
       )}
     >
       {value && <CheckBoxIcon />}

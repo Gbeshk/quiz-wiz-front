@@ -5,7 +5,7 @@ import { footerColumns } from './landingFooterData';
 function LandingFooter() {
   return (
     <footer className="w-full bg-white">
-      <div className="max-w-360 w-full mx-auto pt-11 px-24 flex">
+      <div className="mx-auto flex w-full max-w-360 px-24 pt-11">
         <Logo />
         {footerColumns.map(({ title, items, className }) => (
           <LandingFooterColumn
@@ -17,9 +17,9 @@ function LandingFooter() {
         ))}
       </div>
 
-      <div className="w-full h-px bg-footer-line mt-11"></div>
+      <div className="bg-footer-line mt-11 h-px w-full"></div>
 
-      <div className="max-w-360 w-full mx-auto px-24 text-right text-auth-placeholder my-6 font-raleway font-medium text-xs leading-3 tracking-normal">
+      <div className="text-auth-placeholder font-raleway mx-auto my-6 w-full max-w-360 px-24 text-right text-xs leading-3 font-medium tracking-normal">
         <p>© 2026 QW. All rights reserved</p>
       </div>
     </footer>

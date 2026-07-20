@@ -11,7 +11,7 @@ export default function LevelChip({
       type="button"
       onClick={onToggle}
       className={cn(
-        'font-inter px-3 py-1.5 rounded-full ease-in-out duration-300 text-xs font-semibold transition-colors cursor-pointer',
+        'font-inter cursor-pointer rounded-full px-3 py-1.5 text-xs font-semibold transition-colors duration-300 ease-in-out',
         isSelected ? level.selectedClass : [level.bgClass, level.textClass],
       )}
     >

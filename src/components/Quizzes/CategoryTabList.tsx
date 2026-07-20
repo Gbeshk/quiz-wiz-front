@@ -19,13 +19,13 @@ export default function CategoryTabList({
   onMouseLeave,
 }: CategoryTabListProps) {
   return (
-    <div className="relative flex flex-1 items-center min-w-0">
+    <div className="relative flex min-w-0 flex-1 items-center">
       <button
         className={cn(
-          'absolute left-0 top-0 z-20 flex h-[calc(100%-16px)] items-center pr-4 bg-white transition-opacity duration-200',
+          'absolute top-0 left-0 z-20 flex h-[calc(100%-16px)] items-center bg-white pr-4 transition-opacity duration-200',
           showBackArrow
-            ? 'opacity-100 pointer-events-auto'
-            : 'opacity-0 pointer-events-none',
+            ? 'pointer-events-auto opacity-100'
+            : 'pointer-events-none opacity-0',
         )}
       >
         <CategoryScrollArrow
@@ -42,7 +42,7 @@ export default function CategoryTabList({
         onMouseMove={onMouseMove}
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseLeave}
-        className="flex gap-6 items-center overflow-x-auto flex-1 scrollbar-none cursor-grab active:cursor-grabbing select-none"
+        className="flex flex-1 cursor-grab scrollbar-none items-center gap-6 overflow-x-auto select-none active:cursor-grabbing"
       >
         <div>
           <div className="relative flex gap-5.5">
@@ -53,7 +53,7 @@ export default function CategoryTabList({
                 type="button"
                 onClick={() => onSelectCategory(category)}
                 className={cn(
-                  'transition-colors duration-200 font-semibold font-inter text-sm leading-5 whitespace-nowrap shrink-0 cursor-pointer',
+                  'font-inter shrink-0 cursor-pointer text-sm leading-5 font-semibold whitespace-nowrap transition-colors duration-200',
                   activeCategory === category
                     ? 'text-black'
                     : 'text-auth-placeholder',
@@ -64,10 +64,10 @@ export default function CategoryTabList({
             ))}
           </div>
 
-          <div className="relative w-full h-0.5 mt-4">
-            <div className="absolute inset-x-0 bottom-0 h-px bg-categories-line-bg" />
+          <div className="relative mt-4 h-0.5 w-full">
+            <div className="bg-categories-line-bg absolute inset-x-0 bottom-0 h-px" />
             <div
-              className="absolute bottom-0 h-0.5 bg-black transition-all duration-300 ease-out z-10 left-(--indicator-left) w-(--indicator-width)"
+              className="absolute bottom-0 left-(--indicator-left) z-10 h-0.5 w-(--indicator-width) bg-black transition-all duration-300 ease-out"
               style={
                 {
                   '--indicator-left': `${indicatorLeft}px`,

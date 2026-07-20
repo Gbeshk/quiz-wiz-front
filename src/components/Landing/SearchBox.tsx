@@ -18,7 +18,7 @@ export default function SearchBox({
 }: SearchBoxProps) {
   if (isOpen) {
     return (
-      <div className="h-11.5 border flex items-center border-auth-border rounded-lg w-92 px-4 bg-auth-hover-bg">
+      <div className="border-auth-border bg-auth-hover-bg flex h-11.5 w-92 items-center rounded-lg border px-4">
         <SearchIcon className="" />
         <input
           type="text"
@@ -28,9 +28,9 @@ export default function SearchBox({
           autoFocus
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
-          className="ml-1 w-71 focus:outline-none font-inter text-sm font-normal leading-6 tracking-normal placeholder:text-auth-border h-6"
+          className="font-inter placeholder:text-auth-border ml-1 h-6 w-71 text-sm leading-6 font-normal tracking-normal focus:outline-none"
         />
-        <div className="h-full w-px bg-auth-border mr-4"></div>
+        <div className="bg-auth-border mr-4 h-full w-px"></div>
         <button onClick={onClose}>
           <CloseIcon />
         </button>
@@ -39,9 +39,9 @@ export default function SearchBox({
   }
 
   return (
-    <button onClick={onOpen} className="flex items-center gap-1.5 cursor-text">
+    <button onClick={onOpen} className="flex cursor-text items-center gap-1.5">
       <SearchIcon className="" />
-      <p className="text-auth-placeholder font-inter text-sm font-normal leading-6">
+      <p className="text-auth-placeholder font-inter text-sm leading-6 font-normal">
         Search
       </p>
     </button>

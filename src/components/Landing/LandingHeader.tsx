@@ -38,8 +38,8 @@ function LandingHeader() {
   }, [debouncedQuery]);
 
   return (
-    <header className="w-full bg-white border-b border-b-header-border-b">
-      <div className="max-w-360 w-full mx-auto flex items-center px-24 h-18 justify-between">
+    <header className="border-b-header-border-b w-full border-b bg-white">
+      <div className="mx-auto flex h-18 w-full max-w-360 items-center justify-between px-24">
         <NavBrand />
 
         {isAuthenticated ? (

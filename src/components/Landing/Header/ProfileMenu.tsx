@@ -15,13 +15,13 @@ function ProfileMenu() {
     <div className="relative" ref={profileRef}>
       <button
         onClick={() => setIsProfileOpen((prev) => !prev)}
-        className="w-8 h-8 rounded-full overflow-hidden cursor-pointer border border-auth-border flex items-center justify-center"
+        className="border-auth-border flex h-8 w-8 cursor-pointer items-center justify-center overflow-hidden rounded-full border"
       >
         {user?.profilePic ? (
           <img
             src={user.profilePic}
             alt={user.name}
-            className="w-full h-full object-cover rounded-full"
+            className="h-full w-full rounded-full object-cover"
           />
         ) : (
           <ProfileIcon />
@@ -29,29 +29,29 @@ function ProfileMenu() {
       </button>
 
       {isProfileOpen && (
-        <div className="absolute py-8 px-4 w-77.75 h-39 rounded-lg -top-0.5 right-0 border border-auth-border bg-white shadow-[0px_1px_4px_0px_#00000026] z-50">
-          <div className="w-10 h-10 rounded-full  border border-auth-border flex items-center justify-center">
+        <div className="border-auth-border absolute -top-0.5 right-0 z-50 h-39 w-77.75 rounded-lg border bg-white px-4 py-8 shadow-[0px_1px_4px_0px_#00000026]">
+          <div className="border-auth-border flex h-10 w-10 items-center justify-center rounded-full border">
             {user?.profilePic ? (
               <img
                 src={user.profilePic}
                 alt={user.name}
-                className="w-full h-full object-cover rounded-full"
+                className="h-full w-full rounded-full object-cover"
               />
             ) : (
               <ProfileIcon />
             )}
           </div>
-          <p className="text-footer-text font-inter text-sm mt-3 font-semibold leading-5">
+          <p className="text-footer-text font-inter mt-3 text-sm leading-5 font-semibold">
             {user?.name}
           </p>
-          <div className="flex items-center -mt-2 justify-between">
-            <p className="text-auth-text font-inter text-sm font-normal leading-5">
+          <div className="-mt-2 flex items-center justify-between">
+            <p className="text-auth-text font-inter text-sm leading-5 font-normal">
               {user?.email}
             </p>
             <button
               type="button"
               onClick={logout}
-              className="rounded-full w-9 flex items-center justify-center h-9 hover:bg-logout-hover-bg cursor-pointer ease-in-out transition-all duration-300"
+              className="hover:bg-logout-hover-bg flex h-9 w-9 cursor-pointer items-center justify-center rounded-full transition-all duration-300 ease-in-out"
             >
               <LogOutIcon />
             </button>

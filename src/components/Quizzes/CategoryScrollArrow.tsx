@@ -18,8 +18,8 @@ export default function CategoryScrollArrow({
           : 'Show more categories'
       }
       className={cn(
-        'shrink-0 w-9 h-9 flex items-center justify-center rounded-full hover:bg-modal-line cursor-pointer transition-all ease-in-out duration-300',
-        !visible && 'opacity-0 pointer-events-none',
+        'hover:bg-modal-line flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full transition-all duration-300 ease-in-out',
+        !visible && 'pointer-events-none opacity-0',
       )}
     >
       {direction === 'left' ? <ChevronLeftIcon /> : <ChevronRightIcon />}

@@ -5,28 +5,28 @@ import { Link } from 'react-router-dom';
 
 export default function QuizHeroSection({ quiz }: QuizHeroSectionProps) {
   return (
-    <div className="w-full max-w-203.25 flex justify-between gap-8">
-      <div className=" w-full max-w-113.75 shrink-0">
-        <h1 className="font-raleway font-bold text-4xl leading-none tracking-normal">
+    <div className="flex w-full max-w-203.25 justify-between gap-8">
+      <div className="w-full max-w-113.75 shrink-0">
+        <h1 className="font-raleway text-4xl leading-none font-bold tracking-normal">
           {quiz.title}
         </h1>
         <div className="-mt-2">
           <QuizCategories categories={quiz.categories} />
         </div>
-        <h1 className="text-auth-placeholder mt-4 font-semibold text-sm leading-6.5 tracking-normal">
+        <h1 className="text-auth-placeholder mt-4 text-sm leading-6.5 font-semibold tracking-normal">
           {quiz.description}
         </h1>
 
         <QuizMetaRow quiz={quiz} />
         <Link
           to={`/quizzes/${quiz.id}/start`}
-          className="w-83.5 h-12 bg-auth-link mt-10 rounded-xl text-white font-inter font-semibold text-base cursor-pointer flex items-center justify-center"
+          className="bg-auth-link font-inter mt-10 flex h-12 w-83.5 cursor-pointer items-center justify-center rounded-xl text-base font-semibold text-white"
         >
           Start Quiz
         </Link>
       </div>
 
-      <div className="w-81.5 h-76.75 bg-amber-100 rounded-3xl flex items-center justify-center shrink-0">
+      <div className="flex h-76.75 w-81.5 shrink-0 items-center justify-center rounded-3xl bg-amber-100">
         Image
       </div>
     </div>

@@ -17,17 +17,17 @@ export default function QuizDetailsPage() {
     return <NotFoundPage />;
   }
   return (
-    <div className="w-full min-h-screen flex flex-col bg-white">
+    <div className="flex min-h-screen w-full flex-col bg-white">
       <LandingHeader />
 
       <div className="grow">
-        <div className="max-w-360 w-full mx-auto px-24">
-          <div className="relative ml-8 mt-22">
+        <div className="mx-auto w-full max-w-360 px-24">
+          <div className="relative mt-22 ml-8">
             <BackButton />
           </div>
         </div>
 
-        <div className="max-w-360 w-full mx-auto px-24 -mt-4 flex justify-between items-start">
+        <div className="mx-auto -mt-4 flex w-full max-w-360 items-start justify-between px-24">
           <div className="sticky top-1 self-start">
             <QuizHeroSection quiz={quiz} />
             <QuizInstructions instructions={quiz.instructions} />
@@ -37,7 +37,7 @@ export default function QuizDetailsPage() {
         </div>
       </div>
 
-      <div className="w-full h-px bg-auth-border mt-20"></div>
+      <div className="bg-auth-border mt-20 h-px w-full"></div>
       <LandingFooter />
     </div>
   );

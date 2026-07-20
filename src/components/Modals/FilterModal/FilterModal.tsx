@@ -57,7 +57,7 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
   return (
     <div
       className={cn(
-        'absolute border bg-white rounded-xl p-4 border-black right-0 top-11 w-266.25 h-162.5 shadow-[0px_16px_54px_0px_#0000001F] z-50',
+        'absolute top-11 right-0 z-50 h-162.5 w-266.25 rounded-xl border border-black bg-white p-4 shadow-[0px_16px_54px_0px_#0000001F]',
         !isOpen && 'hidden',
       )}
     >

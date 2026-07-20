@@ -5,7 +5,7 @@ export default function QuizOtherQuizzesSlider({
   quizzes,
 }: QuizOtherQuizzesSliderProps) {
   return (
-    <div className="h-400 overflow-hidden relative">
+    <div className="relative h-400 overflow-hidden">
       <style>{`
         @keyframes quiz-slider-scroll {
           from { transform: translateY(0); }

@@ -76,7 +76,7 @@ export default function StartQuizPage() {
   };
 
   return (
-    <div className="w-360 px-24 flex mx-auto flex-col">
+    <div className="mx-auto flex w-360 flex-col px-24">
       <QuizProgressHeader
         quiz={quiz}
         isTitleVisible={isTitleVisible}
@@ -87,7 +87,7 @@ export default function StartQuizPage() {
 
       <QuizTitleSection ref={titleRef} quiz={quiz} />
 
-      <div className="w-full flex justify-between mx-auto mt-23.5">
+      <div className="mx-auto mt-23.5 flex w-full justify-between">
         <QuestionsList
           questions={quiz.questions}
           selectedAnswers={selectedAnswers}

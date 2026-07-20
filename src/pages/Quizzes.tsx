@@ -18,10 +18,10 @@ export default function QuizzesPage() {
   );
 
   return (
-    <div className="w-full min-h-screen flex flex-col bg-white">
+    <div className="flex min-h-screen w-full flex-col bg-white">
       <LandingHeader />
 
-      <main className="w-full max-w-360 mx-auto px-24 grow flex flex-col">
+      <main className="mx-auto flex w-full max-w-360 grow flex-col px-24">
         <CategoryTabs />
         <QuizGrid quizzes={visibleItems} />
         {hasMore && (
@@ -29,7 +29,7 @@ export default function QuizzesPage() {
         )}
       </main>
 
-      <div className="mt-17 bg-auth-border h-px w-full"></div>
+      <div className="bg-auth-border mt-17 h-px w-full"></div>
       <LandingFooter />
     </div>
   );

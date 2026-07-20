@@ -19,13 +19,13 @@ export default function ResultModal({
   mistakesCount,
 }: ResultModalProps) {
   return (
-    <div className="fixed inset-0 z-100 items-center flex justify-center bg-modal-bg">
-      <div className="relative w-100 rounded-xl bg-white p-8 flex flex-col shadow-[0px_8px_8px_-4px_rgba(16,24,40,0.03),0px_20px_24px_-4px_rgba(16,24,40,0.08)]">
+    <div className="bg-modal-bg fixed inset-0 z-100 flex items-center justify-center">
+      <div className="relative flex w-100 flex-col rounded-xl bg-white p-8 shadow-[0px_8px_8px_-4px_rgba(16,24,40,0.03),0px_20px_24px_-4px_rgba(16,24,40,0.08)]">
         <Link
           to="/"
-          className="absolute top-6 right-6 w-6 h-6 cursor-pointer border-none bg-transparent p-0 flex items-center justify-center"
+          className="absolute top-6 right-6 flex h-6 w-6 cursor-pointer items-center justify-center border-none bg-transparent p-0"
         >
-          <CloseIcon className="w-full h-full" />
+          <CloseIcon className="h-full w-full" />
         </Link>
 
         <ResultModalHeader />
@@ -51,7 +51,7 @@ export default function ResultModal({
 
         <Link
           to="/"
-          className="w-full h-12 mt-6 font-inter text-base font-semibold text-white cursor-pointer bg-auth-link flex items-center justify-center rounded-xl"
+          className="font-inter bg-auth-link mt-6 flex h-12 w-full cursor-pointer items-center justify-center rounded-xl text-base font-semibold text-white"
         >
           Back to home
         </Link>

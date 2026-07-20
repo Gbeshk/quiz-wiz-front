@@ -11,7 +11,7 @@ const TimerCard = forwardRef<HTMLDivElement, TimerCardProps>(
     return (
       <div
         ref={ref}
-        className="relative w-98.75 h-65.25 px-6 py-8 rounded-xl flex items-center gap-8 flex-col shadow-[0px_4px_6px_-2px_#10182808,0px_12px_16px_-4px_#10182814] z-40"
+        className="relative z-40 flex h-65.25 w-98.75 flex-col items-center gap-8 rounded-xl px-6 py-8 shadow-[0px_4px_6px_-2px_#10182808,0px_12px_16px_-4px_#10182814]"
         style={
           fixedPosition
             ? {
@@ -22,17 +22,17 @@ const TimerCard = forwardRef<HTMLDivElement, TimerCardProps>(
             : undefined
         }
       >
-        <div className="absolute text-auth-placeholder font-inter text-base font-semibold leading-8 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-12 flex items-center justify-center border-hairline shadow-[0px_1px_4px_0px_#00000026] border-auth-border rounded-lg ">
+        <div className="text-auth-placeholder font-inter border-hairline border-auth-border absolute top-0 left-1/2 flex h-12 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-lg text-base leading-8 font-semibold shadow-[0px_1px_4px_0px_#00000026]">
           Timer
         </div>
 
-        <p className="text-auth-text font-inter text-6xl mt-5 align-middle tabular-nums">
+        <p className="text-auth-text font-inter mt-5 align-middle text-6xl tabular-nums">
           {formattedTime}
         </p>
-        <div className="w-83.5 h-px bg-auth-border"></div>
+        <div className="bg-auth-border h-px w-83.5"></div>
         <button
           onClick={onSubmit}
-          className="w-83.5 h-12 font-inter text-base font-semibold text-white cursor-pointer bg-auth-link flex items-center justify-center rounded-xl"
+          className="font-inter bg-auth-link flex h-12 w-83.5 cursor-pointer items-center justify-center rounded-xl text-base font-semibold text-white"
         >
           Submit
         </button>

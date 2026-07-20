@@ -7,13 +7,13 @@ function LandingFooterColumn({
 }: LandingFooterColumnProps) {
   return (
     <div className={className}>
-      <p className="font-inter font-semibold text-sm leading-5 text-footer-text">
+      <p className="font-inter text-footer-text text-sm leading-5 font-semibold">
         {title}
       </p>
       {items.map((item) => (
         <p
           key={item}
-          className="mt-6 text-auth-text font-inter text-xs leading-5 "
+          className="text-auth-text font-inter mt-6 text-xs leading-5"
         >
           {item}
         </p>

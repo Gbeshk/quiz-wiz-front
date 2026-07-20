@@ -34,8 +34,8 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-white">
-      <div className="flex gap-20.5 w-360 shrink-0">
+    <div className="flex min-h-screen w-full items-center justify-center bg-white">
+      <div className="flex w-360 shrink-0 gap-20.5">
         <AuthHeroImage
           src={RegisterHero}
           alt="Register Hero"
@@ -89,14 +89,14 @@ export default function RegisterPage() {
             />
 
             <div className="flex flex-col gap-1.5">
-              <div className="flex gap-3 items-center">
+              <div className="flex items-center gap-3">
                 <RoundCheckbox<RegisterFormValues>
                   control={control}
                   name="acceptTerms"
                   rules={{ required: 'You must accept the terms' }}
                   hasError={!!errors.acceptTerms}
                 />
-                <p className="font-inter  text-base  text-auth-label">
+                <p className="font-inter text-auth-label text-base">
                   I accept the terms and privacy policy
                 </p>
               </div>
