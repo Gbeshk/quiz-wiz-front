@@ -1,4 +1,7 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { isAxiosError } from 'axios';
 import { Hello } from '@/components/UI/Icons';
 import {
   AuthInput,
@@ -12,17 +15,40 @@ import {
 import { emailRules, passwordRules } from '@/utils/validation';
 import type { LoginFormValues } from '@/types/auth';
 import { LoginHero } from '@/assets';
+import { useAuth } from '@/context/AuthContext';
 
 export default function LoginPage() {
   const {
     register,
     control,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<LoginFormValues>();
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const [submitting, setSubmitting] = useState(false);
 
-  const onSubmit = (data: LoginFormValues) => {
-    console.log(data);
+  const onSubmit = async (data: LoginFormValues) => {
+    setSubmitting(true);
+    try {
+      await login(data.email, data.password, data.rememberMe);
+      navigate('/quizzes');
+    } catch (err) {
+      if (isAxiosError(err) && err.response?.status === 422) {
+        const message =
+          err.response.data?.errors?.email?.[0] ??
+          err.response.data?.message ??
+          'Invalid credentials.';
+        setError('email', { message });
+      } else {
+        setError('email', {
+          message: 'Something went wrong. Please try again.',
+        });
+      }
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
