@@ -24,7 +24,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     api
-      .get<User>('/api/user')
+      .get<User>('/user')
       .then((res) => setUser(res.data))
       .catch(() => setUser(null))
       .finally(() => setIsLoading(false));
@@ -32,7 +32,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string, remember: boolean) => {
     await ensureCsrfCookie();
-    const { data } = await api.post('/api/login', {
+    const { data } = await api.post('/login', {
       email,
       password,
       remember,
@@ -41,7 +41,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async () => {
-    await api.post('/api/logout');
+    await api.post('/logout');
     setUser(null);
   };
 

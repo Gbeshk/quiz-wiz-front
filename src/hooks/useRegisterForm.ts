@@ -1,0 +1,94 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { isAxiosError } from 'axios';
+import { toast } from 'react-hot-toast';
+import { api, ensureCsrfCookie } from '@/lib/api';
+import {
+  emailRules,
+  passwordRules,
+  confirmPasswordRules,
+  usernameRules,
+} from '@/utils/validation';
+import type { RegisterFormValues } from '@/types/auth';
+
+/**
+ * Encapsulates all Register form state, validation rules, and submit
+ * logic (including mapping Laravel 422 validation errors back onto
+ * the correct fields). Returns everything RegisterForm needs to render.
+ */
+export function useRegisterForm() {
+  const [submitting, setSubmitting] = useState(false);
+  const navigate = useNavigate();
+
+  const {
+    register,
+    control,
+    handleSubmit,
+    watch,
+    setError,
+    formState: { errors },
+  } = useForm<RegisterFormValues>({
+    mode: 'onChange',
+  });
+
+  const password = watch('password');
+
+  const mapBackendErrors = (backendErrors: Record<string, string[]>) => {
+    if (backendErrors?.username) {
+      setError('username', { message: backendErrors.username[0] });
+    }
+    if (backendErrors?.email) {
+      setError('email', { message: backendErrors.email[0] });
+    }
+    if (backendErrors?.password) {
+      setError('password', { message: backendErrors.password[0] });
+    }
+    if (backendErrors?.password_confirmation) {
+      setError('confirmPassword', {
+        message: backendErrors.password_confirmation[0],
+      });
+    }
+  };
+
+  const onSubmit = handleSubmit(async (data) => {
+    setSubmitting(true);
+    try {
+      await ensureCsrfCookie();
+      const response = await api.post('/register', {
+        username: data.username,
+        email: data.email,
+        password: data.password,
+        password_confirmation: data.confirmPassword,
+        terms: data.acceptTerms,
+      });
+      toast.success(
+        response.data?.message ??
+          'Registration successful! Please check your email.',
+      );
+      navigate('/login');
+    } catch (err) {
+      if (isAxiosError(err) && err.response?.status === 422) {
+        mapBackendErrors(err.response.data?.errors);
+      } else {
+        toast.error('Something went wrong. Please try again.');
+      }
+    } finally {
+      setSubmitting(false);
+    }
+  });
+
+  return {
+    register,
+    control,
+    errors,
+    submitting,
+    onSubmit,
+    rules: {
+      username: usernameRules,
+      email: emailRules,
+      password: passwordRules,
+      confirmPassword: confirmPasswordRules<RegisterFormValues>(password),
+    },
+  };
+}

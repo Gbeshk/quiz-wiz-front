@@ -13,33 +13,38 @@ interface RoundCheckboxProps<T extends FieldValues> {
   name: Path<T>;
   rules?: RegisterOptions<T, Path<T>>;
   hasError?: boolean;
+  children?: React.ReactNode;
 }
 
 export default function RoundCheckbox<T extends FieldValues>({
   control,
   name,
   rules,
+  children,
 }: RoundCheckboxProps<T>) {
   const {
     field: { value, onChange, onBlur, ref },
   } = useController({ name, control, rules });
 
   return (
-    <label
-      className={cn(
-        'flex h-5 w-5 cursor-pointer items-center justify-center rounded-full transition-colors duration-200',
-        value ? 'bg-black' : 'border-auth-checkbox-border border',
-      )}
-    >
-      {value && <CheckBoxIcon />}
-      <input
-        type="checkbox"
-        ref={ref}
-        checked={!!value}
-        onChange={onChange}
-        onBlur={onBlur}
-        className="hidden"
-      />
+    <label className="flex cursor-pointer items-center gap-3">
+      <div
+        className={cn(
+          'flex h-5 w-5 shrink-0 items-center justify-center rounded-full transition-colors duration-200',
+          value ? 'bg-black' : 'border-auth-checkbox-border border',
+        )}
+      >
+        {value && <CheckBoxIcon />}
+        <input
+          type="checkbox"
+          ref={ref}
+          checked={!!value}
+          onChange={onChange}
+          onBlur={onBlur}
+          className="hidden"
+        />
+      </div>
+      {children}
     </label>
   );
 }
