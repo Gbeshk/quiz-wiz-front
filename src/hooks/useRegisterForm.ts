@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { isAxiosError } from 'axios';
-import { toast } from 'react-hot-toast';
 import { api, ensureCsrfCookie } from '@/lib/api';
+import { showSuccessToast, showErrorToast } from '@/utils/toast';
 import {
   emailRules,
   passwordRules,
@@ -12,11 +12,6 @@ import {
 } from '@/utils/validation';
 import type { RegisterFormValues } from '@/types/auth';
 
-/**
- * Encapsulates all Register form state, validation rules, and submit
- * logic (including mapping Laravel 422 validation errors back onto
- * the correct fields). Returns everything RegisterForm needs to render.
- */
 export function useRegisterForm() {
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -62,7 +57,7 @@ export function useRegisterForm() {
         password_confirmation: data.confirmPassword,
         terms: data.acceptTerms,
       });
-      toast.success(
+      showSuccessToast(
         response.data?.message ??
           'Registration successful! Please check your email.',
       );
@@ -71,7 +66,7 @@ export function useRegisterForm() {
       if (isAxiosError(err) && err.response?.status === 422) {
         mapBackendErrors(err.response.data?.errors);
       } else {
-        toast.error('Something went wrong. Please try again.');
+        showErrorToast('Something went wrong. Please try again.');
       }
     } finally {
       setSubmitting(false);

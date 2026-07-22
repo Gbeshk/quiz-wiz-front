@@ -11,7 +11,7 @@ import StartQuizPage from '@/pages/StartQuizPage';
 import NotFoundPage from '@/pages/NotFoundPage';
 import InternalErrorPage from '@/pages/InternalErrorPage';
 import VerifyEmailPage from '@/pages/VerifyEmailPage';
-import { ProtectedRoute } from '@/components/ProtectedRoute';
+
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -38,14 +38,9 @@ export const router = createBrowserRouter([
     path: '/verify-email',
     element: <VerifyEmailPage />,
   },
-  {
-    element: <ProtectedRoute />,
-    children: [
-      { path: '/quizzes', element: <Quizzes /> },
-      { path: '/quizzes/:id', element: <QuizDetailsPage /> },
-      { path: '/quizzes/:id/start', element: <StartQuizPage /> },
-    ],
-  },
+  { path: '/quizzes', element: <Quizzes /> },
+  { path: '/quizzes/:id', element: <QuizDetailsPage /> },
+  { path: '/quizzes/:id/start', element: <StartQuizPage /> },
   {
     path: '*',
     element: <NotFoundPage />,
