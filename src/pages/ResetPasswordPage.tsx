@@ -9,8 +9,16 @@ import { useResetPasswordForm } from '@/hooks/useResetPasswordForm';
 import { ForgotPasswordHero } from '@/assets';
 
 export default function ResetPasswordPage() {
-  const { register, errors, submitting, onSubmit, rules } =
+  const { register, errors, submitting, checkingToken, onSubmit, rules } =
     useResetPasswordForm();
+
+  if (checkingToken) {
+    return (
+      <div className="flex min-h-screen w-full items-center justify-center bg-white">
+        <p className="font-inter text-sm text-gray-500">Verifying link...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-white">

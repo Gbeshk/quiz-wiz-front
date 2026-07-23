@@ -1,11 +1,11 @@
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Arrow } from '@/components/UI/Icons';
 
 export default function BackButton() {
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const canGoBack = location.key !== 'default';
+  const idx = window.history.state?.idx ?? 0;
+  const canGoBack = idx > 0;
 
   if (!canGoBack) return null;
 

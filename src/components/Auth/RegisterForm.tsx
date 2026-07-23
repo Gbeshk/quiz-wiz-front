@@ -52,17 +52,16 @@ export function RegisterForm() {
       />
 
       <div className="flex flex-col gap-1.5">
-        <div className="flex items-center gap-3">
-          <RoundCheckbox<RegisterFormValues>
-            control={control}
-            name="acceptTerms"
-            rules={{ required: 'You must accept the terms' }}
-            hasError={!!errors.acceptTerms}
-          />
+        <RoundCheckbox<RegisterFormValues>
+          control={control}
+          name="acceptTerms"
+          rules={{ required: 'You must accept the terms' }}
+          hasError={!!errors.acceptTerms}
+        >
           <p className="font-inter text-auth-label text-base">
             I accept the terms and privacy policy
           </p>
-        </div>
+        </RoundCheckbox>
         {errors.acceptTerms && (
           <ErrorText message={errors.acceptTerms.message ?? ''} />
         )}

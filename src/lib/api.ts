@@ -9,10 +9,17 @@ export const api = axios.create({
   headers: {
     Accept: 'application/json',
   },
+  timeout: 10000,
 });
 
 export async function ensureCsrfCookie() {
-  await axios.get(`${API_BASE_URL}/sanctum/csrf-cookie`, {
-    withCredentials: true,
-  });
+  try {
+    await axios.get(`${API_BASE_URL}/sanctum/csrf-cookie`, {
+      withCredentials: true,
+      timeout: 5000,
+    });
+  } catch (error) {
+    console.error('🚨 CSRF Cookie fetch failed or timed out:', error);
+    throw error;
+  }
 }

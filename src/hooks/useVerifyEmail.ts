@@ -1,64 +1,80 @@
-import { useEffect, useRef, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
+import { useEffect, useRef } from 'react';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { isAxiosError } from 'axios';
 import { api } from '@/lib/api';
-
-const MIN_DISPLAY_MS = 2000;
-const REDIRECT_DELAY_MS = 1500;
-
-export type VerifyStatus = 'verifying' | 'success' | 'error';
+import {
+  showSuccessToast,
+  showWarningToast,
+  showErrorToast,
+} from '@/utils/toast';
 
 export function useVerifyEmail() {
+  const { id, hash } = useParams<{ id: string; hash: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const hasCalled = useRef(false);
-  const [status, setStatus] = useState<VerifyStatus>('verifying');
-  const [message, setMessage] = useState('Verifying your email address...');
+  const verifiedRef = useRef(false);
 
   useEffect(() => {
-    if (hasCalled.current) return;
-    hasCalled.current = true;
+    if (verifiedRef.current) return;
+    verifiedRef.current = true;
 
-    const startedAt = Date.now();
-    const id = searchParams.get('id');
-    const hash = searchParams.get('hash');
-    const expires = searchParams.get('expires');
-    const signature = searchParams.get('signature');
+    async function verify() {
+      if (!id || !hash) {
+        showErrorToast('Invalid Link', 'Verification parameters are missing.');
+        navigate('/login', { replace: true });
+        return;
+      }
 
-    if (!id || !hash || !expires || !signature) {
-      setStatus('error');
-      setMessage('Verification link is missing required information.');
-      setTimeout(() => navigate('/login', { replace: true }), MIN_DISPLAY_MS);
-      return;
+      const queryString = searchParams.toString();
+      const endpoint = `/email/verify/${id}/${hash}${queryString ? `?${queryString}` : ''}`;
+
+      try {
+        const response = await api.get(endpoint);
+        const status = response.data?.status;
+
+        if (status === 'already_verified') {
+          showSuccessToast(
+            'Email Already Verified',
+            'Your email address is already verified.',
+          );
+        } else {
+          showSuccessToast(
+            'Email Verified',
+            'Your email address has been verified successfully!',
+          );
+        }
+
+        navigate('/login', { replace: true });
+      } catch (err) {
+        const isExpiredOrInvalid =
+          isAxiosError(err) &&
+          (err.response?.status === 400 || err.response?.status === 403);
+
+        if (isExpiredOrInvalid) {
+          const email =
+            err.response?.data?.email ?? searchParams.get('email') ?? '';
+
+          showWarningToast(
+            'Verification Link Expired',
+            'This verification link has expired. Please request a new one.',
+          );
+          navigate('/login', {
+            replace: true,
+            state: {
+              verificationEmail: email,
+              verificationExpired: true,
+            },
+          });
+        } else {
+          showErrorToast(
+            'Verification Failed',
+            'Something went wrong verifying your email.',
+          );
+          navigate('/login', { replace: true });
+        }
+      }
     }
 
-    api
-      .get(`/email/verify/${id}/${hash}`, {
-        params: { expires, signature },
-      })
-      .then((res) => {
-        const msg = res.data?.message ?? 'Email verified successfully!';
-        setStatus('success');
-        setMessage(msg);
-        toast.success(msg);
-      })
-      .catch((err) => {
-        const msg =
-          err.response?.data?.message ??
-          'Verification link is invalid or expired.';
-        setStatus('error');
-        setMessage(msg);
-        toast.error(msg);
-      })
-      .finally(() => {
-        const elapsed = Date.now() - startedAt;
-        const remaining = Math.max(MIN_DISPLAY_MS - elapsed, 0);
-
-        setTimeout(() => {
-          navigate('/login', { replace: true });
-        }, remaining + REDIRECT_DELAY_MS);
-      });
-  }, [searchParams, navigate]);
-
-  return { status, message };
+    verify();
+  }, [id, hash, searchParams, navigate]);
 }

@@ -28,21 +28,22 @@ export default function RoundCheckbox<T extends FieldValues>({
 
   return (
     <label className="flex cursor-pointer items-center gap-3">
+      <input
+        type="checkbox"
+        ref={ref}
+        checked={!!value}
+        onChange={onChange}
+        onBlur={onBlur}
+        className="peer sr-only"
+      />
       <div
         className={cn(
           'flex h-5 w-5 shrink-0 items-center justify-center rounded-full transition-colors duration-200',
+          'peer-focus-visible:ring-2 peer-focus-visible:ring-black peer-focus-visible:ring-offset-2',
           value ? 'bg-black' : 'border-auth-checkbox-border border',
         )}
       >
         {value && <CheckBoxIcon />}
-        <input
-          type="checkbox"
-          ref={ref}
-          checked={!!value}
-          onChange={onChange}
-          onBlur={onBlur}
-          className="hidden"
-        />
       </div>
       {children}
     </label>

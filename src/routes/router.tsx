@@ -35,6 +35,10 @@ export const router = createBrowserRouter([
     element: <ResetPasswordPage />,
   },
   {
+    path: '/email/verify/:id/:hash',
+    element: <VerifyEmailPage />,
+  },
+  {
     path: '/verify-email',
     element: <VerifyEmailPage />,
   },

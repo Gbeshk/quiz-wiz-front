@@ -58,15 +58,15 @@ export function useRegisterForm() {
         terms: data.acceptTerms,
       });
       showSuccessToast(
-        response.data?.message ??
-          'Registration successful! Please check your email.',
+        'Registered successfully!',
+        response.data?.message ?? 'Verification email is sent.',
       );
       navigate('/login');
     } catch (err) {
       if (isAxiosError(err) && err.response?.status === 422) {
         mapBackendErrors(err.response.data?.errors);
       } else {
-        showErrorToast('Something went wrong. Please try again.');
+        showErrorToast('Something went wrong', 'Please try again.');
       }
     } finally {
       setSubmitting(false);

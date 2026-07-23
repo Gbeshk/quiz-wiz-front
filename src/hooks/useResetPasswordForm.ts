@@ -1,53 +1,137 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { isAxiosError } from 'axios';
-import toast from 'react-hot-toast';
-import { api, ensureCsrfCookie } from '@/lib/api';
-import { confirmPasswordRules, passwordRules } from '@/utils/validation';
-import type { ResetPasswordFormValues } from '@/types/auth';
+import { api } from '@/lib/api';
+import {
+  showSuccessToast,
+  showErrorToast,
+  showWarningToast,
+} from '@/utils/toast';
+import { passwordRules } from '@/utils/validation';
 
 export function useResetPasswordForm() {
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get('token') || '';
+  const emailParam = searchParams.get('email') || '';
+
+  const navigate = useNavigate();
+  const [submitting, setSubmitting] = useState(false);
+  const [checkingToken, setCheckingToken] = useState(true);
+
+  const checkedRef = useRef(false);
+
   const {
     register,
     handleSubmit,
-    watch,
     setError,
+    watch,
     formState: { errors },
-  } = useForm<ResetPasswordFormValues>();
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const [submitting, setSubmitting] = useState(false);
+  } = useForm({
+    defaultValues: {
+      password: '',
+      confirmPassword: '',
+    },
+  });
 
-  const password = watch('password');
-  const token = searchParams.get('token') ?? '';
-  const email = searchParams.get('email') ?? '';
+  const passwordValue = watch('password');
+
+  useEffect(() => {
+    if (checkedRef.current) return;
+    checkedRef.current = true;
+
+    async function checkTokenValidity() {
+      if (!token || !emailParam) {
+        showWarningToast(
+          'Token Expired',
+          'Password reset link has expired or is invalid.',
+        );
+        navigate('/forgot-password', {
+          replace: true,
+          state: {
+            expired: true,
+            email: emailParam || '',
+            message: 'Password reset link has expired or is invalid.',
+          },
+        });
+        return;
+      }
+
+      try {
+        await api.post('/verify-reset-token', {
+          token,
+          email: emailParam,
+        });
+      } catch {
+        showWarningToast(
+          'Token Expired',
+          'Password reset link has expired or is invalid.',
+        );
+        navigate('/forgot-password', {
+          replace: true,
+          state: {
+            expired: true,
+            email: emailParam,
+            message: 'Password reset link has expired or is invalid.',
+          },
+        });
+      } finally {
+        setCheckingToken(false);
+      }
+    }
+
+    checkTokenValidity();
+  }, [token, emailParam, navigate]);
 
   const onSubmit = handleSubmit(async (data) => {
     setSubmitting(true);
+
     try {
-      await ensureCsrfCookie();
-      const response = await api.post('/reset-password', {
+      await api.post('/reset-password', {
         token,
-        email,
+        email: emailParam,
         password: data.password,
         password_confirmation: data.confirmPassword,
       });
-      toast.success(response.data?.message ?? 'Password reset successfully.');
+
+      showSuccessToast(
+        'Password Reset',
+        'Your password has been reset successfully!',
+      );
       navigate('/login');
     } catch (err) {
-      if (isAxiosError(err) && err.response?.status === 422) {
-        const message =
-          err.response.data?.errors?.email?.[0] ??
-          err.response.data?.message ??
-          'This reset link is invalid or has expired.';
-        toast.error(message);
-        navigate('/login');
+      if (isAxiosError(err)) {
+        const responseData = err.response?.data;
+
+        if (
+          responseData?.status === 'invalid_token' ||
+          err.response?.status === 400
+        ) {
+          showWarningToast(
+            'Token Expired',
+            'Password reset link has expired or is invalid.',
+          );
+          navigate('/forgot-password', {
+            replace: true,
+            state: {
+              expired: true,
+              email: emailParam,
+              message: 'Password reset link has expired or is invalid.',
+            },
+          });
+        } else if (responseData?.errors) {
+          const passErr = responseData.errors.password?.[0];
+          if (passErr) setError('password', { message: passErr });
+
+          showErrorToast('Reset Failed', 'Please fix the errors below.');
+        } else {
+          showErrorToast(
+            'Error',
+            responseData?.message || 'Something went wrong.',
+          );
+        }
       } else {
-        setError('password', {
-          message: 'Something went wrong. Please try again.',
-        });
-        toast.error('Something went wrong. Please try again.');
+        showErrorToast('Error', 'Something went wrong. Please try again.');
       }
     } finally {
       setSubmitting(false);
@@ -58,11 +142,15 @@ export function useResetPasswordForm() {
     register,
     errors,
     submitting,
+    checkingToken,
     onSubmit,
-    password,
     rules: {
       password: passwordRules,
-      confirmPassword: confirmPasswordRules<ResetPasswordFormValues>(password),
+      confirmPassword: {
+        required: 'Please confirm your password',
+        validate: (value: string) =>
+          value === passwordValue || 'Passwords do not match',
+      },
     },
   };
 }

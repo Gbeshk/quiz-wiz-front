@@ -9,8 +9,16 @@ import { useForgotPasswordForm } from '@/hooks/useForgotPasswordForm';
 import { ForgotPasswordHero } from '@/assets';
 
 export default function ForgotPasswordPage() {
-  const { register, errors, submitting, sent, onSubmit, rules } =
+  const { register, errors, submitting, sent, isExpired, onSubmit, rules } =
     useForgotPasswordForm();
+
+  const buttonLabel = submitting
+    ? 'Sending...'
+    : sent
+      ? 'Link sent'
+      : isExpired
+        ? 'Resend reset link'
+        : 'Send';
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-white">
@@ -37,9 +45,11 @@ export default function ForgotPasswordPage() {
               rules={rules.email}
               error={errors.email}
             />
-
             <SubmitButton
-              label={sent ? 'Link sent' : 'Send'}
+              label={
+                sent ? 'Link sent' : isExpired ? 'Resend reset link' : 'Send'
+              }
+              loadingLabel="Sending link..."
               disabled={submitting}
             />
           </form>

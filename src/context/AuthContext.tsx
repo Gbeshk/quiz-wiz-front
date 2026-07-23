@@ -1,11 +1,6 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  type ReactNode,
-} from 'react';
-import { api, ensureCsrfCookie } from '@/lib/api';
+import { createContext, useContext, type ReactNode } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { api } from '@/lib/api';
 import type { User } from '@/types/auth';
 
 interface AuthContextValue {
@@ -19,35 +14,41 @@ interface AuthContextValue {
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    api
-      .get<User>('/user')
-      .then((res) => setUser(res.data))
-      .catch(() => setUser(null))
-      .finally(() => setIsLoading(false));
-  }, []);
+  const { data: user, isLoading } = useQuery({
+    queryKey: ['auth', 'user'],
+    queryFn: async () => {
+      try {
+        const { data } = await api.get<User>('/user');
+        return data;
+      } catch {
+        return null;
+      }
+    },
+    staleTime: Infinity,
+    retry: false,
+  });
 
   const login = async (email: string, password: string, remember: boolean) => {
-    await ensureCsrfCookie();
-    const { data } = await api.post('/login', {
-      email,
-      password,
-      remember,
-    });
-    setUser(data.user);
+    const { data } = await api.post('/login', { email, password, remember });
+    queryClient.setQueryData(['auth', 'user'], data.user);
   };
 
   const logout = async () => {
     await api.post('/logout');
-    setUser(null);
+    queryClient.setQueryData(['auth', 'user'], null);
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated: !!user, isLoading, login, logout }}
+      value={{
+        user: user ?? null,
+        isAuthenticated: !!user,
+        isLoading,
+        login,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>
