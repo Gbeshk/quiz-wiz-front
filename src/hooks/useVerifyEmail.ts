@@ -2,11 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { isAxiosError } from 'axios';
 import { api } from '@/lib/api';
-import {
-  showSuccessToast,
-  showWarningToast,
-  showErrorToast,
-} from '@/utils/toast';
+import { showToast } from '@/components/UI/Toast/showToast';
 
 export function useVerifyEmail() {
   const { id, hash } = useParams<{ id: string; hash: string }>();
@@ -20,7 +16,11 @@ export function useVerifyEmail() {
 
     async function verify() {
       if (!id || !hash) {
-        showErrorToast('Invalid Link', 'Verification parameters are missing.');
+        showToast(
+          'error',
+          'Invalid Link',
+          'Verification parameters are missing.',
+        );
         navigate('/login', { replace: true });
         return;
       }
@@ -33,12 +33,14 @@ export function useVerifyEmail() {
         const status = response.data?.status;
 
         if (status === 'already_verified') {
-          showSuccessToast(
+          showToast(
+            'success',
             'Email Already Verified',
             'Your email address is already verified.',
           );
         } else {
-          showSuccessToast(
+          showToast(
+            'success',
             'Email Verified',
             'Your email address has been verified successfully!',
           );
@@ -54,7 +56,8 @@ export function useVerifyEmail() {
           const email =
             err.response?.data?.email ?? searchParams.get('email') ?? '';
 
-          showWarningToast(
+          showToast(
+            'warning',
             'Verification Link Expired',
             'This verification link has expired. Please request a new one.',
           );
@@ -66,7 +69,8 @@ export function useVerifyEmail() {
             },
           });
         } else {
-          showErrorToast(
+          showToast(
+            'error',
             'Verification Failed',
             'Something went wrong verifying your email.',
           );

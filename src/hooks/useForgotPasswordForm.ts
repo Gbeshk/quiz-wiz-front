@@ -1,11 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { isAxiosError } from 'axios';
-import { showSuccessToast, showErrorToast } from '@/utils/toast';
+import { showToast } from '@/components/UI/Toast/showToast';
 import { api, ensureCsrfCookie } from '@/lib/api';
 import { emailRules } from '@/utils/validation';
 import type { ForgotPasswordFormValues } from '@/types/auth';
+import { useState } from 'react';
 
 interface LocationState {
   expired?: boolean;
@@ -22,14 +23,13 @@ export function useForgotPasswordForm() {
     handleSubmit,
     setError,
     setValue,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<ForgotPasswordFormValues>({
     defaultValues: {
       email: state?.email || '',
     },
   });
 
-  const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
   const [isExpired, setIsExpired] = useState(false);
 
@@ -48,13 +48,13 @@ export function useForgotPasswordForm() {
   }, [state, setValue]);
 
   const onSubmit = handleSubmit(async (data) => {
-    setSubmitting(true);
     try {
       await ensureCsrfCookie();
       const response = await api.post('/forgot-password', {
         email: data.email,
       });
-      showSuccessToast(
+      showToast(
+        'success',
         'Email sent!',
         response.data?.message ?? 'Check your inbox for the reset link.',
       );
@@ -67,22 +67,20 @@ export function useForgotPasswordForm() {
           err.response.data?.message ??
           'We could not find a user with that email.';
         setError('email', { message });
-        showErrorToast('Request failed', message);
+        showToast('error', 'Request failed', message);
       } else {
         setError('email', {
           message: 'Something went wrong. Please try again.',
         });
-        showErrorToast('Something went wrong', 'Please try again.');
+        showToast('error', 'Something went wrong', 'Please try again.');
       }
-    } finally {
-      setSubmitting(false);
     }
   });
 
   return {
     register,
     errors,
-    submitting,
+    submitting: isSubmitting,
     sent,
     isExpired,
     onSubmit,

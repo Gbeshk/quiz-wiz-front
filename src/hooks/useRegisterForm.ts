@@ -1,9 +1,8 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { isAxiosError } from 'axios';
 import { api, ensureCsrfCookie } from '@/lib/api';
-import { showSuccessToast, showErrorToast } from '@/utils/toast';
+import { showToast } from '@/components/UI/Toast/showToast';
 import {
   emailRules,
   passwordRules,
@@ -13,7 +12,6 @@ import {
 import type { RegisterFormValues } from '@/types/auth';
 
 export function useRegisterForm() {
-  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const {
@@ -22,7 +20,7 @@ export function useRegisterForm() {
     handleSubmit,
     watch,
     setError,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<RegisterFormValues>({
     mode: 'onChange',
   });
@@ -47,7 +45,6 @@ export function useRegisterForm() {
   };
 
   const onSubmit = handleSubmit(async (data) => {
-    setSubmitting(true);
     try {
       await ensureCsrfCookie();
       const response = await api.post('/register', {
@@ -57,7 +54,8 @@ export function useRegisterForm() {
         password_confirmation: data.confirmPassword,
         terms: data.acceptTerms,
       });
-      showSuccessToast(
+      showToast(
+        'success',
         'Registered successfully!',
         response.data?.message ?? 'Verification email is sent.',
       );
@@ -66,10 +64,8 @@ export function useRegisterForm() {
       if (isAxiosError(err) && err.response?.status === 422) {
         mapBackendErrors(err.response.data?.errors);
       } else {
-        showErrorToast('Something went wrong', 'Please try again.');
+        showToast('error', 'Something went wrong', 'Please try again.');
       }
-    } finally {
-      setSubmitting(false);
     }
   });
 
@@ -77,7 +73,7 @@ export function useRegisterForm() {
     register,
     control,
     errors,
-    submitting,
+    submitting: isSubmitting,
     onSubmit,
     rules: {
       username: usernameRules,

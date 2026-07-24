@@ -1,10 +1,12 @@
-import toast, { type Toast as ToastType } from 'react-hot-toast';
+import toast from 'react-hot-toast';
+import type { Toast as ToastType } from 'react-hot-toast';
 import {
   ErrorIconToast,
   SuccessIcon,
   WarningIcon,
 } from '@/components/UI/Icons';
-type ToastVariant = 'success' | 'warning' | 'error';
+
+export type ToastVariant = 'success' | 'warning' | 'error';
 
 interface CustomToastProps {
   t: ToastType;

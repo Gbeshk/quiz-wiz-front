@@ -1,11 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { isAxiosError } from 'axios';
-import { api } from '@/lib/api';
-import {
-  showSuccessToast,
-  showErrorToast,
-  showWarningToast,
-} from '@/utils/toast';
+import { api, ensureCsrfCookie } from '@/lib/api';
+import { showToast } from '@/components/UI/Toast/showToast';
 
 const DEFAULT_COOLDOWN_SECONDS = 60;
 const STORAGE_PREFIX = 'resend_verification_until:';
@@ -56,11 +52,13 @@ export function useResendVerification(email: string | null) {
 
     setResending(true);
     try {
+      await ensureCsrfCookie();
       await api.post('/email/resend-verification', { email });
       setResent(true);
       setCooldown(DEFAULT_COOLDOWN_SECONDS);
       storeCooldown(email, DEFAULT_COOLDOWN_SECONDS);
-      showSuccessToast(
+      showToast(
+        'success',
         'Verification email sent',
         'Please check your inbox for a new link.',
       );
@@ -71,12 +69,13 @@ export function useResendVerification(email: string | null) {
           DEFAULT_COOLDOWN_SECONDS;
         setCooldown(retryAfter);
         storeCooldown(email, retryAfter);
-        showWarningToast(
+        showToast(
+          'warning',
           'Slow down',
           `Please wait ${retryAfter}s before trying again.`,
         );
       } else {
-        showErrorToast('Something went wrong', 'Please try again.');
+        showToast('error', 'Something went wrong', 'Please try again.');
       }
     } finally {
       setResending(false);

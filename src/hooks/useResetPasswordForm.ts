@@ -1,13 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { isAxiosError } from 'axios';
-import { api } from '@/lib/api';
-import {
-  showSuccessToast,
-  showErrorToast,
-  showWarningToast,
-} from '@/utils/toast';
+import { api, ensureCsrfCookie } from '@/lib/api';
+import { showToast } from '@/components/UI/Toast/showToast';
 import { passwordRules } from '@/utils/validation';
 
 export function useResetPasswordForm() {
@@ -16,7 +12,6 @@ export function useResetPasswordForm() {
   const emailParam = searchParams.get('email') || '';
 
   const navigate = useNavigate();
-  const [submitting, setSubmitting] = useState(false);
   const [checkingToken, setCheckingToken] = useState(true);
 
   const checkedRef = useRef(false);
@@ -26,7 +21,7 @@ export function useResetPasswordForm() {
     handleSubmit,
     setError,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
       password: '',
@@ -42,7 +37,8 @@ export function useResetPasswordForm() {
 
     async function checkTokenValidity() {
       if (!token || !emailParam) {
-        showWarningToast(
+        showToast(
+          'warning',
           'Token Expired',
           'Password reset link has expired or is invalid.',
         );
@@ -58,12 +54,14 @@ export function useResetPasswordForm() {
       }
 
       try {
+        await ensureCsrfCookie();
         await api.post('/verify-reset-token', {
           token,
           email: emailParam,
         });
       } catch {
-        showWarningToast(
+        showToast(
+          'warning',
           'Token Expired',
           'Password reset link has expired or is invalid.',
         );
@@ -84,9 +82,8 @@ export function useResetPasswordForm() {
   }, [token, emailParam, navigate]);
 
   const onSubmit = handleSubmit(async (data) => {
-    setSubmitting(true);
-
     try {
+      await ensureCsrfCookie();
       await api.post('/reset-password', {
         token,
         email: emailParam,
@@ -94,7 +91,8 @@ export function useResetPasswordForm() {
         password_confirmation: data.confirmPassword,
       });
 
-      showSuccessToast(
+      showToast(
+        'success',
         'Password Reset',
         'Your password has been reset successfully!',
       );
@@ -107,7 +105,8 @@ export function useResetPasswordForm() {
           responseData?.status === 'invalid_token' ||
           err.response?.status === 400
         ) {
-          showWarningToast(
+          showToast(
+            'warning',
             'Token Expired',
             'Password reset link has expired or is invalid.',
           );
@@ -123,25 +122,24 @@ export function useResetPasswordForm() {
           const passErr = responseData.errors.password?.[0];
           if (passErr) setError('password', { message: passErr });
 
-          showErrorToast('Reset Failed', 'Please fix the errors below.');
+          showToast('error', 'Reset Failed', 'Please fix the errors below.');
         } else {
-          showErrorToast(
+          showToast(
+            'error',
             'Error',
             responseData?.message || 'Something went wrong.',
           );
         }
       } else {
-        showErrorToast('Error', 'Something went wrong. Please try again.');
+        showToast('error', 'Error', 'Something went wrong. Please try again.');
       }
-    } finally {
-      setSubmitting(false);
     }
   });
 
   return {
     register,
     errors,
-    submitting,
+    submitting: isSubmitting,
     checkingToken,
     onSubmit,
     rules: {
