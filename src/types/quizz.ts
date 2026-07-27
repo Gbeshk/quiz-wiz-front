@@ -17,10 +17,7 @@ export interface CategoryChipProps {
   isSelected: boolean;
   onToggle: () => void;
 }
-export interface Difficulty {
-  name: string;
-  color: string;
-}
+
 export interface FilterByPanelProps {
   myQuizzes: boolean;
   notCompleted: boolean;

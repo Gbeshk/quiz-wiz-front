@@ -7,7 +7,6 @@ import type { QuizStatsProps } from '@/types/quizz';
 export default function QuizStats({
   isCompleted,
   completedDate,
-  totalTimeMinutes,
   timeTakenSeconds,
   totalUsers,
 }: QuizStatsProps) {

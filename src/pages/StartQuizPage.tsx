@@ -132,7 +132,11 @@ export default function StartQuizPage() {
           selectedAnswers={selectedAnswers}
           onSelectOption={handleSelectOption}
         />
-        <TimerCard formattedTime={formattedTime} onSubmit={handleSubmit} />
+        <TimerCard
+          isSubmitting={isSubmitting}
+          formattedTime={formattedTime}
+          onSubmit={handleSubmit}
+        />
       </div>
       {submitError && (
         <p className="mt-4 text-center text-sm text-red-500">{submitError}</p>

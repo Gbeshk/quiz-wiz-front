@@ -3,10 +3,11 @@ import { forwardRef } from 'react';
 interface TimerCardProps {
   formattedTime: string;
   onSubmit: () => void;
+  isSubmitting: boolean;
 }
 
 const TimerCard = forwardRef<HTMLDivElement, TimerCardProps>(
-  ({ formattedTime, onSubmit }, ref) => {
+  ({ formattedTime, onSubmit, isSubmitting }, ref) => {
     return (
       <div
         ref={ref}
@@ -21,9 +22,10 @@ const TimerCard = forwardRef<HTMLDivElement, TimerCardProps>(
         <div className="bg-auth-border h-px w-83.5"></div>
         <button
           onClick={onSubmit}
-          className="font-inter bg-auth-link flex h-12 w-83.5 cursor-pointer items-center justify-center rounded-xl text-base font-semibold text-white"
+          disabled={isSubmitting}
+          className="font-inter bg-auth-link flex h-12 w-83.5 cursor-pointer items-center justify-center rounded-xl text-base font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
         >
-          Submit
+          {isSubmitting ? 'Submitting...' : 'Submit'}
         </button>
       </div>
     );
