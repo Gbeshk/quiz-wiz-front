@@ -1,12 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import { showToast } from '@/components/UI/Toast/showToast';
 import { api, ensureCsrfCookie } from '@/lib/api';
 import { emailRules } from '@/utils/validation';
 import type { ForgotPasswordFormValues } from '@/types/auth';
-import { useState } from 'react';
+import { useEffect } from 'react';
 
 interface LocationState {
   expired?: boolean;
@@ -23,44 +24,36 @@ export function useForgotPasswordForm() {
     handleSubmit,
     setError,
     setValue,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<ForgotPasswordFormValues>({
-    defaultValues: {
-      email: state?.email || '',
-    },
+    defaultValues: { email: state?.email || '' },
   });
 
-  const [sent, setSent] = useState(false);
   const [isExpired, setIsExpired] = useState(false);
-
   const handledStateRef = useRef(false);
 
   useEffect(() => {
     if (handledStateRef.current) return;
-
     if (state?.expired) {
       handledStateRef.current = true;
       setIsExpired(true);
-      if (state.email) {
-        setValue('email', state.email);
-      }
+      if (state.email) setValue('email', state.email);
     }
   }, [state, setValue]);
 
-  const onSubmit = handleSubmit(async (data) => {
-    try {
+  const forgotPasswordMutation = useMutation({
+    mutationFn: async (data: ForgotPasswordFormValues) => {
       await ensureCsrfCookie();
       const response = await api.post('/forgot-password', {
         email: data.email,
       });
-      showToast(
-        'success',
-        'Email sent!',
-        response.data?.message ?? 'Check your inbox for the reset link.',
-      );
-      setSent(true);
+      return response.data?.message ?? 'Check your inbox for the reset link.';
+    },
+    onSuccess: (message) => {
+      showToast('success', 'Email sent!', message);
       setIsExpired(false);
-    } catch (err) {
+    },
+    onError: (err) => {
       if (isAxiosError(err) && err.response?.status === 422) {
         const message =
           err.response.data?.errors?.email?.[0] ??
@@ -74,14 +67,16 @@ export function useForgotPasswordForm() {
         });
         showToast('error', 'Something went wrong', 'Please try again.');
       }
-    }
+    },
   });
+
+  const onSubmit = handleSubmit((data) => forgotPasswordMutation.mutate(data));
 
   return {
     register,
     errors,
-    submitting: isSubmitting,
-    sent,
+    submitting: forgotPasswordMutation.isPending,
+    sent: forgotPasswordMutation.isSuccess,
     isExpired,
     onSubmit,
     rules: { email: emailRules },

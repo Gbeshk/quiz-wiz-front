@@ -2,39 +2,30 @@ import { forwardRef } from 'react';
 
 interface TimerCardProps {
   formattedTime: string;
-  fixedPosition: { top: number; left: number } | null;
   onSubmit: () => void;
+  isSubmitting: boolean;
 }
 
 const TimerCard = forwardRef<HTMLDivElement, TimerCardProps>(
-  ({ formattedTime, fixedPosition, onSubmit }, ref) => {
+  ({ formattedTime, onSubmit, isSubmitting }, ref) => {
     return (
       <div
         ref={ref}
         className="relative z-40 flex h-65.25 w-98.75 flex-col items-center gap-8 rounded-xl px-6 py-8 shadow-[0px_4px_6px_-2px_#10182808,0px_12px_16px_-4px_#10182814]"
-        style={
-          fixedPosition
-            ? {
-                position: 'fixed',
-                top: fixedPosition.top,
-                left: fixedPosition.left,
-              }
-            : undefined
-        }
       >
         <div className="text-auth-placeholder font-inter border-hairline border-auth-border absolute top-0 left-1/2 flex h-12 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-lg text-base leading-8 font-semibold shadow-[0px_1px_4px_0px_#00000026]">
           Timer
         </div>
-
         <p className="text-auth-text font-inter mt-5 align-middle text-6xl tabular-nums">
           {formattedTime}
         </p>
         <div className="bg-auth-border h-px w-83.5"></div>
         <button
           onClick={onSubmit}
-          className="font-inter bg-auth-link flex h-12 w-83.5 cursor-pointer items-center justify-center rounded-xl text-base font-semibold text-white"
+          disabled={isSubmitting}
+          className="font-inter bg-auth-link flex h-12 w-83.5 cursor-pointer items-center justify-center rounded-xl text-base font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
         >
-          Submit
+          {isSubmitting ? 'Submitting...' : 'Submit'}
         </button>
       </div>
     );

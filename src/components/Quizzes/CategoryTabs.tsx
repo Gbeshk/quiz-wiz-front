@@ -1,11 +1,12 @@
 import { useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
-import { ALL_QUIZZES, PAGE_CATEGORIES } from '@/constants/categories';
+import { ALL_QUIZZES } from '@/constants/categories';
+import { useCategories } from '@/hooks/useCategories';
 import { useCategoryScroller } from '@/hooks/useCategoryScroller';
 import {
-  getActiveCategory,
+  getActiveCategories,
+  toggleActiveCategory,
   parseFilterSearchParams,
-  setActiveCategory,
 } from '@/lib/filterParams';
 import FilterModal from '../Modals/FilterModal/FilterModal';
 import CategoryTabList from './CategoryTabList';
@@ -14,7 +15,23 @@ import FilterButton from './FilterButton';
 
 export default function CategoryTabs() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeCategory = getActiveCategory(searchParams);
+  const { categories } = useCategories();
+  const pageCategories = [ALL_QUIZZES, ...categories];
+
+  const selectedCategories = getActiveCategories(searchParams);
+  const isAllActive = selectedCategories.length === 0;
+
+  const [lastClickedCategory, setLastClickedCategory] = useState<string>(
+    isAllActive
+      ? ALL_QUIZZES
+      : selectedCategories[selectedCategories.length - 1],
+  );
+
+  const indicatorCategory = isAllActive
+    ? ALL_QUIZZES
+    : selectedCategories.includes(lastClickedCategory)
+      ? lastClickedCategory
+      : selectedCategories[selectedCategories.length - 1];
 
   const {
     scrollRef,
@@ -31,32 +48,30 @@ export default function CategoryTabs() {
     handleMouseUp,
     handleMouseLeave,
     wasDragged,
-  } = useCategoryScroller(activeCategory);
+  } = useCategoryScroller(indicatorCategory);
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const confirmedFilters = parseFilterSearchParams(searchParams);
   const filterCount =
     confirmedFilters.selectedLevels.length +
-    (confirmedFilters.selectedCategories.length > 1
-      ? confirmedFilters.selectedCategories.length
-      : 0) +
+    selectedCategories.length +
     (confirmedFilters.myQuizzes ? 1 : 0) +
     (confirmedFilters.notCompleted ? 1 : 0) +
-    (confirmedFilters.sortBy ? 1 : 0) +
-    (activeCategory !== ALL_QUIZZES ? 1 : 0);
+    (confirmedFilters.sortBy ? 1 : 0);
   const hasConfirmedFilters = filterCount > 0;
 
   const handleSelectCategory = (category: string) => {
     if (wasDragged()) return;
-    setSearchParams(setActiveCategory(searchParams, category));
+    setSearchParams(toggleActiveCategory(searchParams, category));
+    setLastClickedCategory(category);
   };
 
   return (
     <div className="mt-6 flex w-full items-center justify-between gap-2">
       <CategoryTabList
-        categories={PAGE_CATEGORIES}
-        activeCategory={activeCategory}
+        categories={pageCategories}
+        selectedCategories={selectedCategories}
         onSelectCategory={handleSelectCategory}
         scrollRef={scrollRef}
         registerButtonRef={registerButtonRef}
@@ -90,6 +105,7 @@ export default function CategoryTabs() {
           <FilterModal
             isOpen={isFilterOpen}
             onClose={() => setIsFilterOpen(false)}
+            categories={categories}
           />
         )}
       </div>

@@ -29,7 +29,8 @@ const QuizTitleSection = forwardRef<HTMLHeadingElement, QuizTitleSectionProps>(
               </span>
             </div>
           ))}
-          <div className="-mt-8">
+          <div className="-mt-8 flex">
+            <div className="bg-auth-border mt-9 mr-3 h-3.5 w-px"></div>
             <QuizMetaRow quiz={quiz} />
           </div>
         </div>

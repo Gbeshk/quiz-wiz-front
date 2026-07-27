@@ -1,6 +1,8 @@
 import { useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
 
 import { useFilterModal } from '@/hooks/useFilterModal';
+import { useDifficulties } from '@/hooks/useDifficulties';
 import {
   buildFilterSearchParams,
   parseFilterSearchParams,
@@ -10,11 +12,16 @@ import FilterByPanel from './FilterByPanel';
 import SortByPanel from './SortByPanel';
 import type { FilterModalProps } from '@/types/quizz';
 import { cn } from '@/lib';
-import { useState } from 'react';
 
-export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
+export default function FilterModal({
+  isOpen,
+  onClose,
+  categories,
+}: FilterModalProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState('');
+  const { difficulties } = useDifficulties();
+
   const {
     selectedLevels,
     selectedCategories,
@@ -75,7 +82,9 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
           myQuizzes={myQuizzes}
           notCompleted={notCompleted}
           selectedLevels={selectedLevels}
+          categories={categories}
           selectedCategories={selectedCategories}
+          difficulties={difficulties}
           searchTerm={searchTerm}
           onToggleMyQuizzes={() => setMyQuizzes((prev) => !prev)}
           onToggleNotCompleted={() => setNotCompleted((prev) => !prev)}

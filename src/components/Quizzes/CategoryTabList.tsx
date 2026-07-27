@@ -1,10 +1,11 @@
 import { cn } from '@/lib';
+import { ALL_QUIZZES } from '@/constants/categories';
 import CategoryScrollArrow from './CategoryScrollArrow';
 import type { CategoryTabListProps } from '@/types/quizz';
 
 export default function CategoryTabList({
   categories,
-  activeCategory,
+  selectedCategories,
   onSelectCategory,
   scrollRef,
   registerButtonRef,
@@ -46,22 +47,27 @@ export default function CategoryTabList({
       >
         <div>
           <div className="relative flex gap-5.5">
-            {categories.map((category) => (
-              <button
-                key={category}
-                ref={registerButtonRef(category)}
-                type="button"
-                onClick={() => onSelectCategory(category)}
-                className={cn(
-                  'font-inter shrink-0 cursor-pointer text-sm leading-5 font-semibold whitespace-nowrap transition-colors duration-200',
-                  activeCategory === category
-                    ? 'text-black'
-                    : 'text-auth-placeholder',
-                )}
-              >
-                {category}
-              </button>
-            ))}
+            {categories.map((category) => {
+              const isSelected =
+                category === ALL_QUIZZES
+                  ? selectedCategories.length === 0
+                  : selectedCategories.includes(category);
+
+              return (
+                <button
+                  key={category}
+                  ref={registerButtonRef(category)}
+                  type="button"
+                  onClick={() => onSelectCategory(category)}
+                  className={cn(
+                    'font-inter shrink-0 cursor-pointer text-sm leading-5 font-semibold whitespace-nowrap transition-colors duration-200',
+                    isSelected ? 'text-black' : 'text-auth-placeholder',
+                  )}
+                >
+                  {category}
+                </button>
+              );
+            })}
           </div>
 
           <div className="relative mt-4 h-0.5 w-full">

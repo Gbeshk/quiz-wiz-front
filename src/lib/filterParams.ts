@@ -51,22 +51,29 @@ export function parseFilterSearchParams(params: URLSearchParams): FilterState {
   };
 }
 
-export function getActiveCategory(params: URLSearchParams): string {
-  const categories = params.getAll('categories[]');
-  return categories.length === 1 ? categories[0] : ALL_QUIZZES;
+export function getActiveCategories(params: URLSearchParams): string[] {
+  return params.getAll('categories[]');
 }
 
-export function setActiveCategory(
+export function toggleActiveCategory(
   params: URLSearchParams,
   category: string,
 ): URLSearchParams {
   const next = new URLSearchParams(params);
-  next.delete('categories[]');
 
-  if (category !== ALL_QUIZZES) {
-    next.append('categories[]', category);
+  if (category === ALL_QUIZZES) {
+    next.delete('categories[]');
+    return next;
   }
 
+  const current = next.getAll('categories[]');
+  next.delete('categories[]');
+
+  const updated = current.includes(category)
+    ? current.filter((c) => c !== category)
+    : [...current, category];
+
+  updated.forEach((c) => next.append('categories[]', c));
   return next;
 }
 

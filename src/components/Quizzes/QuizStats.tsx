@@ -1,12 +1,13 @@
 import { cn } from '@/lib';
 import SortCheckIcon from '@/components/UI/Icons/SortCheckIcon';
 import NotCompletedIcon from '../UI/Icons/NotCompletedIcon';
+import { formatDate, formatTime } from '@/utils/quizTime';
 import type { QuizStatsProps } from '@/types/quizz';
 
 export default function QuizStats({
   isCompleted,
   completedDate,
-  totalTimeMinutes,
+  timeTakenSeconds,
   totalUsers,
 }: QuizStatsProps) {
   return (
@@ -30,7 +31,9 @@ export default function QuizStats({
               isCompleted ? 'text-auth-text' : 'text-not-completed-quiz-text',
             )}
           >
-            {isCompleted ? completedDate : 'Date, Time'}
+            {isCompleted && completedDate
+              ? formatDate(completedDate)
+              : 'Date, Time'}
           </p>
         </div>
       </div>
@@ -44,7 +47,9 @@ export default function QuizStats({
             isCompleted ? 'text-auth-text' : 'text-not-completed-quiz-text',
           )}
         >
-          {isCompleted ? `${totalTimeMinutes} Minute` : 'N/A'}
+          {isCompleted && timeTakenSeconds !== undefined
+            ? formatTime(timeTakenSeconds)
+            : 'N/A'}
         </p>
       </div>
       <div>
