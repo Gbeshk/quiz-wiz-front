@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuiz } from '@/hooks/useQuiz';
 import QuizProgressHeader from '@/components/Quizzes/StartQuiz/QuizProgressHeader';
 import QuizTitleSection from '@/components/Quizzes/StartQuiz/QuizTitleSection';
@@ -40,6 +40,21 @@ export default function StartQuizPage() {
 
   const formattedTime = formatTime(secondsLeft);
 
+  const answeredCount = quiz
+    ? quiz.questions.filter((q) => (selectedAnswers[q.id]?.length ?? 0) > 0)
+        .length
+    : 0;
+  const progressPercent = quiz
+    ? (answeredCount / quiz.questions.length) * 100
+    : 0;
+  const allAnswered = quiz ? answeredCount === quiz.questions.length : false;
+
+  useEffect(() => {
+    if (allAnswered && submitError) {
+      setSubmitError(null);
+    }
+  }, [allAnswered, submitError]);
+
   if (isLoading) {
     return <div className="mx-auto flex w-360 flex-col px-24">Loading...</div>;
   }
@@ -61,11 +76,6 @@ export default function StartQuizPage() {
       </div>
     );
   }
-
-  const answeredCount = quiz.questions.filter(
-    (q) => (selectedAnswers[q.id]?.length ?? 0) > 0,
-  ).length;
-  const progressPercent = (answeredCount / quiz.questions.length) * 100;
 
   const handleSelectOption = (
     questionId: string,
@@ -92,6 +102,11 @@ export default function StartQuizPage() {
   const timeTaken = formatTime(timeTakenSeconds);
 
   const handleSubmit = async () => {
+    if (!allAnswered) {
+      setSubmitError('Please answer all questions before submitting.');
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitError(null);
     try {
@@ -136,11 +151,10 @@ export default function StartQuizPage() {
           isSubmitting={isSubmitting}
           formattedTime={formattedTime}
           onSubmit={handleSubmit}
+          error={submitError}
         />
       </div>
-      {submitError && (
-        <p className="mt-4 text-center text-sm text-red-500">{submitError}</p>
-      )}
+
       {isResultModalOpen && gradedResult && (
         <ResultModal
           quiz={quiz}
