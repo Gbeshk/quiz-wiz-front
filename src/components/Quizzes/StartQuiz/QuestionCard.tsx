@@ -36,12 +36,11 @@ export default function QuestionCard({
         {question.question}
       </h1>
 
-      {question.correctAnswers && (
+      {question.type === 'multiple' && !!question.correctAnswersCount && (
         <div className="bg-optional-quiz-div-bg border-px border-optional-quiz-div-border mt-6 flex h-9.25 w-82.75 items-center rounded-sm border">
           <p className="font-inter text-optional-quiz-div-text flex items-center gap-2.5 pl-4.5 text-sm font-medium">
             <InfoIcon />
-            You can select {question.correctAnswers.length} options from
-            question
+            You can select {question.correctAnswersCount} options from question
           </p>
         </div>
       )}

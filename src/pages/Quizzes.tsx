@@ -3,7 +3,7 @@ import { LandingFooter, LandingHeader } from '@/components/Landing';
 import CategoryTabs from '@/components/Quizzes/CategoryTabs';
 import QuizGrid from '@/components/Quizzes/QuizGrid';
 import LoadMoreButton from '@/components/Quizzes/LoadMoreButton';
-import { MOCK_QUIZZES } from '@/constants/mockQuizzes';
+import { useQuizzes } from '@/hooks/useQuizzes';
 import { useLoadMore } from '@/hooks/useLoadMore';
 import { useFilteredQuizzes } from '@/hooks/useFilteredQuizzes';
 
@@ -11,7 +11,8 @@ const PAGE_SIZE = 9;
 
 export default function QuizzesPage() {
   const [searchParams] = useSearchParams();
-  const filteredQuizzes = useFilteredQuizzes(MOCK_QUIZZES, searchParams);
+  const { quizzes, isLoading, error } = useQuizzes();
+  const filteredQuizzes = useFilteredQuizzes(quizzes, searchParams);
   const { visibleItems, hasMore, isLoadingMore, handleLoadMore } = useLoadMore(
     filteredQuizzes,
     PAGE_SIZE,
@@ -23,9 +24,23 @@ export default function QuizzesPage() {
 
       <main className="mx-auto flex w-full max-w-360 grow flex-col px-24">
         <CategoryTabs />
-        <QuizGrid quizzes={visibleItems} />
-        {hasMore && (
-          <LoadMoreButton isLoading={isLoadingMore} onClick={handleLoadMore} />
+
+        {isLoading && <p className="py-12 text-center">Loading quizzes…</p>}
+
+        {error && !isLoading && (
+          <p className="py-12 text-center text-red-500">{error}</p>
+        )}
+
+        {!isLoading && !error && (
+          <>
+            <QuizGrid quizzes={visibleItems} />
+            {hasMore && (
+              <LoadMoreButton
+                isLoading={isLoadingMore}
+                onClick={handleLoadMore}
+              />
+            )}
+          </>
         )}
       </main>
 

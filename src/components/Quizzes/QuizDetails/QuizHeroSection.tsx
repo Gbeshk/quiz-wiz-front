@@ -26,8 +26,16 @@ export default function QuizHeroSection({ quiz }: QuizHeroSectionProps) {
         </Link>
       </div>
 
-      <div className="flex h-76.75 w-81.5 shrink-0 items-center justify-center rounded-3xl bg-amber-100">
-        Image
+      <div className="flex h-76.75 w-81.5 shrink-0 items-center justify-center overflow-hidden rounded-3xl bg-amber-100">
+        {quiz.image ? (
+          <img
+            src={quiz.image}
+            alt={quiz.title}
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          'Image'
+        )}
       </div>
     </div>
   );

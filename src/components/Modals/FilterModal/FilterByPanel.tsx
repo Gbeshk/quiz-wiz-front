@@ -1,5 +1,3 @@
-import { LEVELS } from '@/constants/filters';
-import { FILTER_CATEGORIES } from '@/constants/categories';
 import ToggleRow from './ToggleRow';
 import LevelChip from './LevelChip';
 import CategoryChip from './CategoryChip';
@@ -14,15 +12,17 @@ export default function FilterByPanel({
   onToggleMyQuizzes,
   onToggleNotCompleted,
   onToggleLevel,
+  difficulties,
+  categories,
   onToggleCategory,
 }: FilterByPanelProps) {
   const normalizedSearch = searchTerm.trim().toLowerCase();
 
-  const visibleLevels = LEVELS.filter((level) =>
-    level.label.toLowerCase().includes(normalizedSearch),
+  const visibleLevels = difficulties.filter((difficulty) =>
+    difficulty.name.toLowerCase().includes(normalizedSearch),
   );
 
-  const visibleCategories = FILTER_CATEGORIES.filter((category) =>
+  const visibleCategories = categories.filter((category) =>
     category.toLowerCase().includes(normalizedSearch),
   );
 
@@ -47,14 +47,14 @@ export default function FilterByPanel({
       <p className="font-inter text-footer-text mt-4 text-sm leading-5 font-semibold">
         Levels
       </p>
-      <div className="mt-3 flex flex-wrap gap-2">
+      <div className="mt-3 flex h-7 max-h-20 flex-wrap gap-2 overflow-y-auto pr-1">
         {visibleLevels.length > 0 ? (
-          visibleLevels.map((level) => (
+          visibleLevels.map((difficulty) => (
             <LevelChip
-              key={level.label}
-              level={level}
-              isSelected={selectedLevels.includes(level.label)}
-              onToggle={() => onToggleLevel(level.label)}
+              key={difficulty.name}
+              difficulty={difficulty}
+              isSelected={selectedLevels.includes(difficulty.name)}
+              onToggle={() => onToggleLevel(difficulty.name)}
             />
           ))
         ) : (
@@ -63,13 +63,12 @@ export default function FilterByPanel({
           </p>
         )}
       </div>
-
       <div className="bg-modal-line mt-4 h-px w-full" />
       <p className="font-inter text-footer-text mt-5 text-sm leading-5 font-semibold">
         Categories
       </p>
       <div className="mt-3 flex flex-wrap gap-2">
-        <div className="flex flex-wrap gap-x-3 gap-y-4">
+        <div className="flex h-64 flex-wrap gap-x-3 gap-y-4 overflow-auto pb-2">
           {visibleCategories.length > 0 ? (
             visibleCategories.map((category) => (
               <CategoryChip

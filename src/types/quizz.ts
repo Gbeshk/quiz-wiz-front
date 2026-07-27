@@ -2,12 +2,9 @@ import type { ComponentType } from 'react';
 
 export type SortKey = 'az' | 'za' | 'popular' | 'newest' | 'oldest';
 
-export interface Level {
-  label: string;
-  bgClass: string;
-  textClass: string;
-  selectedClass: string;
-  hoverClass: string;
+export interface Difficulty {
+  name: string;
+  color: string;
 }
 
 export interface SortOptionConfig {
@@ -20,6 +17,10 @@ export interface CategoryChipProps {
   isSelected: boolean;
   onToggle: () => void;
 }
+export interface Difficulty {
+  name: string;
+  color: string;
+}
 export interface FilterByPanelProps {
   myQuizzes: boolean;
   notCompleted: boolean;
@@ -28,15 +29,18 @@ export interface FilterByPanelProps {
   searchTerm: string;
   onToggleMyQuizzes: () => void;
   onToggleNotCompleted: () => void;
+  categories: string[];
+  difficulties: Difficulty[];
   onToggleLevel: (label: string) => void;
   onToggleCategory: (category: string) => void;
 }
 export interface FilterModalProps {
   isOpen: boolean;
   onClose: () => void;
+  categories: string[];
 }
 export interface LevelChipProps {
-  level: Level;
+  difficulty: Difficulty;
   isSelected: boolean;
   onToggle: () => void;
 }
@@ -72,7 +76,7 @@ export interface FilterButtonProps {
 
 export interface CategoryTabListProps {
   categories: string[];
-  activeCategory: string;
+  selectedCategories: string[];
   onSelectCategory: (category: string) => void;
   scrollRef: React.RefObject<HTMLDivElement | null>;
   registerButtonRef: (
@@ -101,28 +105,36 @@ export interface Question {
   id: string;
   question: string;
   options: string[];
+  answerIds: number[];
   type: 'single' | 'multiple';
-  correctAnswer?: number;
-  correctAnswers?: number[];
+  correctAnswersCount?: number;
   points: number;
 }
-
+export interface QuizAttemptInfo {
+  pointsEarned: number;
+  timeTakenSeconds: number;
+  completedAt: string;
+}
 export interface Quiz {
   id: string;
   title: string;
   description: string;
-  categories: [string, string];
+  categories: string[];
   questions: Question[];
   isCompleted: boolean;
   completedDate?: string;
   totalTimeMinutes: number;
   totalUsers: number;
   difficulty: string;
+  difficultyColor: string;
   pointsEarned: number;
   pointsTotal: number;
   timesPlayed: number;
   instructions: string;
-  photoUrl?: string;
+  image: string | null;
+  timeTakenSeconds?: number;
+  questionsCount: number;
+  myAttempt: QuizAttemptInfo | null;
 }
 export interface QuizCardProps {
   quiz: Quiz;
@@ -132,6 +144,7 @@ export interface QuizDifficultyPointsProps {
   difficulty: string;
   isCompleted: boolean;
   pointsEarned?: number;
+  difficultyColor: string;
   pointsTotal?: number;
 }
 export interface QuizStatsProps {
@@ -139,6 +152,7 @@ export interface QuizStatsProps {
   completedDate?: string;
   totalTimeMinutes: number;
   totalUsers: number;
+  timeTakenSeconds?: number;
 }
 export interface QuizHeroSectionProps {
   quiz: Quiz;

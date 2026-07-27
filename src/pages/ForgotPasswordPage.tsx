@@ -12,14 +12,6 @@ export default function ForgotPasswordPage() {
   const { register, errors, submitting, sent, isExpired, onSubmit, rules } =
     useForgotPasswordForm();
 
-  const buttonLabel = submitting
-    ? 'Sending...'
-    : sent
-      ? 'Link sent'
-      : isExpired
-        ? 'Resend reset link'
-        : 'Send';
-
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-white">
       <div className="flex w-360 shrink-0 gap-20.5">
