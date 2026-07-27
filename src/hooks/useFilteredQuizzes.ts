@@ -62,7 +62,7 @@ export function useFilteredQuizzes(
           case 'za':
             return b.title.localeCompare(a.title);
           case 'popular':
-            return b.totalUsers - a.totalUsers;
+            return b.timesPlayed - a.timesPlayed;
           case 'newest':
             return Number(b.id) - Number(a.id);
           case 'oldest':
