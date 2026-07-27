@@ -57,5 +57,18 @@
   --color-modal-bg: #101828b2;
   --color-mistakes-text: #e64646;
   --color-correct-text: #12b76a;
+  --color-toast-bg: #242c32;
   --color-logout-hover-bg: #d0d5dd4d;
+  --color-toast-text: #c8c5c5;
+  --color-success-toast-line: #01e17b;
+  --color-warning-toast-line: #ffd21f;
+  --color-error-toast-line: #f04349;
+}
+@keyframes toast-timer {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
 }

@@ -9,3 +9,7 @@ export { default as Hello } from './Hello';
 export { default as CheckBoxIcon } from './CheckBoxIcon';
 export { default as SearchIcon } from './SearchIcon';
 export { default as CloseIcon } from './CloseIcon';
+export { default as WarningIcon } from './WarningIcon';
+export { default as SuccessIcon } from './SuccessIcon';
+export { default as ErrorIconToast } from './ErrorIconToast';
+export { default as ResendIcon } from './ResendIcon';

@@ -1,30 +1,14 @@
-import { useForm } from 'react-hook-form';
 import { Hello } from '@/components/UI/Icons';
 import {
-  AuthInput,
-  RememberForgotRow,
   BackButton,
   AuthFooter,
-  SubmitButton,
   AuthHeroImage,
   AuthHeader,
 } from '@/components/Auth';
-import { emailRules, passwordRules } from '@/utils/validation';
-import type { LoginFormValues } from '@/types/auth';
 import { LoginHero } from '@/assets';
+import { LoginForm } from '@/components/Auth/LoginForm';
 
 export default function LoginPage() {
-  const {
-    register,
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormValues>();
-
-  const onSubmit = (data: LoginFormValues) => {
-    console.log(data);
-  };
-
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-white">
       <div className="flex w-360 shrink-0 gap-20.5">
@@ -44,36 +28,7 @@ export default function LoginPage() {
             }
           />
 
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="mt-10 flex flex-col gap-6"
-          >
-            <AuthInput<LoginFormValues>
-              label="Email address"
-              name="email"
-              placeholder="Your email"
-              register={register}
-              rules={emailRules}
-              error={errors.email}
-            />
-
-            <AuthInput<LoginFormValues>
-              label="Password"
-              name="password"
-              type="password"
-              register={register}
-              rules={passwordRules}
-              placeholder="••••••••"
-              error={errors.password}
-            />
-
-            <RememberForgotRow<LoginFormValues>
-              control={control}
-              name="rememberMe"
-            />
-
-            <SubmitButton label="Log in" />
-          </form>
+          <LoginForm />
 
           <AuthFooter
             prompt="Don't have an account?"

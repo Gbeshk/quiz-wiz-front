@@ -1,4 +1,3 @@
-import { useForm } from 'react-hook-form';
 import { Logo } from '@/components/UI/Icons';
 import {
   BackButton,
@@ -6,28 +5,24 @@ import {
   AuthInput,
   AuthFooter,
 } from '@/components/Auth';
-import { confirmPasswordRules, passwordRules } from '@/utils/validation';
-import type { ResetPasswordFormValues } from '@/types/auth';
+import { useResetPasswordForm } from '@/hooks/useResetPasswordForm';
 import { ForgotPasswordHero } from '@/assets';
 
 export default function ResetPasswordPage() {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<ResetPasswordFormValues>();
+  const { register, errors, submitting, checkingToken, onSubmit, rules } =
+    useResetPasswordForm();
 
-  const password = watch('password');
-
-  const onSubmit = (data: ResetPasswordFormValues) => {
-    console.log(data);
-  };
+  if (checkingToken) {
+    return (
+      <div className="flex min-h-screen w-full items-center justify-center bg-white">
+        <p className="font-inter text-sm text-gray-500">Verifying link...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-white">
       <div className="flex w-360 shrink-0 gap-20.5">
-        {' '}
         <div className="relative">
           <div className="absolute top-10 left-10">
             <Logo />
@@ -48,33 +43,30 @@ export default function ResetPasswordPage() {
             Please type something you'll remember
           </p>
 
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="mt-10 flex flex-col gap-6"
-          >
-            <AuthInput<ResetPasswordFormValues>
+          <form onSubmit={onSubmit} className="mt-10 flex flex-col gap-6">
+            <AuthInput
               label="New password"
               name="password"
               type="password"
               register={register}
-              rules={passwordRules}
+              rules={rules.password}
               placeholder="must be 8 characters"
               error={errors.password}
             />
 
             <div className="mt-3">
-              <AuthInput<ResetPasswordFormValues>
+              <AuthInput
                 label="Confirm password"
                 name="confirmPassword"
                 type="password"
                 register={register}
                 placeholder="repeat password"
-                rules={confirmPasswordRules<ResetPasswordFormValues>(password)}
+                rules={rules.confirmPassword}
                 error={errors.confirmPassword}
               />
             </div>
 
-            <SubmitButton label="Reset password" />
+            <SubmitButton label="Reset password" disabled={submitting} />
           </form>
 
           <AuthFooter

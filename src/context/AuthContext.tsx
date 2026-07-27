@@ -1,32 +1,54 @@
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import { createContext, useContext, type ReactNode } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { api } from '@/lib/api';
+import type { User } from '@/types/auth';
 
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  profilePic?: string;
-}
 interface AuthContextValue {
   user: User | null;
   isAuthenticated: boolean;
-  login: (user: User) => void;
-  logout: () => void;
+  isLoading: boolean;
+  login: (email: string, password: string, remember: boolean) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>({
-    id: '1',
-    name: 'Test User',
-    email: 'test@test.com',
+  const queryClient = useQueryClient();
+
+  const { data: user, isLoading } = useQuery({
+    queryKey: ['auth', 'user'],
+    queryFn: async () => {
+      try {
+        const { data } = await api.get<User>('/user');
+        return data;
+      } catch {
+        return null;
+      }
+    },
+    staleTime: Infinity,
+    retry: false,
   });
-  const login = (user: User) => setUser(user);
-  const logout = () => setUser(null);
+
+  const login = async (email: string, password: string, remember: boolean) => {
+    const { data } = await api.post('/login', { email, password, remember });
+    queryClient.setQueryData(['auth', 'user'], data.user);
+  };
+
+  const logout = async () => {
+    await api.post('/logout');
+    queryClient.setQueryData(['auth', 'user'], null);
+  };
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated: !!user, login, logout }}
+      value={{
+        user: user ?? null,
+        isAuthenticated: !!user,
+        isLoading,
+        login,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>

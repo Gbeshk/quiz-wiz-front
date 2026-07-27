@@ -1,7 +1,7 @@
 export interface LoginFormValues {
   email: string;
   password: string;
-  rememberMe: boolean;
+  remember: boolean;
 }
 
 export interface RegisterFormValues {
@@ -18,4 +18,10 @@ export interface ForgotPasswordFormValues {
 export interface ResetPasswordFormValues {
   password: string;
   confirmPassword: string;
+}
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  email_verified_at: string | null;
 }

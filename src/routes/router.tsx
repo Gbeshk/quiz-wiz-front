@@ -10,6 +10,7 @@ import QuizDetailsPage from '@/pages/QuizDetailsPage';
 import StartQuizPage from '@/pages/StartQuizPage';
 import NotFoundPage from '@/pages/NotFoundPage';
 import InternalErrorPage from '@/pages/InternalErrorPage';
+import VerifyEmailPage from '@/pages/VerifyEmailPage';
 
 export const router = createBrowserRouter([
   {
@@ -34,17 +35,16 @@ export const router = createBrowserRouter([
     element: <ResetPasswordPage />,
   },
   {
-    path: '/quizzes',
-    element: <Quizzes />,
+    path: '/email/verify/:id/:hash',
+    element: <VerifyEmailPage />,
   },
   {
-    path: '/quizzes/:id',
-    element: <QuizDetailsPage />,
+    path: '/verify-email',
+    element: <VerifyEmailPage />,
   },
-  {
-    path: '/quizzes/:id/start',
-    element: <StartQuizPage />,
-  },
+  { path: '/quizzes', element: <Quizzes /> },
+  { path: '/quizzes/:id', element: <QuizDetailsPage /> },
+  { path: '/quizzes/:id/start', element: <StartQuizPage /> },
   {
     path: '*',
     element: <NotFoundPage />,

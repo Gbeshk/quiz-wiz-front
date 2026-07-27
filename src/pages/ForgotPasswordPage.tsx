@@ -1,4 +1,3 @@
-import { useForm } from 'react-hook-form';
 import {
   AuthInput,
   BackButton,
@@ -6,20 +5,20 @@ import {
   AuthHeroImage,
   AuthHeader,
 } from '@/components/Auth';
-import { emailRules } from '@/utils/validation';
-import type { ForgotPasswordFormValues } from '@/types/auth';
+import { useForgotPasswordForm } from '@/hooks/useForgotPasswordForm';
 import { ForgotPasswordHero } from '@/assets';
 
 export default function ForgotPasswordPage() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ForgotPasswordFormValues>();
+  const { register, errors, submitting, sent, isExpired, onSubmit, rules } =
+    useForgotPasswordForm();
 
-  const onSubmit = (data: ForgotPasswordFormValues) => {
-    console.log(data);
-  };
+  const buttonLabel = submitting
+    ? 'Sending...'
+    : sent
+      ? 'Link sent'
+      : isExpired
+        ? 'Resend reset link'
+        : 'Send';
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-white">
@@ -37,20 +36,22 @@ export default function ForgotPasswordPage() {
             description="Don't worry! It happens. Please enter the email associated with your account."
           />
 
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="mt-10 flex flex-col gap-6"
-          >
-            <AuthInput<ForgotPasswordFormValues>
+          <form onSubmit={onSubmit} className="mt-10 flex flex-col gap-6">
+            <AuthInput
               label="Email address"
               name="email"
               placeholder="enter your email address"
               register={register}
-              rules={emailRules}
+              rules={rules.email}
               error={errors.email}
             />
-
-            <SubmitButton label="Send" />
+            <SubmitButton
+              label={
+                sent ? 'Link sent' : isExpired ? 'Resend reset link' : 'Send'
+              }
+              loadingLabel="Sending link..."
+              disabled={submitting}
+            />
           </form>
         </div>
       </div>
