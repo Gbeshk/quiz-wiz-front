@@ -12,8 +12,7 @@ export default function QuizDetailsPage() {
   const { id } = useParams<{ id: string }>();
 
   const { quiz, isLoading, error } = useQuiz(id);
-  const sliderQuizzes = useOtherQuizzes(id);
-
+  const { quizzes: sliderQuizzes } = useOtherQuizzes(id);
   if (isLoading) {
     return <p className="py-24 text-center">Loading quiz…</p>;
   }
