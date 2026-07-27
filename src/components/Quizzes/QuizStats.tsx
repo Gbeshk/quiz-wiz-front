@@ -1,6 +1,6 @@
 import { cn } from '@/lib';
 import SortCheckIcon from '@/components/UI/Icons/SortCheckIcon';
-import NotCompletedIcon from '../UI/Icons/NotCompletedIcon';
+import NotCompletedIcon from '@/components/UI/Icons/NotCompletedIcon';
 import { formatDate, formatTime } from '@/utils/quizTime';
 import type { QuizStatsProps } from '@/types/quizz';
 
