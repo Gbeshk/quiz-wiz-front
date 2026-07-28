@@ -4,10 +4,11 @@ interface TimerCardProps {
   formattedTime: string;
   onSubmit: () => void;
   isSubmitting: boolean;
+  error?: string | null;
 }
 
 const TimerCard = forwardRef<HTMLDivElement, TimerCardProps>(
-  ({ formattedTime, onSubmit, isSubmitting }, ref) => {
+  ({ formattedTime, onSubmit, isSubmitting, error }, ref) => {
     return (
       <div
         ref={ref}
@@ -23,10 +24,16 @@ const TimerCard = forwardRef<HTMLDivElement, TimerCardProps>(
         <button
           onClick={onSubmit}
           disabled={isSubmitting}
-          className="font-inter bg-auth-link flex h-12 w-83.5 cursor-pointer items-center justify-center rounded-xl text-base font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
+          className="font-inter bg-auth-link flex h-12 w-83.5 shrink-0 cursor-pointer items-center justify-center rounded-xl text-base font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isSubmitting ? 'Submitting...' : 'Submit'}
         </button>
+
+        {error && (
+          <p className="absolute bottom-3 left-1/2 w-83.5 -translate-x-1/2 text-center text-sm text-red-500">
+            {error}
+          </p>
+        )}
       </div>
     );
   },

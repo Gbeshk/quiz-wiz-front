@@ -20,9 +20,16 @@ function LandingHeader() {
   const closeSearch = () => {
     setIsSearchOpen(false);
     setQuery('');
+
+    if (searchParams.has('search')) {
+      const params = new URLSearchParams(searchParams);
+      params.delete('search');
+      navigate(`/quizzes?${params.toString()}`, { replace: true });
+    }
   };
 
-  const showSearch = pathname !== '/';
+  const isQuizDetailsPage = /^\/quizzes\/[^/]+\/?$/.test(pathname);
+  const showSearch = pathname !== '/' && !isQuizDetailsPage;
 
   useEffect(() => {
     if (!isSearchOpen) return;
