@@ -12,7 +12,7 @@ function NavBrand() {
       </Link>
       <Link
         to="/quizzes"
-        className="font-inter text-auth-text hover:text-auth-placeholder flex h-6 w-22.75 items-center justify-center gap-2 transition-all duration-300 ease-in-out"
+        className="font-inter max-xl1:hidden text-auth-text hover:text-auth-placeholder flex h-6 w-22.75 items-center justify-center gap-2 transition-all duration-300 ease-in-out"
       >
         {isQuizzesActive && (
           <div className="bg-auth-link h-2 w-2 rounded-full"></div>

@@ -36,8 +36,10 @@ function mapQuiz(item: QuizApiItem): Quiz {
     isCompleted: item.isCompleted,
     totalTimeMinutes: item.time,
     totalUsers: 0,
-    difficulty: item.difficulty ?? '',
-    difficultyColor: item.difficultyColor ?? '',
+    difficulty: {
+      name: item.difficulty ?? '',
+      color: item.difficultyColor ?? '',
+    },
     pointsEarned: item.pointsEarned,
     timesPlayed: item.timesPlayed,
     instructions: item.instruction ?? '',

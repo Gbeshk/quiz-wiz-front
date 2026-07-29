@@ -10,7 +10,7 @@ export default function LoadMoreButton({
   onClick,
 }: LoadMoreButtonProps) {
   return (
-    <div className="mx-auto mt-10 flex w-360 justify-center px-24">
+    <div className="mx-auto mt-10 flex justify-center px-24">
       <button
         type="button"
         onClick={onClick}

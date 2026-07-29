@@ -1,8 +1,7 @@
 export default function Logo() {
   return (
     <svg
-      width="77"
-      height="17"
+      className="max-xl1:w-23.25 max-xl1:h-5.25 h-4.25 w-19.25"
       viewBox="0 0 77 17"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

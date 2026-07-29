@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function GuestActions() {
   return (
-    <>
+    <div className="xl1:flex 2md:items-center hidden">
       <Link
         to="/register"
         className="font-raleway ml-7 flex h-10.5 w-24 items-center justify-center rounded border border-transparent bg-black text-sm font-bold text-white transition-all duration-300 hover:border-black hover:bg-white hover:text-black hover:shadow-[4px_4px_0px_0px_#000000]"
@@ -20,7 +20,7 @@ function GuestActions() {
           <ArrowRightBlue />
         </span>
       </Link>
-    </>
+    </div>
   );
 }
 

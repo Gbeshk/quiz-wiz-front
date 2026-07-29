@@ -68,47 +68,59 @@ export default function CategoryTabs() {
   };
 
   return (
-    <div className="mt-6 flex w-full items-center justify-between gap-2">
-      <CategoryTabList
-        categories={pageCategories}
-        selectedCategories={selectedCategories}
-        onSelectCategory={handleSelectCategory}
-        scrollRef={scrollRef}
-        registerButtonRef={registerButtonRef}
-        indicatorLeft={indicatorLeft}
-        indicatorWidth={indicatorWidth}
-        showBackArrow={showBackArrow}
-        onScroll={handleScroll}
-        onSlideNext={handleSlideNext}
-        onSlidePrev={handleSlidePrev}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseLeave}
-      />
-
-      <div className="relative mb-4 flex shrink-0 items-center gap-6.25">
-        <CategoryScrollArrow
-          direction="right"
-          visible={showForwardArrow}
-          onClick={handleSlideNext}
+    <>
+      <div className="mt-6 flex w-full items-center justify-between gap-2">
+        <CategoryTabList
+          categories={pageCategories}
+          selectedCategories={selectedCategories}
+          onSelectCategory={handleSelectCategory}
+          scrollRef={scrollRef}
+          registerButtonRef={registerButtonRef}
+          indicatorLeft={indicatorLeft}
+          indicatorWidth={indicatorWidth}
+          showBackArrow={showBackArrow}
+          onScroll={handleScroll}
+          onSlideNext={handleSlideNext}
+          onSlidePrev={handleSlidePrev}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseLeave}
         />
 
+        <div className="relative mb-4 flex shrink-0 items-center gap-6.25">
+          <CategoryScrollArrow
+            direction="right"
+            visible={showForwardArrow}
+            onClick={handleSlideNext}
+          />
+
+          <div className="max-xl1:hidden inline">
+            <FilterButton
+              isOpen={isFilterOpen}
+              hasConfirmedFilters={hasConfirmedFilters}
+              filterCount={filterCount}
+              onClick={() => setIsFilterOpen((prev) => !prev)}
+            />
+          </div>
+
+          {isFilterOpen && (
+            <FilterModal
+              isOpen={isFilterOpen}
+              onClose={() => setIsFilterOpen(false)}
+              categories={categories}
+            />
+          )}
+        </div>
+      </div>
+      <div className="max-xl1:inline mt-3 hidden">
         <FilterButton
           isOpen={isFilterOpen}
           hasConfirmedFilters={hasConfirmedFilters}
           filterCount={filterCount}
           onClick={() => setIsFilterOpen((prev) => !prev)}
         />
-
-        {isFilterOpen && (
-          <FilterModal
-            isOpen={isFilterOpen}
-            onClose={() => setIsFilterOpen(false)}
-            categories={categories}
-          />
-        )}
       </div>
-    </div>
+    </>
   );
 }

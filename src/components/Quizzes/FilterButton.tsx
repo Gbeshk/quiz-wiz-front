@@ -12,7 +12,7 @@ export default function FilterButton({
       type="button"
       onClick={onClick}
       className={cn(
-        'relative flex h-9.5 w-21.25 cursor-pointer items-center gap-2 rounded-lg px-4 transition-colors duration-300 ease-out',
+        'max-xl1:h-12 relative flex h-9.5 w-21.25 cursor-pointer items-center gap-2 rounded-lg px-4 transition-colors duration-300 ease-out',
         hasConfirmedFilters
           ? 'border-2 border-black text-black'
           : 'border-filter-border text-auth-placeholder hover:bg-filter-hover hover:border-modal-header-text hover:text-modal-header-text border',

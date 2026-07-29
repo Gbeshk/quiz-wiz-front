@@ -6,7 +6,8 @@ import SearchBox from './SearchBox';
 import NavBrand from './Header/NavBrand';
 import ProfileMenu from './Header/ProfileMenu';
 import GuestActions from './Header/GuestActions';
-
+import MobileMenu from './Header/MobileMenu';
+import { cn } from '@/lib';
 function LandingHeader() {
   const { isAuthenticated } = useAuth();
   const { pathname } = useLocation();
@@ -44,36 +45,59 @@ function LandingHeader() {
     navigate(`/quizzes?${params.toString()}`, { replace: true });
   }, [debouncedQuery]);
 
+  const hideWhenSearchOpen = isSearchOpen ? 'hidden md2:flex' : 'flex';
+  const searchWrapper = isSearchOpen
+    ? 'absolute inset-0 flex items-center justify-center px-6 md2:static md2:inset-auto md2:px-0'
+    : '';
+
   return (
     <header className="border-b-header-border-b w-full border-b bg-white">
-      <div className="mx-auto flex h-18 w-full max-w-360 items-center justify-between px-24">
-        <NavBrand />
+      <div className="max-ssm:px-6 relative mx-auto flex h-18 w-full max-w-360 items-center justify-between px-24">
+        <div className={hideWhenSearchOpen}>
+          <NavBrand />
+        </div>
 
         {isAuthenticated ? (
           <div className="flex items-center gap-7.5">
             {showSearch && (
-              <SearchBox
-                isOpen={isSearchOpen}
-                query={query}
-                onQueryChange={setQuery}
-                onOpen={() => setIsSearchOpen(true)}
-                onClose={closeSearch}
-              />
+              <div className={searchWrapper}>
+                <SearchBox
+                  isOpen={isSearchOpen}
+                  query={query}
+                  onQueryChange={setQuery}
+                  onOpen={() => setIsSearchOpen(true)}
+                  onClose={closeSearch}
+                />
+              </div>
             )}
-            <ProfileMenu />
+            <div className={hideWhenSearchOpen}>
+              <ProfileMenu /> <MobileMenu />
+            </div>
           </div>
         ) : (
           <div className="flex items-center gap-2">
             {showSearch && (
-              <SearchBox
-                isOpen={isSearchOpen}
-                query={query}
-                onQueryChange={setQuery}
-                onOpen={() => setIsSearchOpen(true)}
-                onClose={closeSearch}
-              />
+              <div className={searchWrapper}>
+                <SearchBox
+                  isOpen={isSearchOpen}
+                  query={query}
+                  onQueryChange={setQuery}
+                  onOpen={() => setIsSearchOpen(true)}
+                  onClose={closeSearch}
+                />
+              </div>
             )}
-            <GuestActions />
+            <div
+              className={cn(
+                'flex items-center justify-center',
+                hideWhenSearchOpen,
+              )}
+            >
+              <GuestActions />
+              <div className="ml-5.5 flex items-center justify-center">
+                <MobileMenu />
+              </div>
+            </div>
           </div>
         )}
       </div>

@@ -12,7 +12,7 @@ function ProfileMenu() {
   useClickOutside(profileRef, () => setIsProfileOpen(false));
 
   return (
-    <div className="relative" ref={profileRef}>
+    <div className="xl1:flex 2md:items-center relative hidden" ref={profileRef}>
       <button
         onClick={() => setIsProfileOpen((prev) => !prev)}
         className="border-auth-border flex h-8 w-8 cursor-pointer items-center justify-center overflow-hidden rounded-full border"

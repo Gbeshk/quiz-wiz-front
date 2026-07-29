@@ -3,7 +3,7 @@ interface CloseIconProps {
 }
 
 export default function CloseIcon({
-  className = 'w-4.5 cursor-pointer h-4.5',
+  className = 'w-4.5 cursor-pointer h-4.5 max-xl1:w-6 max-xl1:h-6',
 }: CloseIconProps) {
   return (
     <svg

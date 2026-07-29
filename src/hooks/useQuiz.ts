@@ -52,8 +52,10 @@ function mapQuizDetail(item: QuizDetailApiItem): Quiz {
     completedDate: item.myAttempt?.completedAt,
     totalTimeMinutes: item.time,
     totalUsers: 0,
-    difficulty: item.difficulty ?? '',
-    difficultyColor: item.difficultyColor ?? '',
+    difficulty: {
+      name: item.difficulty ?? '',
+      color: item.difficultyColor ?? '',
+    },
     pointsEarned: item.pointsEarned,
     pointsTotal: item.pointsTotal,
     timesPlayed: item.timesPlayed,

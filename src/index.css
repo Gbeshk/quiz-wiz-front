@@ -1,6 +1,11 @@
 @import 'tailwindcss';
 
 @theme {
+  --breakpoint-xl2: 1310px;
+  --breakpoint-xl3: 1390px;
+  --breakpoint-xl1: 970px;
+  --breakpoint-md2: 735px;
+  --breakpoint-ssm: 530px;
   --font-inter: 'Inter', sans-serif;
   --font-raleway: 'Raleway', sans-serif;
   --color-auth-text: #475467;
@@ -63,6 +68,7 @@
   --color-success-toast-line: #01e17b;
   --color-warning-toast-line: #ffd21f;
   --color-error-toast-line: #f04349;
+  --height-thin: 0.33px;
 }
 @keyframes toast-timer {
   from {
