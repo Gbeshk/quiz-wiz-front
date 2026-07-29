@@ -50,10 +50,10 @@ export default function QuizCard({ quiz, variant = 'default' }: QuizCardProps) {
       />
 
       <QuizDifficultyPoints
-        difficulty={quiz.difficulty}
+        difficulty={quiz.difficulty.name}
         isCompleted={quiz.isCompleted}
         pointsEarned={quiz.pointsEarned}
-        difficultyColor={quiz.difficultyColor}
+        difficultyColor={quiz.difficulty.color}
         pointsTotal={quiz.pointsTotal}
       />
     </Link>

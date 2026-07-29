@@ -20,7 +20,7 @@ export function useFilteredQuizzes(
     let result = quizzes.filter((quiz) => {
       if (
         selectedLevels.length > 0 &&
-        !selectedLevels.includes(quiz.difficulty)
+        !selectedLevels.includes(quiz.difficulty.name)
       ) {
         return false;
       }
