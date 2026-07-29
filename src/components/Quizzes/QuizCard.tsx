@@ -14,7 +14,7 @@ export default function QuizCard({ quiz, variant = 'default' }: QuizCardProps) {
     <Link
       to={`/quizzes/${quiz.id}`}
       className={cn(
-        'group mx-auto block h-128 w-full max-w-98.5 cursor-pointer rounded-xl border border-transparent px-6 py-8 text-inherit no-underline transition-colors duration-300 hover:border-black',
+        'group max-xl3:rounded-none mx-auto block h-128 w-98.5 cursor-pointer rounded-xl border border-transparent px-6 py-8 text-inherit no-underline transition-colors duration-300 hover:border-black',
         isFlat
           ? 'bg-quiz-card-border border-auth-border'
           : 'shadow-[0px_4px_6px_-2px_#10182808,0px_12px_16px_-4px_#10182814]',
