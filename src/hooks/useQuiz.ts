@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '@/lib/api';
-import type { Quiz } from '@/types/quizz';
+import type { Difficulty, Quiz } from '@/types/quizz';
 import { useAuth } from '@/context/AuthContext';
 interface QuizDetailApiItem {
   id: number;
@@ -9,8 +9,7 @@ interface QuizDetailApiItem {
   image: string | null;
   instruction: string | null;
   time: number;
-  difficulty: string;
-  difficultyColor: string;
+  difficulty: Difficulty;
   categories: { id: number; name: string }[];
   pointsTotal: number;
   questions: {
@@ -52,8 +51,10 @@ function mapQuizDetail(item: QuizDetailApiItem): Quiz {
     completedDate: item.myAttempt?.completedAt,
     totalTimeMinutes: item.time,
     totalUsers: 0,
-    difficulty: item.difficulty ?? '',
-    difficultyColor: item.difficultyColor ?? '',
+    difficulty: {
+      name: item.difficulty.name ?? '',
+      color: item.difficulty.color ?? '',
+    },
     pointsEarned: item.pointsEarned,
     pointsTotal: item.pointsTotal,
     timesPlayed: item.timesPlayed,

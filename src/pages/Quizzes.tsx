@@ -22,7 +22,7 @@ export default function QuizzesPage() {
     <div className="flex min-h-screen w-full flex-col bg-white">
       <LandingHeader />
 
-      <main className="mx-auto flex w-full max-w-360 grow flex-col px-24">
+      <main className="max-ssm:px-6 mx-auto flex w-full max-w-360 grow flex-col px-24">
         <CategoryTabs />
 
         {isLoading && <p className="py-12 text-center">Loading quizzes…</p>}
@@ -32,7 +32,7 @@ export default function QuizzesPage() {
         )}
 
         {!isLoading && !error && (
-          <>
+          <div className="items center flex flex-col">
             <QuizGrid quizzes={visibleItems} />
             {hasMore && (
               <LoadMoreButton
@@ -40,7 +40,7 @@ export default function QuizzesPage() {
                 onClick={handleLoadMore}
               />
             )}
-          </>
+          </div>
         )}
       </main>
 

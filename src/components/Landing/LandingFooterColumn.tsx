@@ -13,7 +13,7 @@ function LandingFooterColumn({
       {items.map((item) => (
         <p
           key={item}
-          className="text-auth-text font-inter mt-6 text-xs leading-5"
+          className="text-auth-text font-inter max-xl1:mt-4 mt-6 text-xs leading-5"
         >
           {item}
         </p>

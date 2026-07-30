@@ -33,8 +33,8 @@ export default function ResultModal({
         <ResultDetailRow label="Quiz Name" value={quiz.title} />
         <ResultDetailRow
           label="Quiz level"
-          value={quiz.difficulty}
-          valueClassName={DIFFICULTY_ICON_COLOR[quiz.difficulty]}
+          value={quiz.difficulty.name}
+          valueClassName={DIFFICULTY_ICON_COLOR[quiz.difficulty.name]}
         />
         <ResultDetailRow label="Time" value={timeTaken} />
         <ResultDetailRow

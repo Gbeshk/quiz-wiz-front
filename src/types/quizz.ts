@@ -122,8 +122,7 @@ export interface Quiz {
   completedDate?: string;
   totalTimeMinutes: number;
   totalUsers: number;
-  difficulty: string;
-  difficultyColor: string;
+  difficulty: Difficulty;
   pointsEarned: number;
   pointsTotal: number;
   timesPlayed: number;
