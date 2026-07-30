@@ -13,3 +13,4 @@ export { default as WarningIcon } from './WarningIcon';
 export { default as SuccessIcon } from './SuccessIcon';
 export { default as ErrorIconToast } from './ErrorIconToast';
 export { default as ResendIcon } from './ResendIcon';
+export { default as LandingPic } from './LandingPic';
