@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import BurgerMenu from '@/components/UI/Icons/BurgerMenu';
 import ProfileIcon from '@/components/UI/Icons/ProfileIcon';
 import { CloseIcon, Logo } from '@/components/UI/Icons';
+import AuthModal from '@/components/Auth/AuthModal';
 
 interface MobileMenuProps {
   ml?: number;
@@ -13,8 +14,14 @@ interface MobileMenuProps {
 function MobileMenu({ ml = 0 }: MobileMenuProps) {
   const { isAuthenticated, user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const [authModal, setAuthModal] = useState<'login' | 'register' | null>(null);
 
   const close = () => setIsOpen(false);
+  const openAuthModal = (type: 'login' | 'register') => {
+    close();
+    setAuthModal(type);
+  };
+  const closeAuthModal = () => setAuthModal(null);
 
   return (
     <>
@@ -68,25 +75,30 @@ function MobileMenu({ ml = 0 }: MobileMenuProps) {
               </>
             ) : (
               <>
-                <Link
-                  to={'/register'}
-                  onClick={logout}
+                <button
+                  onClick={() => openAuthModal('register')}
                   className="font-raleway flex h-11.5 w-full cursor-pointer items-center justify-center rounded-sm bg-black text-sm leading-none font-bold text-white"
                 >
                   Sign up
-                </Link>
-                <Link
-                  to={'/login'}
-
-                  onClick={logout}
+                </button>
+                <button
+                  onClick={() => openAuthModal('login')}
                   className="bg-quiz-completed-bg text-auth-link font-raleway flex h-11.5 w-full cursor-pointer items-center justify-center rounded-sm text-sm leading-none font-bold"
                 >
                   Log in
-                </Link>
+                </button>
               </>
             )}
           </div>
         </div>
+      )}
+
+      {authModal && (
+        <AuthModal
+          type={authModal}
+          onClose={closeAuthModal}
+          onSwitch={setAuthModal}
+        />
       )}
     </>
   );

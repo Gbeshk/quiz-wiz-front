@@ -35,7 +35,7 @@ export function LoginForm() {
   } = useResendVerification(state.verificationEmail ?? null);
 
   return (
-    <form onSubmit={onSubmit} className="mt-10 flex flex-col gap-6">
+    <form onSubmit={onSubmit} className="mt-10 flex w-full flex-col gap-6">
       <AuthInput<LoginFormValues>
         label="Email address"
         name="email"

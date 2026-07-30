@@ -69,6 +69,7 @@
   --color-warning-toast-line: #ffd21f;
   --color-error-toast-line: #f04349;
   --height-thin: 0.33px;
+  --spacing-hero: 14.6vh;
 }
 @keyframes toast-timer {
   from {

@@ -10,31 +10,32 @@ import { LoginForm } from '@/components/Auth/LoginForm';
 
 export default function LoginPage() {
   return (
-    <div className="flex min-h-screen w-full items-center justify-center bg-white">
-      <div className="flex w-360 shrink-0 gap-20.5">
+    <div className="flex min-h-screen w-full gap-[5.7%]">
+      <div className="min-h-screen w-[46.25%]">
         <AuthHeroImage
           src={LoginHero}
           alt="Login Hero"
           imgClassName="login-hero"
         />
-        <div className="relative mt-31">
-          <BackButton />
-
-          <AuthHeader
-            title={
-              <>
-                Hi, Welcome! <Hello />
-              </>
-            }
-          />
-
-          <LoginForm />
-
-          <AuthFooter
-            prompt="Don't have an account?"
-            linkText="Sign up"
-            to="/register"
-          />
+      </div>
+      <div className="min-h-screen w-[30%]">
+        <div className="relative">
+          <div className="mt-hero">
+            <BackButton />
+            <AuthHeader
+              title={
+                <>
+                  Hi, Welcome! <Hello />
+                </>
+              }
+            />
+            <LoginForm />
+            <AuthFooter
+              prompt="Don't have an account?"
+              linkText="Sign up"
+              to="/register"
+            />
+          </div>
         </div>
       </div>
     </div>

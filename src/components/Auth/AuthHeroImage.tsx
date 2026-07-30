@@ -1,4 +1,5 @@
 import { Logo } from '@/components/UI/Icons';
+import { Link } from 'react-router-dom';
 interface AuthHeroImageProps {
   src: string;
   alt: string;
@@ -11,11 +12,15 @@ export default function AuthHeroImage({
   imgClassName,
 }: AuthHeroImageProps) {
   return (
-    <div className="relative">
-      <div className="absolute top-10 left-10">
+    <div className="relative h-screen shrink-0">
+      <Link to={'/quizzes'} className="absolute top-10 left-10 cursor-pointer">
         <Logo />
-      </div>
-      <img src={src} alt={alt} className={imgClassName} />
+      </Link>
+      <img
+        src={src}
+        alt={alt}
+        className={`h-full w-full object-cover ${imgClassName}`}
+      />
     </div>
   );
 }
