@@ -10,15 +10,15 @@ import { LoginForm } from '@/components/Auth/LoginForm';
 
 export default function LoginPage() {
   return (
-    <div className="flex min-h-screen w-full gap-[5.7%]">
-      <div className="min-h-screen w-[46.25%]">
+    <div className="gap-auth flex min-h-screen w-full">
+      <div className="w-hero min-h-screen">
         <AuthHeroImage
           src={LoginHero}
           alt="Login Hero"
           imgClassName="login-hero"
         />
       </div>
-      <div className="min-h-screen w-[30%]">
+      <div className="w-form min-h-screen">
         <div className="relative">
           <div className="mt-hero">
             <BackButton />

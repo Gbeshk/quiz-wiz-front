@@ -13,38 +13,42 @@ export default function ForgotPasswordPage() {
     useForgotPasswordForm();
 
   return (
-    <div className="flex min-h-screen w-full items-center justify-center bg-white">
-      <div className="flex w-360 shrink-0 gap-20.5">
+    <div className="gap-auth flex min-h-screen w-full">
+      <div className="w-hero min-h-screen">
         <AuthHeroImage
           src={ForgotPasswordHero}
           alt="Forgot Password Hero"
           imgClassName="login-hero"
         />
-        <div className="relative mt-31">
-          <BackButton />
+      </div>
+      <div className="w-form min-h-screen">
+        <div className="relative">
+          <div className="mt-hero">
+            <BackButton />
 
-          <AuthHeader
-            title="Forgot password?"
-            description="Don't worry! It happens. Please enter the email associated with your account."
-          />
+            <AuthHeader
+              title="Forgot password?"
+              description="Don't worry! It happens. Please enter the email associated with your account."
+            />
 
-          <form onSubmit={onSubmit} className="mt-10 flex flex-col gap-6">
-            <AuthInput
-              label="Email address"
-              name="email"
-              placeholder="enter your email address"
-              register={register}
-              rules={rules.email}
-              error={errors.email}
-            />
-            <SubmitButton
-              label={
-                sent ? 'Link sent' : isExpired ? 'Resend reset link' : 'Send'
-              }
-              loadingLabel="Sending link..."
-              disabled={submitting}
-            />
-          </form>
+            <form onSubmit={onSubmit} className="mt-10 flex flex-col gap-6">
+              <AuthInput
+                label="Email address"
+                name="email"
+                placeholder="enter your email address"
+                register={register}
+                rules={rules.email}
+                error={errors.email}
+              />
+              <SubmitButton
+                label={
+                  sent ? 'Link sent' : isExpired ? 'Resend reset link' : 'Send'
+                }
+                loadingLabel="Sending link..."
+                disabled={submitting}
+              />
+            </form>
+          </div>
         </div>
       </div>
     </div>

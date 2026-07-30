@@ -70,6 +70,10 @@
   --color-error-toast-line: #f04349;
   --height-thin: 0.33px;
   --spacing-hero: 14.6vh;
+  --spacing-hero-register: 13vh;
+  --width-hero: 46.25%;
+  --spacing-auth: 5.7%;
+  --width-form: 29.5%;
 }
 @keyframes toast-timer {
   from {
