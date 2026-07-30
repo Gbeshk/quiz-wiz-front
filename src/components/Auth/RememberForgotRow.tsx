@@ -5,11 +5,13 @@ import RoundCheckbox from './RoundCheckbox';
 interface RememberForgotRowProps<T extends FieldValues> {
   control: Control<T>;
   name: Path<T>;
+  onForgotPasswordClick?: () => void;
 }
 
 export default function RememberForgotRow<T extends FieldValues>({
   control,
   name,
+  onForgotPasswordClick,
 }: RememberForgotRowProps<T>) {
   return (
     <div className="flex items-center justify-between">
@@ -19,12 +21,22 @@ export default function RememberForgotRow<T extends FieldValues>({
         </p>
       </RoundCheckbox>
 
-      <Link
-        to="/forgot-password"
-        className="font-inter text-auth-label text-base hover:underline"
-      >
-        Forgot password?
-      </Link>
+      {onForgotPasswordClick ? (
+        <button
+          type="button"
+          onClick={onForgotPasswordClick}
+          className="font-inter text-auth-label cursor-pointer text-base hover:underline"
+        >
+          Forgot password?
+        </button>
+      ) : (
+        <Link
+          to="/forgot-password"
+          className="font-inter text-auth-label text-base hover:underline"
+        >
+          Forgot password?
+        </Link>
+      )}
     </div>
   );
 }

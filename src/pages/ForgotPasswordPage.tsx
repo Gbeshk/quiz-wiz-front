@@ -1,56 +1,45 @@
-import {
-  AuthInput,
-  BackButton,
-  SubmitButton,
-  AuthHeroImage,
-  AuthHeader,
-} from '@/components/Auth';
-import { useForgotPasswordForm } from '@/hooks/useForgotPasswordForm';
+import { useNavigate } from 'react-router-dom';
+import { BackButton, AuthHeroImage, AuthHeader } from '@/components/Auth';
+import { ForgotPasswordForm } from '@/components/Auth/ForgotPasswordForm';
+import AuthModal from '@/components/Auth/AuthModal';
 import { ForgotPasswordHero } from '@/assets';
 
 export default function ForgotPasswordPage() {
-  const { register, errors, submitting, sent, isExpired, onSubmit, rules } =
-    useForgotPasswordForm();
+  const navigate = useNavigate();
 
   return (
-    <div className="gap-auth flex min-h-screen w-full">
-      <div className="w-hero min-h-screen">
-        <AuthHeroImage
-          src={ForgotPasswordHero}
-          alt="Forgot Password Hero"
-          imgClassName="login-hero"
-        />
-      </div>
-      <div className="w-form min-h-screen">
-        <div className="relative">
-          <div className="mt-hero">
-            <BackButton />
-
-            <AuthHeader
-              title="Forgot password?"
-              description="Don't worry! It happens. Please enter the email associated with your account."
-            />
-
-            <form onSubmit={onSubmit} className="mt-10 flex flex-col gap-6">
-              <AuthInput
-                label="Email address"
-                name="email"
-                placeholder="enter your email address"
-                register={register}
-                rules={rules.email}
-                error={errors.email}
+    <>
+      <div className="max-xl1:hidden gap-auth flex min-h-screen w-full">
+        <div className="w-hero min-h-screen">
+          <AuthHeroImage
+            src={ForgotPasswordHero}
+            alt="Forgot Password Hero"
+            imgClassName="login-hero"
+          />
+        </div>
+        <div className="w-form min-h-screen">
+          <div className="relative">
+            <div className="mt-hero">
+              <BackButton />
+              <AuthHeader
+                title="Forgot password?"
+                description="Don't worry! It happens. Please enter the email associated with your account."
               />
-              <SubmitButton
-                label={
-                  sent ? 'Link sent' : isExpired ? 'Resend reset link' : 'Send'
-                }
-                loadingLabel="Sending link..."
-                disabled={submitting}
-              />
-            </form>
+              <ForgotPasswordForm />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      <div className="xl1:hidden">
+        <AuthModal
+          type="forgot-password"
+          onClose={() => navigate('/login')}
+          onSwitch={(type) =>
+            navigate(type === 'login' ? '/login' : '/register')
+          }
+        />
+      </div>
+    </>
   );
 }

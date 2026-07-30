@@ -24,7 +24,12 @@ export default function AuthHeader({
       </h1>
 
       {description && (
-        <p className="font-inter text-auth-text mt-4 w-full max-w-106.5 text-sm">
+        <p
+          className={cn(
+            'font-inter text-auth-text mt-4 w-full max-w-106.5 text-sm',
+            centered && 'mx-auto text-center',
+          )}
+        >
           {description}
         </p>
       )}
