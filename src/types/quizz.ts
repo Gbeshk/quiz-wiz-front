@@ -156,6 +156,7 @@ export interface QuizHeroSectionProps {
 
 export interface QuizMetaRowProps {
   quiz: Quiz;
+  responsive?: boolean;
 }
 
 export interface QuizInstructionsProps {
@@ -164,4 +165,5 @@ export interface QuizInstructionsProps {
 
 export interface QuizOtherQuizzesSliderProps {
   quizzes: Quiz[];
+  currentQuiz: Quiz;
 }
