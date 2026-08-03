@@ -21,11 +21,17 @@ export default function QuizOtherQuizzesSlider({
         Similar quizzes
       </p>
 
-      <div className="quiz-slider-track xl4:w-auto max-xl4:mt-5 xl4:flex-col flex w-max flex-row gap-8 p-1">
-        {loopedQuizzes.map((quiz, index) => (
-          <QuizCard key={`${quiz.id}-${index}`} quiz={quiz} variant="flat" />
-        ))}
-      </div>
+      {sameCategoryQuizzes.length === 0 ? (
+        <p className="text-auth-placeholder mt-5 ml-3 text-sm">
+          No similar quizzes found.
+        </p>
+      ) : (
+        <div className="quiz-slider-track xl4:w-auto max-xl4:mt-5 xl4:flex-col flex w-max flex-row gap-8 p-1">
+          {loopedQuizzes.map((quiz, index) => (
+            <QuizCard key={`${quiz.id}-${index}`} quiz={quiz} variant="flat" />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
