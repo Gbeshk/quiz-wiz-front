@@ -42,7 +42,7 @@ export default function AuthInput<T extends FieldValues>({
           type={inputType}
           placeholder={placeholder}
           className={cn(
-            'hover:bg-auth-hover-bg focus:ring-auth-ring focus:border-auth-ring placeholder:text-auth-placeholder font-inter h-14 w-106.5 rounded-lg border px-4 py-4.5 text-base transition-all duration-300 ease-in-out focus:ring-3 focus:outline-none',
+            'hover:bg-auth-hover-bg focus:ring-auth-ring focus:border-auth-ring placeholder:text-auth-placeholder font-inter h-14 w-full rounded-lg border px-4 py-4.5 text-base transition-all duration-300 ease-in-out focus:ring-3 focus:outline-none',
             error || isPassword ? 'pr-12' : '',
             error ? 'border-auth-border-error' : 'border-auth-border',
           )}

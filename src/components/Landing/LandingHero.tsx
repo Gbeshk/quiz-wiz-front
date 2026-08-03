@@ -1,7 +1,8 @@
-import { LandingLogo, LandingPic } from '@/assets';
+import { LandingLogo } from '@/assets';
 import HoverIcon from '@/components/UI/Icons/HoverIcon';
 import LandingText from '@/components/UI/Icons/LandingText';
 import { useNavigate } from 'react-router-dom';
+import { LandingPic } from '../UI';
 
 function LandingHero() {
   const navigate = useNavigate();
@@ -48,7 +49,9 @@ function LandingHero() {
         <div className="absolute -top-33.25 bottom-0 left-139 w-272.75 overflow-hidden">
           <div className="h-272.75 w-272.75 rounded-full bg-black"></div>
         </div>
-        <img src={LandingPic} className="absolute -top-89.5 left-173" alt="" />
+        <div className="absolute -top-89.5 left-173">
+          <LandingPic />
+        </div>
       </div>
     </div>
   );

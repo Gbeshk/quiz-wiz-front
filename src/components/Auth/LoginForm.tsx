@@ -9,8 +9,10 @@ type LocationState = {
   verificationExpired?: boolean;
   verificationEmail?: string | null;
 };
-
-export function LoginForm() {
+interface LoginFormProps {
+  onForgotPassword?: () => void;
+}
+export function LoginForm({ onForgotPassword }: LoginFormProps = {}) {
   const {
     register,
     control,
@@ -35,7 +37,7 @@ export function LoginForm() {
   } = useResendVerification(state.verificationEmail ?? null);
 
   return (
-    <form onSubmit={onSubmit} className="mt-10 flex flex-col gap-6">
+    <form onSubmit={onSubmit} className="mt-10 flex w-full flex-col gap-6">
       <AuthInput<LoginFormValues>
         label="Email address"
         name="email"
@@ -53,7 +55,11 @@ export function LoginForm() {
         placeholder="••••••••"
         error={errors.password}
       />
-      <RememberForgotRow<LoginFormValues> control={control} name="remember" />
+      <RememberForgotRow<LoginFormValues>
+        control={control}
+        name="remember"
+        onForgotPasswordClick={onForgotPassword}
+      />
       {state.verificationExpired && (
         <ResendBanner
           message="Your verification link has expired."

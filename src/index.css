@@ -69,6 +69,14 @@
   --color-warning-toast-line: #ffd21f;
   --color-error-toast-line: #f04349;
   --height-thin: 0.33px;
+  --spacing-hero: 14.6vh;
+  --spacing-hero-register: 13vh;
+  --width-hero: 46.25%;
+  --spacing-auth: 5.7%;
+  --width-form: 29.5%;
+  --color-mobile-auth-background: #1018284d;
+  --color-mobile-modal-close: #74777f;
+  --height-auth-modal: 85%;
 }
 @keyframes toast-timer {
   from {
@@ -92,4 +100,38 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+}
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 300ms ease-in-out;
+}
+
+.animate-slide-down {
+  animation: slide-down 300ms ease-in-out;
 }
