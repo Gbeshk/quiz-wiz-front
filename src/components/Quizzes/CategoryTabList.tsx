@@ -9,8 +9,6 @@ export default function CategoryTabList({
   onSelectCategory,
   scrollRef,
   registerButtonRef,
-  indicatorLeft,
-  indicatorWidth,
   showBackArrow,
   onScroll,
   onSlidePrev,
@@ -54,34 +52,29 @@ export default function CategoryTabList({
                   : selectedCategories.includes(category);
 
               return (
-                <button
-                  key={category}
-                  ref={registerButtonRef(category)}
-                  type="button"
-                  onClick={() => onSelectCategory(category)}
-                  className={cn(
-                    'font-inter shrink-0 cursor-pointer text-sm leading-5 font-semibold whitespace-nowrap transition-colors duration-200',
-                    isSelected ? 'text-black' : 'text-auth-placeholder',
-                  )}
-                >
-                  {category}
-                </button>
+                <div key={category} className="flex flex-col items-center">
+                  <button
+                    ref={registerButtonRef(category)}
+                    type="button"
+                    onClick={() => onSelectCategory(category)}
+                    className={cn(
+                      'font-inter shrink-0 cursor-pointer text-sm leading-5 font-semibold whitespace-nowrap transition-colors duration-200',
+                      isSelected ? 'text-black' : 'text-auth-placeholder',
+                    )}
+                  >
+                    {category}
+                  </button>
+                  <div
+                    className={cn(
+                      'mt-4 h-0.5 w-full bg-black transition-opacity duration-200',
+                      isSelected ? 'opacity-100' : 'opacity-0',
+                    )}
+                  />
+                </div>
               );
             })}
           </div>
-
-          <div className="relative mt-4 h-0.5 w-full">
-            <div className="bg-categories-line-bg absolute inset-x-0 bottom-0 h-px" />
-            <div
-              className="absolute bottom-0 left-(--indicator-left) z-10 h-0.5 w-(--indicator-width) bg-black transition-all duration-300 ease-out"
-              style={
-                {
-                  '--indicator-left': `${indicatorLeft}px`,
-                  '--indicator-width': `${indicatorWidth}px`,
-                } as React.CSSProperties
-              }
-            />
-          </div>
+          <div className="bg-categories-line-bg absolute inset-x-0 bottom-0 h-px" />
         </div>
       </div>
     </div>

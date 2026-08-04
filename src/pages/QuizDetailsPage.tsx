@@ -13,6 +13,7 @@ export default function QuizDetailsPage() {
 
   const { quiz, isLoading, error } = useQuiz(id);
   const { quizzes: sliderQuizzes } = useOtherQuizzes(id);
+
   if (isLoading) {
     return <p className="py-24 text-center">Loading quiz…</p>;
   }
@@ -26,19 +27,19 @@ export default function QuizDetailsPage() {
       <LandingHeader />
 
       <div className="grow">
-        <div className="mx-auto w-full max-w-360 px-24">
+        <div className="max-xl1:hidden mx-auto w-full max-w-360 px-24">
           <div className="relative mt-22 ml-8">
             <BackButton />
           </div>
         </div>
 
-        <div className="mx-auto -mt-4 flex w-full max-w-360 items-start justify-between px-24">
-          <div className="sticky top-1 w-203.5 self-start">
+        <div className="mx-auto -mt-4 flex w-full max-w-360 flex-wrap items-start justify-between px-24 max-sm:px-6">
+          <div className="w-full max-w-203.5">
             <QuizHeroSection quiz={quiz} />
             <QuizInstructions instructions={quiz.instructions} />
           </div>
 
-          <QuizOtherQuizzesSlider quizzes={sliderQuizzes} />
+          <QuizOtherQuizzesSlider quizzes={sliderQuizzes} currentQuiz={quiz} />
         </div>
       </div>
 

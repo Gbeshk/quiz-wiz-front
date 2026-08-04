@@ -24,7 +24,7 @@ export default function RegisterPage() {
         </div>
         <div className="w-form min-h-screen">
           <div className="relative">
-            <div className="mt-hero">
+            <div className="mt-hero-register">
               <BackButton />
               <AuthHeader title="Create an account" />
               <RegisterForm />

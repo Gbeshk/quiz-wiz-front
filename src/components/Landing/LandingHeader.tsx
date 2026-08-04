@@ -52,7 +52,7 @@ function LandingHeader() {
 
   return (
     <header className="border-b-header-border-b w-full border-b bg-white">
-      <div className="max-ssm:px-6 relative mx-auto flex h-18 w-full max-w-360 items-center justify-between px-24">
+      <div className="relative mx-auto flex h-18 w-full max-w-360 items-center justify-between px-24 max-sm:px-6">
         <div className={hideWhenSearchOpen}>
           <NavBrand />
         </div>
