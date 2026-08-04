@@ -78,6 +78,8 @@
   --color-mobile-auth-background: #1018284d;
   --color-mobile-modal-close: #74777f;
   --height-auth-modal: 85%;
+  --text-landing-text-desktop: 79px;
+  --text-landing-text-mobile: 45px;
 }
 @keyframes toast-timer {
   from {

@@ -50,7 +50,7 @@ function LandingHero() {
         </div>
 
         <div className="xl3:top-25 xl3:left-194.75 xl3:translate-x-0 absolute -top-63.5 left-1/2 z-50 -translate-x-1/2">
-          <p className="font-raleway max-xl3:w-66.5 max-xl3:h-51.25 max-xl3:text-[45px] max-xl3:leading-13 h-61.75 w-131 text-[79px] leading-21 font-bold text-white">
+          <p className="font-raleway max-xl3:w-66.5 max-xl3:h-51.25 max-xl3:text-landing-text-mobile max-xl3:leading-13 text-landing-text-desktop h-61.75 w-131 leading-21 font-bold text-white">
             Our mission is to entertain <br /> & educate
           </p>
         </div>
