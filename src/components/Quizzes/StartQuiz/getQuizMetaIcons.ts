@@ -6,9 +6,17 @@ import PlaysIcon from '@/components/UI/Icons/PlaysIcon';
 import TimeIcon from '@/components/UI/Icons/TimeIcon';
 import type { Quiz } from '@/types/quizz';
 
+export interface QuizIconProps {
+  size?: number;
+  color?: string;
+  width?: number;
+  height?: number;
+  fill?: string;
+}
+
 export interface QuizMetaIcon {
   key: 'pin' | 'questions' | 'points' | 'plays' | 'time';
-  Icon: ComponentType<any>;
+  Icon: ComponentType<QuizIconProps>;
   label: string;
 }
 
