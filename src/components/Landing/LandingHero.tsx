@@ -1,6 +1,5 @@
 import { LandingLogo } from '@/assets';
 import HoverIcon from '@/components/UI/Icons/HoverIcon';
-import LandingText from '@/components/UI/Icons/LandingText';
 import { Link } from 'react-router-dom';
 import { LandingPic } from '../UI';
 
@@ -51,7 +50,9 @@ function LandingHero() {
         </div>
 
         <div className="xl3:top-25 xl3:left-194.75 xl3:translate-x-0 absolute -top-63.5 left-1/2 z-50 -translate-x-1/2">
-          <LandingText />
+          <p className="font-raleway max-xl3:w-66.5 max-xl3:h-51.25 max-xl3:text-[45px] max-xl3:leading-13 h-61.75 w-131 text-[79px] leading-21 font-bold text-white">
+            Our mission is to entertain <br /> & educate
+          </p>
         </div>
 
         <div className="xl3:-top-33.25 xl3:bottom-0 xl3:left-139 xl3:w-272.75 xl3:translate-x-0 xl3:overflow-hidden absolute -top-88.5 left-1/2 z-0 -translate-x-1/2">
