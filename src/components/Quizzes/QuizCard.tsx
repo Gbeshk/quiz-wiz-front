@@ -5,6 +5,7 @@ import type { QuizCardProps } from '@/types/quizz';
 import QuizCategories from './QuizCategories';
 import QuizStats from './QuizStats';
 import QuizDifficultyPoints from './QuizDifficultyPoints';
+import DefaultImage from '@/components/UI/Icons/DefaultImage';
 
 export default function QuizCard({ quiz, variant = 'default' }: QuizCardProps) {
   const isFlat = variant === 'flat';
@@ -24,7 +25,7 @@ export default function QuizCard({ quiz, variant = 'default' }: QuizCardProps) {
         {quiz.image ? (
           <img src={quiz.image} alt={quiz.title} className="h-full w-full" />
         ) : (
-          'photo'
+          <DefaultImage />
         )}
       </div>
 
