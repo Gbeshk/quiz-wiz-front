@@ -17,7 +17,7 @@ export default function QuizDesktopHeader({
   onClose,
 }: QuizDesktopHeaderProps) {
   return (
-    <div className="max-xl5:px-24 mx-auto hidden h-18 w-full max-w-360 grid-cols-[1fr_auto_1fr] items-center lg:grid">
+    <div className="max-xl5:px-24 mx-auto hidden h-18 w-full grid-cols-[1fr_auto_1fr] items-center px-24 lg:grid">
       {isTitleVisible ? (
         <div className="h-6 w-6"></div>
       ) : (

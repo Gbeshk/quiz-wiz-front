@@ -1,4 +1,5 @@
-import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useQuiz } from '@/hooks/useQuiz';
 import { useQuizAttempt } from '@/hooks/useQuizAttempt';
 import { useElementVisibility } from '@/hooks/useElementVisibility';
@@ -8,13 +9,19 @@ import QuizTitleSection from '@/components/Quizzes/StartQuiz/QuizTitleSection';
 import QuestionsList from '@/components/Quizzes/StartQuiz/QuestionsList';
 import TimerCard from '@/components/Quizzes/StartQuiz/TimerCard';
 import ResultModal from '@/components/Quizzes/StartQuiz/ResultModal';
+import LeaveQuizModal from '@/components/Quizzes/StartQuiz/LeaveQuizModal';
 import QuizLoadingState from '@/components/Quizzes/StartQuiz/QuizLoadingState';
 import QuizAttemptedView from '@/components/Quizzes/StartQuiz/QuizAttemptedView';
 import NotFoundPage from './NotFoundPage';
 import { cn } from '@/lib';
+import { useAuth } from '@/context/AuthContext';
 
 export default function StartQuizPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const isAuthenticated = Boolean(user);
+
   const { quiz, isLoading, error } = useQuiz(id);
   const { ref: titleRef, isVisible: isTitleIntersecting } =
     useElementVisibility<HTMLHeadingElement>();
@@ -22,6 +29,8 @@ export default function StartQuizPage() {
 
   const isTitleVisible = isTitleIntersecting;
   const isMobileHeaderExpanded = isPageScrollable ? !isTitleIntersecting : true;
+
+  const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
 
   const {
     selectedAnswers,
@@ -35,6 +44,31 @@ export default function StartQuizPage() {
     gradedResult,
     handleSubmit,
   } = useQuizAttempt(quiz);
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = '';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [isAuthenticated]);
+
+  const handleRequestClose = () => {
+    if (isAuthenticated) {
+      setIsLeaveModalOpen(true);
+    } else {
+      navigate(`/quizzes/${id}`);
+    }
+  };
+
+  const handleConfirmLeave = () => {
+    setIsLeaveModalOpen(false);
+    navigate(`/quizzes/${id}`);
+  };
 
   if (isLoading) {
     return <QuizLoadingState />;
@@ -65,6 +99,7 @@ export default function StartQuizPage() {
         onSubmit={handleSubmit}
         isSubmitting={isSubmitting}
         submitError={submitError}
+        onClose={handleRequestClose}
       />
       <div
         className={cn(
@@ -92,6 +127,12 @@ export default function StartQuizPage() {
           timeTaken={timeTaken}
           correctCount={gradedResult.correctCount}
           mistakesCount={gradedResult.mistakesCount}
+        />
+      )}
+      {isLeaveModalOpen && (
+        <LeaveQuizModal
+          onStay={() => setIsLeaveModalOpen(false)}
+          onLeave={handleConfirmLeave}
         />
       )}
     </div>
