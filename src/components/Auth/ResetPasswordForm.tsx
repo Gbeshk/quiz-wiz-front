@@ -21,7 +21,7 @@ export function ResetPasswordForm() {
         type="password"
         register={register}
         rules={rules.password}
-        placeholder="must be 8 characters"
+        placeholder="must be 3 characters"
         error={errors.password}
       />
       <AuthInput
