@@ -6,6 +6,7 @@ import QuizMobileHeader from './QuizMobileHeader';
 interface QuizProgressHeaderProps {
   quiz: Quiz;
   isTitleVisible: boolean;
+  isMobileHeaderExpanded?: boolean;
   progressPercent: number;
   answeredCount: number;
   totalQuestions: number;
@@ -18,6 +19,7 @@ interface QuizProgressHeaderProps {
 export default function QuizProgressHeader({
   quiz,
   isTitleVisible,
+  isMobileHeaderExpanded,
   progressPercent,
   answeredCount,
   totalQuestions,
@@ -42,7 +44,7 @@ export default function QuizProgressHeader({
       />
       <QuizMobileHeader
         quiz={quiz}
-        isTitleVisible={isTitleVisible}
+        isTitleVisible={!(isMobileHeaderExpanded ?? !isTitleVisible)}
         progressPercent={progressPercent}
         answeredCount={answeredCount}
         totalQuestions={totalQuestions}

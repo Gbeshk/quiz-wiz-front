@@ -20,7 +20,8 @@ export default function StartQuizPage() {
     useElementVisibility<HTMLHeadingElement>();
   const isPageScrollable = usePageScrollable();
 
-  const isTitleVisible = isPageScrollable ? isTitleIntersecting : false;
+  const isTitleVisible = isTitleIntersecting;
+  const isMobileHeaderExpanded = isPageScrollable ? !isTitleIntersecting : true;
 
   const {
     selectedAnswers,
@@ -56,6 +57,7 @@ export default function StartQuizPage() {
       <QuizProgressHeader
         quiz={quiz}
         isTitleVisible={isTitleVisible}
+        isMobileHeaderExpanded={isMobileHeaderExpanded}
         progressPercent={progressPercent}
         answeredCount={answeredCount}
         totalQuestions={quiz.questions.length}
@@ -65,7 +67,10 @@ export default function StartQuizPage() {
         submitError={submitError}
       />
       <div
-        className={cn('h-18 max-lg:h-16', !isTitleVisible && 'max-lg:h-62')}
+        className={cn(
+          'h-18 max-lg:h-16',
+          isMobileHeaderExpanded && 'max-lg:h-62',
+        )}
       />
       <QuizTitleSection ref={titleRef} quiz={quiz} />
       <div className="mx-auto mt-23.5 flex w-full justify-between">
@@ -81,7 +86,6 @@ export default function StartQuizPage() {
           error={submitError}
         />
       </div>
-
       {isResultModalOpen && gradedResult && (
         <ResultModal
           quiz={quiz}
