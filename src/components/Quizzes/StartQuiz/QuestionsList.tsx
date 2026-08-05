@@ -17,7 +17,7 @@ export default function QuestionsList({
   onSelectOption,
 }: QuestionsListProps) {
   return (
-    <div className="mb-16 flex w-203.25 flex-col gap-12">
+    <div className="w-question mb-16 flex max-w-215 flex-col gap-12 max-lg:w-full">
       {questions.map((question) => (
         <QuestionCard
           key={question.id}

@@ -3,6 +3,7 @@
 @theme {
   --breakpoint-xl2: 1310px;
   --breakpoint-xl4: 1430px;
+  --breakpoint-xl5: 1630px;
   --breakpoint-xl3: 1390px;
   --breakpoint-xl1: 970px;
   --breakpoint-md2: 735px;
@@ -78,8 +79,12 @@
   --color-mobile-auth-background: #1018284d;
   --color-mobile-modal-close: #74777f;
   --height-auth-modal: 85%;
+  --width-mobile-submit: 71%;
+  --width-mobile-timer: 26%;
   --text-landing-text-desktop: 79px;
   --text-landing-text-mobile: 45px;
+  --width-question: 65%;
+  --width-timer: 31%;
 }
 @keyframes toast-timer {
   from {
