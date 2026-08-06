@@ -47,7 +47,7 @@ function mapQuiz(item: QuizApiItem): Quiz {
     myAttempt: null,
   };
 }
-export function useQuizzes() {
+export function useQuizzes(myQuizzes = false) {
   const { user, isLoading: isAuthLoading } = useAuth();
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [total, setTotal] = useState<number>(0);
@@ -61,7 +61,12 @@ export function useQuizzes() {
     setIsLoading(true);
 
     api
-      .get('/quizzes', { params: { per_page: 100 } })
+      .get('/quizzes', {
+        params: {
+          per_page: 100,
+          my_quizzes: myQuizzes ? 1 : undefined,
+        },
+      })
       .then((res) => {
         if (cancelled) return;
         setQuizzes(res.data.data.map(mapQuiz));
@@ -80,7 +85,7 @@ export function useQuizzes() {
     return () => {
       cancelled = true;
     };
-  }, [user?.id, isAuthLoading]);
+  }, [user?.id, isAuthLoading, myQuizzes]);
 
   return { quizzes, total, isLoading, error };
 }
