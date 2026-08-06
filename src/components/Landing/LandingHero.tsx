@@ -2,8 +2,32 @@ import { LandingLogo } from '@/assets';
 import HoverIcon from '@/components/UI/Icons/HoverIcon';
 import { Link } from 'react-router-dom';
 import { LandingPic } from '../UI';
+import { useQuizzes } from '@/hooks/useQuizzes';
+import { useCategories } from '@/hooks/useCategories';
+
+function StatNumber({
+  value,
+  isLoading,
+}: {
+  value: number;
+  isLoading: boolean;
+}) {
+  if (isLoading) {
+    return (
+      <span
+        className="inline-block animate-pulse rounded-2xl bg-white/20"
+        aria-hidden="true"
+      />
+    );
+  }
+  return <span className="animate-in fade-in duration-500">{value}+</span>;
+}
 
 function LandingHero() {
+  const { total: quizTotal, isLoading: quizzesLoading } = useQuizzes();
+  const { total: categoryTotal, isLoading: categoriesLoading } =
+    useCategories();
+
   return (
     <div className="relative mx-auto w-full max-w-360 px-0">
       <img
@@ -21,7 +45,7 @@ function LandingHero() {
             className="group max-ssm:ml-12 max-ssm:px-0 mx-auto block w-full max-w-360 cursor-pointer px-24"
           >
             <p className="font-raleway text-8xl leading-13.75 font-black tracking-normal text-white">
-              200+
+              <StatNumber value={quizTotal} isLoading={quizzesLoading} />
             </p>
             <p className="font-raleway mt-8 text-5xl leading-13.75 font-black tracking-normal text-white transition-all duration-300 ease-out">
               <span className="[text-decoration-skip-ink:none] group-hover:underline">
@@ -38,7 +62,7 @@ function LandingHero() {
             className="group max-ssm:ml-12 max-ssm:px-0 mx-auto block w-full max-w-360 cursor-pointer px-24"
           >
             <p className="font-raleway text-8xl leading-13.75 font-black tracking-normal text-white">
-              25+
+              <StatNumber value={categoryTotal} isLoading={categoriesLoading} />
             </p>
             <p className="font-raleway max-ssm:w-70 mt-8 text-5xl leading-13.75 font-black tracking-normal text-white transition-all duration-300 ease-out">
               <span className="[text-decoration-skip-ink:none] group-hover:underline">

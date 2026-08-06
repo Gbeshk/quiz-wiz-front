@@ -85,6 +85,8 @@
   --text-landing-text-mobile: 45px;
   --width-question: 65%;
   --width-timer: 31%;
+  --color-mobile-toggle: #66708580;
+  --width-filter-modal: 74vw;
 }
 @keyframes toast-timer {
   from {

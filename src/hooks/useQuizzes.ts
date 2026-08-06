@@ -50,6 +50,7 @@ function mapQuiz(item: QuizApiItem): Quiz {
 export function useQuizzes() {
   const { user, isLoading: isAuthLoading } = useAuth();
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+  const [total, setTotal] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -64,6 +65,7 @@ export function useQuizzes() {
       .then((res) => {
         if (cancelled) return;
         setQuizzes(res.data.data.map(mapQuiz));
+        setTotal(res.data.meta?.total ?? res.data.data.length);
         setError(null);
       })
       .catch((err) => {
@@ -80,5 +82,5 @@ export function useQuizzes() {
     };
   }, [user?.id, isAuthLoading]);
 
-  return { quizzes, isLoading, error };
+  return { quizzes, total, isLoading, error };
 }
