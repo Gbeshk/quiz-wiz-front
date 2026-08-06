@@ -2,6 +2,7 @@ import type { QuizHeroSectionProps } from '@/types/quizz';
 import QuizCategories from '@/components/Quizzes/QuizCategories';
 import QuizMetaRow from './QuizMetaRow';
 import { Link } from 'react-router-dom';
+import DefaultImage from '@/components/UI/Icons/DefaultImage';
 
 export default function QuizHeroSection({ quiz }: QuizHeroSectionProps) {
   return (
@@ -47,7 +48,7 @@ export default function QuizHeroSection({ quiz }: QuizHeroSectionProps) {
             className="h-full w-full object-cover"
           />
         ) : (
-          'Image'
+          <DefaultImage />
         )}
       </div>
     </div>

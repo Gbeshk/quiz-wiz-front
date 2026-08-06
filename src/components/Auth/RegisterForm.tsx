@@ -38,7 +38,7 @@ export function RegisterForm() {
         register={register}
         rules={rules.password}
         error={errors.password}
-        placeholder="must be 8 characters"
+        placeholder="must be 3 characters"
       />
 
       <AuthInput<RegisterFormValues>
@@ -48,7 +48,7 @@ export function RegisterForm() {
         register={register}
         rules={rules.confirmPassword}
         error={errors.confirmPassword}
-        placeholder="must be 8 characters"
+        placeholder="must be 3 characters"
       />
 
       <div className="flex flex-col gap-1.5">

@@ -13,7 +13,7 @@ export const emailRules = {
 
 export const passwordRules = {
   required: 'Password is required',
-  minLength: { value: 8, message: 'Must be at least 8 characters' },
+  minLength: { value: 3, message: 'Must be at least 3 characters' },
 };
 
 export function confirmPasswordRules<T extends FieldValues>(

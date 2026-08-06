@@ -12,7 +12,7 @@ export default function QuizMobileQuestionsCard({
       <p className="h-4 truncate text-xs leading-none font-bold tracking-normal">
         Questions
       </p>
-      <p className="text-correct-text text-xs leading-none font-bold tracking-normal">
+      <p className="text-correct-text text-base leading-none font-bold tracking-normal">
         {answeredCount}/{totalQuestions}
       </p>
     </div>

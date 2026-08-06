@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useCountdown } from '@/hooks/useCountdown';
 import { formatTime } from '@/utils/quizTime';
 import { submitQuizAttempt } from '@/api/quizAttempts';
 import type { Quiz } from '@/types/quizz';
+import { useAuth } from '@/context/AuthContext';
 
 interface GradedResult {
   pointsEarned: number;
@@ -11,23 +12,138 @@ interface GradedResult {
 }
 
 export function useQuizAttempt(quiz: Quiz | null | undefined) {
-  const [selectedAnswers, setSelectedAnswers] = useState<
-    Record<string, number[]>
-  >({});
+  const { user } = useAuth();
   const [isResultModalOpen, setIsResultModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [gradedResult, setGradedResult] = useState<GradedResult | null>(null);
 
   const totalSeconds = (quiz?.totalTimeMinutes ?? 5) * 60;
+
+  const timerStorageKey =
+    user?.id && quiz?.id ? `quiz_start_time_${user.id}_${quiz.id}` : null;
+  const answersStorageKey =
+    user?.id && quiz?.id ? `quiz_answers_${user.id}_${quiz.id}` : null;
+  const resultStorageKey =
+    user?.id && quiz?.id ? `quiz_result_${user.id}_${quiz.id}` : null;
+
+  const [selectedAnswers, setSelectedAnswers] = useState<
+    Record<string, number[]>
+  >(() => {
+    if (!answersStorageKey) return {};
+    const stored = localStorage.getItem(answersStorageKey);
+    if (stored) {
+      try {
+        return JSON.parse(stored);
+      } catch {
+        return {};
+      }
+    }
+    return {};
+  });
+
+  useEffect(() => {
+    if (!answersStorageKey) return;
+    const stored = localStorage.getItem(answersStorageKey);
+    if (stored) {
+      try {
+        setSelectedAnswers(JSON.parse(stored));
+      } catch (err) {
+        console.error('Failed to parse stored answers:', err);
+      }
+    }
+  }, [answersStorageKey]);
+
+  const [elapsedSeconds, setElapsedSeconds] = useState<number>(() => {
+    if (!timerStorageKey) return 0;
+    const stored = localStorage.getItem(timerStorageKey);
+    if (stored) {
+      const startTimestamp = parseInt(stored, 10);
+      return Math.min(
+        totalSeconds,
+        Math.floor((Date.now() - startTimestamp) / 1000),
+      );
+    }
+    return 0;
+  });
+
+  useEffect(() => {
+    if (!quiz || !user || !timerStorageKey) return;
+
+    let stored = localStorage.getItem(timerStorageKey);
+    if (!stored) {
+      stored = Date.now().toString();
+      localStorage.setItem(timerStorageKey, stored);
+    }
+
+    const startTimestamp = parseInt(stored, 10);
+
+    const updateElapsed = () => {
+      const now = Date.now();
+      const secondsPassed = Math.floor((now - startTimestamp) / 1000);
+      setElapsedSeconds(secondsPassed);
+    };
+
+    updateElapsed();
+    const interval = setInterval(updateElapsed, 1000);
+
+    return () => clearInterval(interval);
+  }, [quiz, user, timerStorageKey]);
+
+  const selectedAnswersRef = useRef(selectedAnswers);
+  useEffect(() => {
+    selectedAnswersRef.current = selectedAnswers;
+  }, [selectedAnswers]);
+
+  const clearLocalStorage = () => {
+    if (timerStorageKey) localStorage.removeItem(timerStorageKey);
+    if (answersStorageKey) localStorage.removeItem(answersStorageKey);
+  };
+
+  const executeSubmit = async (isAutoSubmit = false) => {
+    if (!quiz || isSubmitting) return;
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+    try {
+      const currentAnswers = selectedAnswersRef.current;
+      const answers = quiz.questions.map((q) => ({
+        question_id: Number(q.id),
+        answer_ids: (currentAnswers[q.id] ?? []).map((idx) => q.answerIds[idx]),
+      }));
+
+      const finalTimeTaken = isAutoSubmit ? totalSeconds : timeTakenSeconds;
+
+      const result = await submitQuizAttempt(quiz.id, finalTimeTaken, answers);
+      clearLocalStorage();
+
+      if (resultStorageKey) {
+        localStorage.setItem(resultStorageKey, JSON.stringify(result));
+      }
+
+      setGradedResult(result);
+      setIsResultModalOpen(true);
+    } catch (err) {
+      setSubmitError('Could not submit your result. Please try again.');
+      console.error('Failed to submit attempt:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleTimeOut = () => {
+    executeSubmit(true);
+  };
+
+  const rawSecondsLeft = Math.max(0, totalSeconds - elapsedSeconds);
   const secondsLeft = useCountdown(
-    totalSeconds,
+    rawSecondsLeft,
     isResultModalOpen || !!quiz?.myAttempt,
-    () => setIsResultModalOpen(true),
+    handleTimeOut,
   );
 
   const formattedTime = formatTime(secondsLeft);
-  const timeTakenSeconds = totalSeconds - secondsLeft;
+  const timeTakenSeconds = Math.min(totalSeconds, totalSeconds - secondsLeft);
   const timeTaken = formatTime(timeTakenSeconds);
 
   const answeredCount = quiz
@@ -54,15 +170,20 @@ export function useQuizAttempt(quiz: Quiz | null | undefined) {
       const current = prev[questionId] ?? [];
       const isAlreadySelected = current.includes(optionIndex);
 
+      let updated: number[];
       if (isMultiple) {
-        const updated = isAlreadySelected
+        updated = isAlreadySelected
           ? current.filter((i) => i !== optionIndex)
           : [...current, optionIndex];
-        return { ...prev, [questionId]: updated };
+      } else {
+        updated = isAlreadySelected ? [] : [optionIndex];
       }
 
-      const updated = isAlreadySelected ? [] : [optionIndex];
-      return { ...prev, [questionId]: updated };
+      const newAnswers = { ...prev, [questionId]: updated };
+      if (answersStorageKey) {
+        localStorage.setItem(answersStorageKey, JSON.stringify(newAnswers));
+      }
+      return newAnswers;
     });
   };
 
@@ -74,29 +195,7 @@ export function useQuizAttempt(quiz: Quiz | null | undefined) {
       return;
     }
 
-    setIsSubmitting(true);
-    setSubmitError(null);
-    try {
-      const answers = quiz.questions.map((q) => ({
-        question_id: Number(q.id),
-        answer_ids: (selectedAnswers[q.id] ?? []).map(
-          (idx) => q.answerIds[idx],
-        ),
-      }));
-
-      const result = await submitQuizAttempt(
-        quiz.id,
-        timeTakenSeconds,
-        answers,
-      );
-      setGradedResult(result);
-      setIsResultModalOpen(true);
-    } catch (err) {
-      setSubmitError('Could not submit your result. Please try again.');
-      console.error('Failed to submit attempt:', err);
-    } finally {
-      setIsSubmitting(false);
-    }
+    await executeSubmit(false);
   };
 
   return {

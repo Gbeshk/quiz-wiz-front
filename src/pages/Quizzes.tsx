@@ -1,3 +1,4 @@
+import { useLayoutEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { LandingFooter, LandingHeader } from '@/components/Landing';
 import CategoryTabs from '@/components/Quizzes/CategoryTabs';
@@ -8,6 +9,7 @@ import { useLoadMore } from '@/hooks/useLoadMore';
 import { useFilteredQuizzes } from '@/hooks/useFilteredQuizzes';
 
 const PAGE_SIZE = 9;
+const SCROLL_KEY = 'quizzes_list_scroll_pos';
 
 export default function QuizzesPage() {
   const [searchParams] = useSearchParams();
@@ -17,6 +19,24 @@ export default function QuizzesPage() {
     filteredQuizzes,
     PAGE_SIZE,
   );
+
+  useLayoutEffect(() => {
+    const handleSaveScroll = () => {
+      sessionStorage.setItem(SCROLL_KEY, window.scrollY.toString());
+    };
+
+    window.addEventListener('scroll', handleSaveScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleSaveScroll);
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!isLoading && filteredQuizzes.length > 0) {
+      const savedScrollPos = sessionStorage.getItem(SCROLL_KEY);
+      if (savedScrollPos) {
+        window.scrollTo(0, parseInt(savedScrollPos, 10));
+      }
+    }
+  }, [isLoading, filteredQuizzes.length]);
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-white">

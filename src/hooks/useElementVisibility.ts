@@ -1,19 +1,23 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState, useCallback } from 'react';
 
 export function useElementVisibility<T extends HTMLElement>() {
-  const ref = useRef<T>(null);
   const [isVisible, setIsVisible] = useState(true);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+  const ref = useCallback((node: T | null) => {
+    if (!node) return;
 
     const observer = new IntersectionObserver(
-      ([entry]) => setIsVisible(entry.isIntersecting),
-      { threshold: 0 },
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      {
+        rootMargin: '-80px 0px 0px 0px',
+        threshold: 0,
+      },
     );
 
-    observer.observe(el);
+    observer.observe(node);
+
     return () => observer.disconnect();
   }, []);
 
