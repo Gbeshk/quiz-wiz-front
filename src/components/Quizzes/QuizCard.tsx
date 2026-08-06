@@ -9,7 +9,6 @@ import DefaultImage from '@/components/UI/Icons/DefaultImage';
 
 export default function QuizCard({ quiz, variant = 'default' }: QuizCardProps) {
   const isFlat = variant === 'flat';
-  console.log(quiz);
 
   return (
     <Link
