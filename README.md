@@ -1,73 +1,137 @@
-# React + TypeScript + Vite
+# Quiz Wiz — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+Quiz Wiz is a quiz platform where users can register with email verification, reset their password, and browse, sort, and filter quizzes to attempt.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This repository is the **frontend**, a React single-page app that consumes the Quiz Wiz API. The backend (Laravel) lives in a separate repository — see [Resources](#resources) for the link.
 
-## React Compiler
+#
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Table of Contents
 
-## Expanding the ESLint configuration
+- [Prerequisites](#prerequisites)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Development](#development)
+- [Deployment](#deployment)
+- [Resources](#resources)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+#
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Node.js & npm**
+- The [backend repository](https://github.com/RedberryInternship/giorgi-beshkenadze-quiz-wiz-back) running locally — this app depends on the API for all data (auth, quizzes, etc.). Without it running, the app will load but requests will fail / no data will display.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+#
+
+### Tech Stack
+
+- [React 19](https://react.dev/) — UI library
+- [TypeScript](https://www.typescriptlang.org/) — static typing
+- [Vite](https://vitejs.dev/) — build tool & dev server
+- [React Router](https://reactrouter.com/) — routing
+- [TanStack Query](https://tanstack.com/query/latest) — data fetching / server state, used for all API requests
+- [Axios](https://axios-http.com/) — HTTP client
+- [React Hook Form](https://react-hook-form.com/) — form handling & validation
+- [TailwindCSS](https://tailwindcss.com/) — styling
+- [React Hot Toast](https://react-hot-toast.com/) — notifications
+- [ESLint & Prettier](https://redberry.gitbook.io/resources/eslint-and-prettier-is-gamartva-vue.js-proektshi) — linter & formatter
+
+#
+
+### Getting Started
+
+1\. Clone the repository:
+
+```sh
+git clone https://github.com/RedberryInternship/giorgi-beshkenadze-quiz-wiz-front.git
+cd giorgi-beshkenadze-quiz-wiz-front
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2\. Install dependencies:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```sh
+npm install
 ```
+
+3\. Set up your environment file:
+
+```sh
+cp .env.example .env
+```
+
+And make sure it points to your local backend:
+
+```env
+VITE_API_URL=http://localhost:8000
+```
+
+4\. Make sure the [backend](https://github.com/RedberryInternship/giorgi-beshkenadze-quiz-wiz-back) is running first (see its README), then start the dev server:
+
+```sh
+npm run dev
+```
+
+##### Now, you should be good to go!
+
+#
+
+### Development
+
+Run the app in development mode with hot reload:
+
+```sh
+npm run dev
+```
+
+Before committing, lint your code and fix any issues:
+
+```sh
+npm run lint
+```
+
+To build a production bundle (type-checks with `tsc` first, then builds with Vite):
+
+```sh
+npm run build
+```
+
+You can preview the production build locally with:
+
+```sh
+npm run preview
+```
+
+#
+
+### Deployment
+
+The app is built with `npm run build` and the resulting static `dist/` output is served directly by **Nginx**, with SSL provided by **Let's Encrypt**.
+
+- **Production:** [https://quiz-wiz.giorgi-beshkenadze.redberryinternship.ge](https://quiz-wiz.giorgi-beshkenadze.redberryinternship.ge)
+
+Deployment steps, run manually on the server after pulling the latest code:
+
+```sh
+git pull origin main
+npm install
+npm run build
+```
+
+The production environment variable is set in `.env.production`:
+
+```env
+VITE_API_URL=https://quiz-wiz-api.giorgi-beshkenadze.redberryinternship.ge
+```
+
+- Authentication uses Sanctum's cookie-based SPA flow (`withCredentials`, CSRF cookie fetched via `/sanctum/csrf-cookie`), which works across the frontend and API subdomains since both share the same parent domain.
+- There is currently no CI/CD pipeline — deploys are manual. This section will be updated if that changes.
+
+#
+
+### Resources
+
+- **Backend repository:** [quiz-wiz-back](https://github.com/RedberryInternship/giorgi-beshkenadze-quiz-wiz-back)
+- **Figma design:** [QuizWiz](https://www.figma.com/design/QTWoxa2OYVayZ04WJ0ZZ9k/QuizWiz?node-id=1057-78034&p=f&t=ZJN3ulmEvhMyNMyY-0)
