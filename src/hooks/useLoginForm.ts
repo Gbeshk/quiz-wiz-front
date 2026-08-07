@@ -16,7 +16,7 @@ export function useLoginForm() {
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<LoginFormValues>();
+  } = useForm<LoginFormValues>({ mode: 'onChange' });
   const { login } = useAuth();
   const navigate = useNavigate();
   const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null);

@@ -11,7 +11,6 @@ export function useFilteredQuizzes(
     const {
       selectedLevels,
       selectedCategories,
-      myQuizzes,
       notCompleted,
       sortBy,
       searchTerm,
@@ -48,8 +47,6 @@ export function useFilteredQuizzes(
           return false;
         }
       }
-
-      void myQuizzes;
 
       return true;
     });

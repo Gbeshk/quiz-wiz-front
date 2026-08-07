@@ -105,6 +105,7 @@ export function useQuizAttempt(quiz: Quiz | null | undefined) {
 
     setIsSubmitting(true);
     setSubmitError(null);
+    setIsResultModalOpen(true);
     try {
       const currentAnswers = selectedAnswersRef.current;
       const answers = quiz.questions.map((q) => ({
@@ -122,15 +123,14 @@ export function useQuizAttempt(quiz: Quiz | null | undefined) {
       }
 
       setGradedResult(result);
-      setIsResultModalOpen(true);
     } catch (err) {
       setSubmitError('Could not submit your result. Please try again.');
+      setIsResultModalOpen(false);
       console.error('Failed to submit attempt:', err);
     } finally {
       setIsSubmitting(false);
     }
   };
-
   const handleTimeOut = () => {
     executeSubmit(true);
   };

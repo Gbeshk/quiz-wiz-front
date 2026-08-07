@@ -3,6 +3,7 @@ import CloseIcon from '@/components/UI/Icons/CloseIcon';
 import type { Quiz } from '@/types/quizz';
 import ResultModalHeader from './ResultModalHeader';
 import ResultDetailRow from './ResultDetailRow';
+import ResultModalSkeleton from './ResultModalSkeleton';
 import { DIFFICULTY_ICON_COLOR } from '@/constants/difficulty';
 
 interface ResultModalProps {
@@ -10,6 +11,7 @@ interface ResultModalProps {
   timeTaken: string;
   correctCount: number;
   mistakesCount: number;
+  isLoading?: boolean;
 }
 
 export default function ResultModal({
@@ -17,6 +19,7 @@ export default function ResultModal({
   timeTaken,
   correctCount,
   mistakesCount,
+  isLoading = false,
 }: ResultModalProps) {
   return (
     <div className="bg-modal-bg fixed inset-0 z-100 flex items-center justify-center">
@@ -28,33 +31,39 @@ export default function ResultModal({
           <CloseIcon className="h-full w-full" />
         </Link>
 
-        <ResultModalHeader />
+        {isLoading ? (
+          <ResultModalSkeleton />
+        ) : (
+          <>
+            <ResultModalHeader />
 
-        <ResultDetailRow label="Quiz Name" value={quiz.title} />
-        <ResultDetailRow
-          label="Quiz level"
-          value={quiz.difficulty.name}
-          valueClassName={DIFFICULTY_ICON_COLOR[quiz.difficulty.name]}
-        />
-        <ResultDetailRow label="Time" value={timeTaken} />
-        <ResultDetailRow
-          label="Mistakes"
-          value={mistakesCount}
-          valueClassName="text-mistakes-text"
-        />
-        <ResultDetailRow
-          label="Right answers"
-          value={correctCount}
-          valueClassName="text-correct-text"
-          showDivider={false}
-        />
+            <ResultDetailRow label="Quiz Name" value={quiz.title} />
+            <ResultDetailRow
+              label="Quiz level"
+              value={quiz.difficulty.name}
+              valueClassName={DIFFICULTY_ICON_COLOR[quiz.difficulty.name]}
+            />
+            <ResultDetailRow label="Time" value={timeTaken} />
+            <ResultDetailRow
+              label="Mistakes"
+              value={mistakesCount}
+              valueClassName="text-mistakes-text"
+            />
+            <ResultDetailRow
+              label="Right answers"
+              value={correctCount}
+              valueClassName="text-correct-text"
+              showDivider={false}
+            />
 
-        <Link
-          to="/"
-          className="font-inter bg-auth-link mt-6 flex h-12 w-full cursor-pointer items-center justify-center rounded-xl text-base font-semibold text-white"
-        >
-          Back to home
-        </Link>
+            <Link
+              to="/"
+              className="font-inter bg-auth-link mt-6 flex h-12 w-full cursor-pointer items-center justify-center rounded-xl text-base font-semibold text-white"
+            >
+              Back to home
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );

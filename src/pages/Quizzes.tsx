@@ -7,13 +7,15 @@ import LoadMoreButton from '@/components/Quizzes/LoadMoreButton';
 import { useQuizzes } from '@/hooks/useQuizzes';
 import { useLoadMore } from '@/hooks/useLoadMore';
 import { useFilteredQuizzes } from '@/hooks/useFilteredQuizzes';
+import { parseFilterSearchParams } from '@/lib/filterParams';
 
 const PAGE_SIZE = 9;
 const SCROLL_KEY = 'quizzes_list_scroll_pos';
 
 export default function QuizzesPage() {
   const [searchParams] = useSearchParams();
-  const { quizzes, isLoading, error } = useQuizzes();
+  const { myQuizzes } = parseFilterSearchParams(searchParams);
+  const { quizzes, isLoading, error } = useQuizzes(myQuizzes);
   const filteredQuizzes = useFilteredQuizzes(quizzes, searchParams);
   const { visibleItems, hasMore, isLoadingMore, handleLoadMore } = useLoadMore(
     filteredQuizzes,

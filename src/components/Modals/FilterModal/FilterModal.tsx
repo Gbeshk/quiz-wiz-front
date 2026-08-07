@@ -7,11 +7,9 @@ import {
   buildFilterSearchParams,
   parseFilterSearchParams,
 } from '@/lib/filterParams';
-import FilterModalHeader from './FilterModalHeader';
-import FilterByPanel from './FilterByPanel';
-import SortByPanel from './SortByPanel';
 import type { FilterModalProps } from '@/types/quizz';
-import { cn } from '@/lib';
+import FilterModalDesktop from './FilterModalDesktop';
+import FilterModalMobile from './FilterModalMobile';
 
 export default function FilterModal({
   isOpen,
@@ -44,7 +42,7 @@ export default function FilterModal({
       myQuizzes,
       notCompleted,
       sortBy,
-      searchTerm: searchParams.get('search') ?? '',
+      searchTerm,
     });
 
     setSearchParams(params);
@@ -61,38 +59,49 @@ export default function FilterModal({
     setSearchParams(params);
   };
 
+  const handleCancel = () => {
+    resetAll();
+  };
+
+  const panelProps = {
+    myQuizzes,
+    notCompleted,
+    selectedLevels,
+    categories,
+    selectedCategories,
+    difficulties,
+    searchTerm,
+    sortBy,
+    onToggleMyQuizzes: () => setMyQuizzes((prev) => !prev),
+    onToggleNotCompleted: () => setNotCompleted((prev) => !prev),
+    onToggleLevel: toggleLevel,
+    onToggleCategory: toggleCategory,
+    onSelectSort: toggleSort,
+  };
+
   return (
-    <div
-      className={cn(
-        'absolute top-11 right-0 z-50 h-162.5 w-266.25 rounded-xl border border-black bg-white p-4 shadow-[0px_16px_54px_0px_#0000001F]',
-        !isOpen && 'hidden',
-      )}
-    >
-      <FilterModalHeader
+    <>
+      <FilterModalDesktop
+        isOpen={isOpen}
         hasSelection={hasSelection}
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
         onReset={handleReset}
         onConfirm={handleConfirm}
         onClose={onClose}
+        panelProps={panelProps}
       />
-
-      <div className="flex justify-between">
-        <FilterByPanel
-          myQuizzes={myQuizzes}
-          notCompleted={notCompleted}
-          selectedLevels={selectedLevels}
-          categories={categories}
-          selectedCategories={selectedCategories}
-          difficulties={difficulties}
-          searchTerm={searchTerm}
-          onToggleMyQuizzes={() => setMyQuizzes((prev) => !prev)}
-          onToggleNotCompleted={() => setNotCompleted((prev) => !prev)}
-          onToggleLevel={toggleLevel}
-          onToggleCategory={toggleCategory}
-        />
-        <SortByPanel sortBy={sortBy} onSelect={toggleSort} />
-      </div>
-    </div>
+      <FilterModalMobile
+        isOpen={isOpen}
+        hasSelection={hasSelection}
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        onReset={handleReset}
+        onConfirm={handleConfirm}
+        onCancel={handleCancel}
+        onClose={onClose}
+        panelProps={panelProps}
+      />
+    </>
   );
 }

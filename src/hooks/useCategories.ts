@@ -1,16 +1,23 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 
-async function fetchCategories(): Promise<string[]> {
+async function fetchCategories() {
   const res = await api.get('/categories');
-  return res.data.data.map((c: { name: string }) => c.name);
+  return {
+    categories: res.data.data.map((c: { name: string }) => c.name),
+    total: res.data.meta?.total ?? res.data.data.length,
+  };
 }
 
 export function useCategories() {
-  const { data: categories = [], isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['categories'],
     queryFn: fetchCategories,
   });
 
-  return { categories, isLoading };
+  return {
+    categories: data?.categories ?? [],
+    total: data?.total ?? 0,
+    isLoading,
+  };
 }

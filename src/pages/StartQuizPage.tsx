@@ -121,12 +121,13 @@ export default function StartQuizPage() {
           error={submitError}
         />
       </div>
-      {isResultModalOpen && gradedResult && (
+      {isResultModalOpen && (
         <ResultModal
           quiz={quiz}
           timeTaken={timeTaken}
-          correctCount={gradedResult.correctCount}
-          mistakesCount={gradedResult.mistakesCount}
+          correctCount={gradedResult?.correctCount ?? 0}
+          mistakesCount={gradedResult?.mistakesCount ?? 0}
+          isLoading={!gradedResult}
         />
       )}
       {isLeaveModalOpen && (

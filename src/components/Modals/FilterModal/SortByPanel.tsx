@@ -4,8 +4,8 @@ import type { SortByPanelProps } from '@/types/quizz';
 
 export default function SortByPanel({ sortBy, onSelect }: SortByPanelProps) {
   return (
-    <div className="border-auth-border h-137 w-98 rounded-lg border p-4">
-      <p className="font-inter text-auth-link text-sm leading-5 font-semibold">
+    <div className="md:border-auth-border md:w-98 md:rounded-lg md:border md:p-4">
+      <p className="font-inter text-auth-link text-sm leading-5 font-semibold max-md:hidden">
         Sort by
       </p>
       {SORT_OPTIONS.map((option) => (
