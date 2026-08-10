@@ -14,6 +14,7 @@ interface GradedResult {
 export function useQuizAttempt(quiz: Quiz | null | undefined) {
   const { user } = useAuth();
   const [isResultModalOpen, setIsResultModalOpen] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [gradedResult, setGradedResult] = useState<GradedResult | null>(null);
@@ -68,7 +69,7 @@ export function useQuizAttempt(quiz: Quiz | null | undefined) {
   });
 
   useEffect(() => {
-    if (!quiz || !user || !timerStorageKey) return;
+    if (!quiz || !user || !timerStorageKey || isFinished) return;
 
     let stored = localStorage.getItem(timerStorageKey);
     if (!stored) {
@@ -88,7 +89,7 @@ export function useQuizAttempt(quiz: Quiz | null | undefined) {
     const interval = setInterval(updateElapsed, 1000);
 
     return () => clearInterval(interval);
-  }, [quiz, user, timerStorageKey]);
+  }, [quiz, user, timerStorageKey, isFinished]);
 
   const selectedAnswersRef = useRef(selectedAnswers);
   useEffect(() => {
@@ -105,6 +106,7 @@ export function useQuizAttempt(quiz: Quiz | null | undefined) {
 
     setIsSubmitting(true);
     setSubmitError(null);
+    setIsFinished(true);
     setIsResultModalOpen(true);
     try {
       const currentAnswers = selectedAnswersRef.current;
@@ -126,6 +128,7 @@ export function useQuizAttempt(quiz: Quiz | null | undefined) {
     } catch (err) {
       setSubmitError('Could not submit your result. Please try again.');
       setIsResultModalOpen(false);
+      setIsFinished(false);
       console.error('Failed to submit attempt:', err);
     } finally {
       setIsSubmitting(false);
@@ -138,7 +141,7 @@ export function useQuizAttempt(quiz: Quiz | null | undefined) {
   const rawSecondsLeft = Math.max(0, totalSeconds - elapsedSeconds);
   const secondsLeft = useCountdown(
     rawSecondsLeft,
-    isResultModalOpen || !!quiz?.myAttempt,
+    isFinished || !!quiz?.myAttempt,
     handleTimeOut,
   );
 
