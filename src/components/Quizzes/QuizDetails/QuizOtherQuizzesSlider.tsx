@@ -1,6 +1,8 @@
 import type { QuizOtherQuizzesSliderProps } from '@/types/quizz';
 import QuizCard from '@/components/Quizzes/QuizCard';
 
+const SECONDS_PER_CARD = 20;
+
 export default function QuizOtherQuizzesSlider({
   quizzes,
   currentQuiz,
@@ -26,7 +28,12 @@ export default function QuizOtherQuizzesSlider({
           No similar quizzes found.
         </p>
       ) : (
-        <div className="quiz-slider-track xl4:w-auto max-xl4:mt-5 xl4:flex-col flex w-max flex-row gap-8 p-1">
+        <div
+          style={{
+            animationDuration: `${sameCategoryQuizzes.length * SECONDS_PER_CARD}s`,
+          }}
+          className="quiz-slider-track xl4:w-auto max-xl4:mt-5 xl4:flex-col flex w-max flex-row gap-8 p-1"
+        >
           {loopedQuizzes.map((quiz, index) => (
             <QuizCard key={`${quiz.id}-${index}`} quiz={quiz} variant="flat" />
           ))}
