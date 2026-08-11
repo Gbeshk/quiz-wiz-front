@@ -66,7 +66,7 @@ export function useOtherQuizzes(currentId: string | undefined) {
         const mapped: Quiz[] = res.data.data
           .map(mapQuiz)
           .filter((q: Quiz) => q.id !== currentId);
-        setQuizzes([...mapped, ...mapped]);
+        setQuizzes(mapped);
       })
       .catch((err) => {
         console.error('Failed to load other quizzes:', err);
